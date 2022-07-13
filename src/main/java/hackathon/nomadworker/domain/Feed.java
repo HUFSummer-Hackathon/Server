@@ -3,10 +3,9 @@ package hackathon.nomadworker.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,4 +21,21 @@ public class Feed {
     private String f_content;
     private int f_like;
     private String f_time;
+
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "p_id")
+    private Place place;
+
+    // 사용자 테이블
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "u_id")
+    private User user;
+
+
+    @OneToMany(mappedBy ="user", cascade = CascadeType.ALL)
+    private List<User_Like> userLikeList = new ArrayList<>();
+
+
 }
