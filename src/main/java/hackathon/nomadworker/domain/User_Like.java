@@ -10,12 +10,13 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Getter
 @Setter
-public class User_Like {
+public class User_Like
+{
 
     @Id
     @GeneratedValue
     @Column(name="like_id")
-    private Long Id;
+    private Long id;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name="u_id")
