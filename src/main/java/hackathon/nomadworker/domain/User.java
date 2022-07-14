@@ -27,4 +27,9 @@ public class User {
 
     @OneToMany(mappedBy ="user", cascade = CascadeType.ALL)
     private List<User_Like> userLikeList = new ArrayList<>();
+
+    public void addLike(User_Like userLike) {
+        this.userLikeList.add(userLike);
+        userLike.setUser(this);
+    }
 }
