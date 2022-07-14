@@ -35,7 +35,7 @@ public class Place {
 
 
         @OneToMany(mappedBy = "place",cascade = CascadeType.ALL)
-        private List<Feed> feeds = new ArrayList<>();
+        private List<Feed> feedList = new ArrayList<>();
 
         @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
         @JoinColumn(name = "pr_id")
@@ -46,13 +46,18 @@ public class Place {
         private Menu menu;
 
         // 연관관계 메서드 //
-        public void addPrice(Price price){
+        public void setPrice(Price price){
                 this.price = price;
                 price.setPlace(this);
         }
-        public void addMenu(Menu menu){
+        public void setMenu(Menu menu){
                 this.menu = menu;
                 menu.setPlace(this);
+        }
+
+        public void addFeed(Feed feed){
+                this.feedList.add(feed);
+                feed.setPlace(this);
         }
 
 
