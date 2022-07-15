@@ -1,9 +1,9 @@
 cloud:
   aws:
     s3:
-      bucket: nomadworker
+      bucket:
     region:
-      static: ap-northeast-2
+      static:
     stack:
       auto: false
     credentials:
