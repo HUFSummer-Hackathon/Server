@@ -22,8 +22,6 @@ public class Feed {
     private int f_like;
     private String f_time;
 
-
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "p_id")
     private Place place;
@@ -33,9 +31,12 @@ public class Feed {
     @JoinColumn(name = "u_id")
     private User user;
 
-
     @OneToMany(mappedBy ="user", cascade = CascadeType.ALL)
     private List<User_Like> userLikeList = new ArrayList<>();
 
+    public void addLike(User_Like userLike) {
+        this.userLikeList.add(userLike);
+        userLike.setFeed(this);
+    }
 
 }
