@@ -33,6 +33,9 @@ public class Place {
 
         private String p_storeType;
 
+        private float p_latitude;
+        private float p_longitude;
+
 
         @OneToMany(mappedBy = "place",cascade = CascadeType.ALL)
         private List<Feed> feedList = new ArrayList<>();
