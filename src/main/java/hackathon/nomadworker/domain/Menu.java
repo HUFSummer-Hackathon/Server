@@ -23,3 +23,4 @@ public class Menu {
     @OneToOne(mappedBy = "menu", fetch= LAZY)
     private Place place;
 }
+
