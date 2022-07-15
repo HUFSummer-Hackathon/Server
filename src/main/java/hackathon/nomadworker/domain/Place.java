@@ -63,6 +63,4 @@ public class Place {
                 feed.setPlace(this);
         }
 
-
-
 }
