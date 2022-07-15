@@ -16,8 +16,7 @@ public class FeedRepository {
     private final EntityManager em;
 
     //모든 피드 조회
-    public List<Feed> findALL()
-    {
+    public List<Feed> findALL() {
         return em.createQuery("select f from Feed f", Feed.class)
                 .getResultList();
     }
