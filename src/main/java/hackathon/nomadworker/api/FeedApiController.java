@@ -16,7 +16,7 @@ public class FeedApiController {
 
     private final FeedService feedService;
 
-    @GetMapping(value = "/feeds/total", produces = "application/json;charset=UTF-8")
+    @GetMapping(value = "api/feeds/total", produces = "application/json;charset=UTF-8")
     public Result feedAll(){
         List<Feed> feedAll = feedService.feedAll();
         List<FeedDto> collect = feedAll.stream()
