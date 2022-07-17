@@ -1,30 +1,28 @@
 package hackathon.nomadworker.api;
-
-
-import hackathon.nomadworker.dto.MailDtos;
-
+import hackathon.nomadworker.dto.MailDtos.*;
 import hackathon.nomadworker.service.MailService;
-
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
 
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class MailApiController
 {
     private final MailService mailService;
 
-    @PostMapping(value="api/mail" , produces = "application/json;charset=UTF-8")
-    public MailDtos.MailPostResponse MailPostResponse(@RequestBody MailDtos.MailPostRequest request)
+@PostMapping(value="/api/mail" , produces = "application/json;charset=UTF-8")
+    public MailPostResponse mailPost(@Valid  @RequestBody MailPostRequest request)
     {
         String address = request.getAddress();
         String randomcode = mailService.mailSend(address);
-        String status = "전송 완료되었습니다.";
-        MailDtos.MailPostResponse mailPostResponse = new MailDtos.MailPostResponse(status,address,randomcode);
-        System.out.println("send----ok");
+        String status = "전송 완료되었습니다";
+
+        MailPostResponse mailPostResponse = new MailPostResponse(status,address,randomcode);
+
+        System.out.println(mailPostResponse);
+
         return mailPostResponse;
     }
 
