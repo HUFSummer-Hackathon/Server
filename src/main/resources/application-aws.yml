@@ -1,0 +1,10 @@
+cloud:
+  aws:
+    s3:
+      bucket:
+    region:
+      static:
+    stack:
+      auto: false
+    credentials:
+      instanceProfile: true
