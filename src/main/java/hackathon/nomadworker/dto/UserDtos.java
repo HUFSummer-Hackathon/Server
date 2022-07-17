@@ -81,12 +81,21 @@ public class UserDtos
 
 
     @Data
-    public static class UserPutRequest
+    public static class UserImagePutRequest
     {
         @NotEmpty private String image;
-        @NotEmpty private float latitude;
-        @NotEmpty private float longitude;
+
     }
+
+    @Data
+    public static class UserCordinatePutRequest
+    {
+        @NotEmpty
+        private float latitude;
+        @NotEmpty
+        private float longitude;
+    }
+
 
     public static class UserPutResponse extends OneUserResponse
     {
@@ -115,7 +124,8 @@ public class UserDtos
     public static class UserPostResponse
     {
         private String status;
-        public UserPostResponse(String status){
+        public UserPostResponse(String status)
+        {
             this.status = status;
         }
     }
@@ -124,7 +134,8 @@ public class UserDtos
     public static class UserDeleteResponse
     {
         private String status;
-        public UserDeleteResponse(String status){
+        public UserDeleteResponse(String status)
+        {
             this.status = status;
         }
     }

@@ -41,11 +41,16 @@ public class UserRepository
     }
 
     // 유저 이미지 좌표 업데이트
-    public User update(Long u_id,String u_image, float u_latitude ,float u_longitude)
+    public User imageUpdate(Long u_id,String u_image)
     {
         User user = em.find(User.class,u_id);
-
         user.setU_image(u_image);
+        em.merge(user);
+        return user;
+    }
+    public User cordinateUpdate(Long u_id,float u_latitude ,float u_longitude)
+    {
+        User user = em.find(User.class,u_id);
         user.setU_latitude(u_latitude);
         user.setU_longitude(u_longitude);
         em.merge(user);
@@ -57,7 +62,6 @@ public class UserRepository
         User user = em.find(User.class, u_id);
         em.remove(user);
     }
-
 
     public Long findIdByUuid(String u_uid)
     {
