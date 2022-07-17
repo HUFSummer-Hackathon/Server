@@ -14,7 +14,6 @@ public class MailDtos
     public static class MailPostResponse
     {
         private String status;
-
         private String address;
         private String code;
 
