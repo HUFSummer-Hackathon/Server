@@ -38,9 +38,14 @@ public class UserService
     }
 
     /// update method for api put,
-    @Transactional  User updateOne(Long u_id,String u_image, float u_latitude ,float u_longitude)
+    @Transactional  User updateImage(Long u_id,String u_image)
     {
-        return userRepository.update(u_id, u_image,  u_latitude , u_longitude);
+        return userRepository.imageUpdate(u_id, u_image);
+    }
+
+    @Transactional  User updateCordinate(Long u_id,float u_latitude,float u_longitude)
+    {
+        return userRepository.cordinateUpdate(u_id,u_latitude,u_longitude);
     }
 
     @Transactional

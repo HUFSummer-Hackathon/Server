@@ -30,14 +30,13 @@ public class UserApiController
     }
 
     @GetMapping(value="/api/users", produces = "application/json;charset=UTF-8")
-    public UserResult userAll(){
+    public UserResult userAll()
+    {
         List<User> findUsers = userService.findUsers();
         List<UserDto> collect = findUsers.stream()
                 .map(user -> new UserDto(user))
                 .collect(Collectors.toList());
         return new UserResult(collect.size(), collect);
     }
-
-
 
 }
