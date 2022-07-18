@@ -18,7 +18,6 @@ public class User {
     @Column(name="u_id") //pk
     private Long id;
 
-
     private String u_uid;
 
     private String u_email;

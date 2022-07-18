@@ -4,6 +4,8 @@ import static hackathon.nomadworker.dto.UserDtos.*;
 
 import hackathon.nomadworker.domain.User;
 import hackathon.nomadworker.dto.UserDtos;
+import hackathon.nomadworker.dto.authDtos.*;
+import hackathon.nomadworker.service.AuthService;
 import hackathon.nomadworker.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -21,14 +23,18 @@ public class UserApiController
 {
 
     private final UserService userService;
+    private final AuthService authService;
 
 
     @PostMapping(value="/api/user" , produces = "application/json;charset=UTF-8")
-    public UserPostResponse userPost(@Valid @RequestBody UserPostRequest request)
-    {
-        userService.userPost(request.getU_uid(), request.getU_email(),request.getU_password(),request.getU_nickname(), request.getU_image(), request.getU_latitude(), request.getU_longitude());
-        String status = "회원 등록이 완료되었습니다.";
-        UserPostResponse userPostResponse = new UserPostResponse(status);
+    public UserPostResponse userPost(@Valid @RequestBody UserPostRequest request) throws Exception {
+
+        //토큰 발행
+        String token= authService.createToken(request.getU_nickname());
+
+        userService.userPost(token, request.getU_email(),request.getU_password(),request.getU_nickname(), request.getU_image(), request.getU_latitude(), request.getU_longitude());
+        String msg = "회원 등록이 완료되었습니다.";
+        UserPostResponse userPostResponse = new UserPostResponse(msg, "200", token);
         return userPostResponse;
     }
 
