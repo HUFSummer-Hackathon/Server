@@ -123,10 +123,14 @@ public class UserDtos
     @Data
     public static class UserPostResponse
     {
+        private String msg;
         private String status;
-        public UserPostResponse(String status)
+        private String token;
+        public UserPostResponse(String msg, String status, String token)
         {
+            this.msg = msg;
             this.status = status;
+            this.token = token;
         }
     }
 
@@ -148,7 +152,5 @@ public class UserDtos
         private T data;
 
     }
-
-
 
 }
