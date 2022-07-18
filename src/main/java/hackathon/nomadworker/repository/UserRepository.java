@@ -76,7 +76,7 @@ public class UserRepository
     //For search v1
     public List<User> findOneByNickName(String userNickname) {
         String jpql = "select u from User u where u.u_nickname like :userNickname";
-        TypedQuery<User> query = em.createQuery(jpql, User.class).setParameter("userNickname", "%" + userNickname +  "%").setMaxResults(1000);
+        TypedQuery<User> query = em.createQuery(jpql, User.class).setParameter("userNickname", userNickname ).setMaxResults(1000);
         return query.getResultList();
     }
 
