@@ -78,4 +78,13 @@ public class UserRepository
         return query.getResultList();
     }
 
+    public List<User> findOneByEmail(String userEmail) {
+        String jpql = "select u from User u where u.u_email like :userEmail";
+        TypedQuery<User> query = em.createQuery(jpql, User.class).setParameter("userEmail", userEmail ).setMaxResults(1000);
+        return query.getResultList();
+    }
+
+
+
+
 }

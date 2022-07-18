@@ -1,15 +1,21 @@
 package hackathon.nomadworker.service;
 
+import hackathon.nomadworker.domain.User;
+import hackathon.nomadworker.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Random;
 @Service
 @AllArgsConstructor
 public class MailService
 {
     private JavaMailSender javaMailSender;
+
+    private final UserRepository userRepository;
 
     public String mailSend(String adddress)
     {
@@ -27,5 +33,14 @@ public class MailService
 
         return code;
     }
+
+    public boolean findOneByEmail(String userEmail)
+    {
+        if(userRepository.findOneByEmail(userEmail).isEmpty()) {
+            return true;
+        }
+        else {return false;}
+    }
+
 
 }

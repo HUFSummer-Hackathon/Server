@@ -63,4 +63,5 @@ public class UserService
     public List<User> findOneByNickName(String userNickname){ return userRepository.findOneByNickName(userNickname);}
 
 
+
 }
