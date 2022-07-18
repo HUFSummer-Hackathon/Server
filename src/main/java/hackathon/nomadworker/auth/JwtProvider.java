@@ -78,5 +78,4 @@ public class JwtProvider{
         return token.substring("Bearer".length());
     }
 
-
 }
