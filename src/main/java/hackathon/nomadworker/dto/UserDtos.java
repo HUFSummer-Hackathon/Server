@@ -139,6 +139,15 @@ public class UserDtos
             this.status = status;
         }
     }
+    @Data
+    @AllArgsConstructor
+    public static class SearchGetResponse2<T>
+    {
+        private boolean status;
+        private int count;
+        private T data;
+
+    }
 
 
 

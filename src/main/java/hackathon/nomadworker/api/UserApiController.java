@@ -3,10 +3,13 @@ package hackathon.nomadworker.api;
 import static hackathon.nomadworker.dto.UserDtos.*;
 
 import hackathon.nomadworker.domain.User;
+import hackathon.nomadworker.dto.UserDtos;
 import hackathon.nomadworker.service.UserService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
+import software.amazon.ion.NullValueException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -37,6 +40,21 @@ public class UserApiController
                 .map(user -> new UserDto(user))
                 .collect(Collectors.toList());
         return new UserResult(collect.size(), collect);
+    }
+
+    @GetMapping(value = "/api/user/nicknamecheck", produces = "application/json;charset=UTF-8")
+    public SearchGetResponse2 search(@Param("userNickname") String userNickname)
+    {
+        List<User> facility1 = userService.findOneByNickName(userNickname);
+        List<UserDto> collect = facility1.stream()
+                .map(f -> new UserDto(f))
+                .collect(Collectors.toList());
+        if(!collect.isEmpty()) {
+            return new SearchGetResponse2(false,collect.size(), collect);
+        }else { // 중복이 없으면 true
+            return new SearchGetResponse2(true,collect.size(), collect);
+        }
+
     }
 
 }
