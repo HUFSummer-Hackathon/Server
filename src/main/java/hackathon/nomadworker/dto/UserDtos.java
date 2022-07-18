@@ -88,7 +88,7 @@ public class UserDtos
     }
 
     @Data
-    public static class UserCordinatePutRequest
+    public static class UserCoordinatePutRequest
     {
         @NotEmpty
         private float latitude;
