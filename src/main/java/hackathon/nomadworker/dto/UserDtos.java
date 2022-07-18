@@ -141,7 +141,7 @@ public class UserDtos
     }
     @Data
     @AllArgsConstructor
-    public static class SearchGetResponse2<T>
+    public static class NicknameSearchGetResponse<T>
     {
         private boolean status;
         private int count;

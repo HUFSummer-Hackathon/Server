@@ -43,16 +43,16 @@ public class UserApiController
     }
 
     @GetMapping(value = "/api/user/nicknamecheck", produces = "application/json;charset=UTF-8")
-    public SearchGetResponse2 search(@Param("userNickname") String userNickname)
+    public NicknameSearchGetResponse NicknameSearch(@Param("userNickname") String userNickname)
     {
         List<User> facility1 = userService.findOneByNickName(userNickname);
         List<UserDto> collect = facility1.stream()
                 .map(f -> new UserDto(f))
                 .collect(Collectors.toList());
         if(!collect.isEmpty()) {
-            return new SearchGetResponse2(false,collect.size(), collect);
+            return new NicknameSearchGetResponse(false,collect.size(), collect);
         }else { // 중복이 없으면 true
-            return new SearchGetResponse2(true,collect.size(), collect);
+            return new NicknameSearchGetResponse(true,collect.size(), collect);
         }
 
     }
