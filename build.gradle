@@ -41,3 +41,9 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+bootJar{
+	archiveBaseName = "."
+	archiveFileName = "Nomadworker"
+	archiveVersion = "0.0.0"
+}
