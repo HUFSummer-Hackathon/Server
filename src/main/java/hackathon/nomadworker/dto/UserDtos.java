@@ -143,7 +143,7 @@ public class UserDtos
     @AllArgsConstructor
     public static class NicknameSearchGetResponse<T>
     {
-        private boolean status;
+        private boolean duplicate;
         private int count;
         private T data;
 

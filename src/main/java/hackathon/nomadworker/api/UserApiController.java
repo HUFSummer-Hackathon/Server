@@ -50,9 +50,10 @@ public class UserApiController
                 .map(f -> new UserDto(f))
                 .collect(Collectors.toList());
         if(!collect.isEmpty()) {
-            return new NicknameSearchGetResponse(false,collect.size(), collect);
-        }else { // 중복이 없으면 true
             return new NicknameSearchGetResponse(true,collect.size(), collect);
+        }else { // 중복이 없으면 true
+
+            return new NicknameSearchGetResponse(false,collect.size(), collect);
         }
 
     }
