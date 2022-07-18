@@ -3,13 +3,12 @@ package hackathon.nomadworker.api;
 import static hackathon.nomadworker.dto.UserDtos.*;
 
 import hackathon.nomadworker.domain.User;
-import hackathon.nomadworker.dto.UserDtos;
 import hackathon.nomadworker.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
-import software.amazon.ion.NullValueException;
+
 
 import javax.validation.Valid;
 import java.util.List;
