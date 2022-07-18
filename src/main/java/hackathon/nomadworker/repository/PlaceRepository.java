@@ -1,8 +1,5 @@
 package hackathon.nomadworker.repository;
 
-
-import hackathon.nomadworker.domain.Place;
-
 import hackathon.nomadworker.domain.Place;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -32,3 +29,4 @@ public class PlaceRepository {
     }
 
 }
+
