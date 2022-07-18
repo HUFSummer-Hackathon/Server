@@ -5,6 +5,7 @@ import hackathon.nomadworker.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 
@@ -72,5 +73,11 @@ public class UserRepository
         return user.getId();
     }
 
+    //For search v1
+    public List<User> findOneByNickName(String userNickname) {
+        String jpql = "select u from User u where u.u_nickname like :userNickname";
+        TypedQuery<User> query = em.createQuery(jpql, User.class).setParameter("userNickname", userNickname ).setMaxResults(1000);
+        return query.getResultList();
+    }
 
 }

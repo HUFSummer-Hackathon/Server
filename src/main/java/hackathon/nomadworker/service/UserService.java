@@ -60,8 +60,8 @@ public class UserService
         return u_id;
     }
 
-    // validate check
-
+    //Nickname uplicate check search api
+    public List<User> findOneByNickName(String userNickname){ return userRepository.findOneByNickName(userNickname);}
 
 
 }

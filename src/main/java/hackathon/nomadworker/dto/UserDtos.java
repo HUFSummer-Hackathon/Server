@@ -139,6 +139,15 @@ public class UserDtos
             this.status = status;
         }
     }
+    @Data
+    @AllArgsConstructor
+    public static class NicknameSearchGetResponse<T>
+    {
+        private boolean duplicate;
+        private int count;
+        private T data;
+
+    }
 
 
 
