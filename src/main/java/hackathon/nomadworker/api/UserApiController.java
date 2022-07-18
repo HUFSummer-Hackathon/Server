@@ -51,8 +51,8 @@ public class UserApiController
     @GetMapping(value = "/api/user/nicknamecheck", produces = "application/json;charset=UTF-8")
     public NicknameSearchGetResponse NicknameSearch(@Param("userNickname") String userNickname)
     {
-        List<User> facility1 = userService.findOneByNickName(userNickname);
-        List<UserDto> collect = facility1.stream()
+        List<User> users = userService.findOneByNickName(userNickname);
+        List<UserDto> collect = users.stream()
                 .map(f -> new UserDto(f))
                 .collect(Collectors.toList());
         if(!collect.isEmpty()) {

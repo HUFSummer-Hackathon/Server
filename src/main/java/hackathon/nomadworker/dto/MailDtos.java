@@ -14,15 +14,16 @@ public class MailDtos
     public static class MailPostResponse
     {
         private String status;
-        private String address;
+        private String msg;
+
         private String code;
 
-        public MailPostResponse(String status ,String address,String code)
+        public MailPostResponse(String status ,String msg,String code)
         {
+            this.msg = msg;
             this.status = status;
-            this.address = address;
             this.code = code;
-            System.out.println("complete post");
+
         }
     }
 
