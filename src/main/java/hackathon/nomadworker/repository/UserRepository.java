@@ -49,7 +49,8 @@ public class UserRepository
         em.merge(user);
         return user;
     }
-    public User cordinateUpdate(Long u_id,float u_latitude ,float u_longitude)
+
+    public User coordinateUpdate(Long u_id,float u_latitude ,float u_longitude)
     {
         User user = em.find(User.class,u_id);
         user.setU_latitude(u_latitude);
