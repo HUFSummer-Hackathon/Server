@@ -18,10 +18,9 @@ public class UserService
     private final UserRepository userRepository;
 
     @Transactional
-    public void userPost(String u_uid, String u_email, String u_password, String u_nickname, String u_image, float u_latitude, float u_longitude)
+    public void userPost(String u_uid, String u_email, String u_password, String u_nickname, float u_latitude, float u_longitude)
     {
-        userRepository.post(u_uid,u_email,u_password,u_nickname,u_image,
-                            u_latitude, u_longitude) ;
+        userRepository.post(u_uid,u_email,u_password,u_nickname, u_latitude, u_longitude) ;
     }
 
 
