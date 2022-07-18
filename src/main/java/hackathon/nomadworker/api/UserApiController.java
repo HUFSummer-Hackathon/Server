@@ -32,7 +32,7 @@ public class UserApiController
         //토큰 발행
         String token= authService.createToken(request.getU_nickname());
 
-        userService.userPost(token, request.getU_email(),request.getU_password(),request.getU_nickname(), request.getU_image(), request.getU_latitude(), request.getU_longitude());
+        userService.userPost(token, request.getU_email(),request.getU_password(),request.getU_nickname());
         String msg = "회원 등록이 완료되었습니다.";
         UserPostResponse userPostResponse = new UserPostResponse(msg, "200", token);
         return userPostResponse;

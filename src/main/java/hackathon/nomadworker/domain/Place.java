@@ -36,23 +36,18 @@ public class Place {
         private float p_latitude;
         private float p_longitude;
 
+        private Integer rent_price;
 
         @OneToMany(mappedBy = "place",cascade = CascadeType.ALL)
         private List<Feed> feedList = new ArrayList<>();
 
-        @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
-        @JoinColumn(name = "pr_id")
-        private Price price;
 
         @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
         @JoinColumn(name = "m_id")
         private Menu menu;
 
         // 연관관계 메서드 //
-        public void setPrice(Price price){
-                this.price = price;
-                price.setPlace(this);
-        }
+
         public void setMenu(Menu menu){
                 this.menu = menu;
                 menu.setPlace(this);

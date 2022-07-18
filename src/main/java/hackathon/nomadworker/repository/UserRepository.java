@@ -15,16 +15,13 @@ public class UserRepository
 {
     private final EntityManager em;
 
-    public void post(String u_uid, String u_email, String u_password, String u_nickname, String u_image, float u_latitude, float u_longitude)
+    public void post(String u_uid, String u_email, String u_password, String u_nickname)
     {
         User user = new User();
         user.setU_uid(u_uid);
         user.setU_email(u_email);
         user.setU_password(u_password);
         user.setU_nickname(u_nickname);
-        user.setU_image(u_image);
-        user.setU_latitude(u_latitude);
-        user.setU_longitude(u_longitude);
 
         em.persist(user);
     }
