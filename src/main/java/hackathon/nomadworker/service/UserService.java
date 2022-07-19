@@ -67,7 +67,7 @@ public class UserService
     {
         User user = userRepository.findOneByEmailPassword( userEmail,userPassword);
         Long u_id = userRepository.findIdByUuid(userToken);
-        if(user.isEmpty())
+        if(user instanceof User)
         {
             if (user.getId() == u_id)
             {

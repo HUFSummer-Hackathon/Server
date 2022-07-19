@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class AuthService {
 
-    public String createToken(String u_nickname)  {
+    public static String createToken(String u_nickname)  {
         String token = JwtProvider.createToken(u_nickname); //토큰 생성
         Claims claims = JwtProvider.parseJwtToken("Bearer "+ token); //토큰 검증
 
