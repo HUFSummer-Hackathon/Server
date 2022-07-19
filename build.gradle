@@ -45,7 +45,7 @@ tasks.named('test') {
 }
 
 bootJar{
-	archiveBaseName = "."
-	archiveFileName = "Nomadworker"
+	archiveBaseName = "NomadworkerApplication"
+	archiveFileName = "Nomadworker.jar"
 	archiveVersion = "0.0.0"
 }
