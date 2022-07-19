@@ -62,6 +62,25 @@ public class UserService
     //Nickname duplicate check search api
     public List<User> findOneByNickName(String userNickname){ return userRepository.findOneByNickName(userNickname);}
 
-
+    @Transactional
+    public String findOneByEmailPasswordToken(String userEmail,String userPassword,String userToken)
+    {
+        User user = userRepository.findOneByEmailPassword( userEmail,userPassword);
+        Long u_id = userRepository.findIdByUuid(userToken);
+        if(user.isEmpty())
+        {
+            if (user.getId() == u_id)
+            {
+                return "okall";
+            } else {
+                userRepository.tokenUpdate(user.getU_nickname());
+                return user.getU_uid();
+            }
+        }
+        else
+        {
+            return "emailpassworderror";
+        }
+    }
 
 }

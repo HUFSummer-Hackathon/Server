@@ -133,7 +133,19 @@ public class UserDtos
             this.token = token;
         }
     }
-
+    @Data
+    public static class UserSigninPostResponse
+    {
+        private String msg;
+        private String status;
+        private String token;
+        public UserSigninPostResponse(String msg, String status, String token)
+        {
+            this.msg = msg;
+            this.status = status;
+            this.token = token;
+        }
+    }
     @Data
     public static class UserDeleteResponse
     {

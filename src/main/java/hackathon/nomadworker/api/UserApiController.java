@@ -37,6 +37,16 @@ public class UserApiController
         UserPostResponse userPostResponse = new UserPostResponse(msg, "200", token);
         return userPostResponse;
     }
+    @PostMapping(value="/api/user/signin" , produces = "application/json;charset=UTF-8")
+    public UserSigninPostResponse userSignin(@RequestHeader("Authorization") String u_uid,
+                                   @Valid @RequestBody UserSigninPostResponse request) {
+
+         //예외처리?
+
+        String msg = "로그인 완료";
+        UserSigninPostResponse userPostResponse = new UserSigninPostResponse(msg, "200",u_uid);
+        return userPostResponse;
+    }
 
     @GetMapping(value="/api/users", produces = "application/json;charset=UTF-8")
     public UserResult userAll()
