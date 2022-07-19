@@ -5,23 +5,29 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
+
 @RestController
 @RequiredArgsConstructor
 public class MailApiController
 {
     private final MailService mailService;
-    @PostMapping(value="/api/mail" , produces = "application/json;charset=UTF-8")
+    @GetMapping(value="/api/user/mail" , produces = "application/json;charset=UTF-8")
     public MailPostResponse mailPost(@Param("userEmail") String userEmail)
     {
 
         if(! mailService.findOneByEmail(userEmail))
-        {
-            MailPostResponse mailPostResponse = new MailPostResponse("400", "이미존재하는 이메일입니다","0");
+        {   Map<String, String> data = new HashMap<>();
+            data.put("code","0");
+            MailPostResponse mailPostResponse = new MailPostResponse("이미존재하는 이메일입니다",400,data);
             return mailPostResponse;
         }else {
             String randomcode = mailService.mailSend(userEmail);
-
-            MailPostResponse mailPostResponse = new MailPostResponse("200","가입 가능한 이메일 입니다",randomcode);
+            Map<String, String> data = new HashMap<>();
+            data.put("code",randomcode);
+            MailPostResponse mailPostResponse = new MailPostResponse("가입 가능한 이메일 입니다",200,data);
             return mailPostResponse;
         }
 

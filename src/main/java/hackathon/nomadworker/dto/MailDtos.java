@@ -1,9 +1,17 @@
 package hackathon.nomadworker.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 public class MailDtos
 {
+    @Data
+    @AllArgsConstructor
+    public static class MailResult<T>
+    {
+        private int count;
+        private T data;
+    }
     @Data
     public static class MailPostRequest
     {
@@ -11,20 +19,14 @@ public class MailDtos
     }
 
     @Data
-    public static class MailPostResponse
+    @AllArgsConstructor
+    public static class MailPostResponse<T>
     {
-        private String status;
-        private String msg;
 
-        private String code;
+        private String message;
+        private int status;
+        private T data;
 
-        public MailPostResponse(String status ,String msg,String code)
-        {
-            this.msg = msg;
-            this.status = status;
-            this.code = code;
-
-        }
     }
 
 

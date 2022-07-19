@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class UserDtos
 {
@@ -19,6 +17,29 @@ public class UserDtos
         private int count;
         private T data;
     }
+
+    @Data
+    @AllArgsConstructor
+    public static class UserResultResponse<T>
+    {
+        private String message;
+        private int status;
+        private T data;
+    }
+
+
+    @Data @AllArgsConstructor
+    public static class UserPostResponse
+    {
+        private String nickname;
+        private String token;
+        private float latitude;
+        private float longitude;
+
+    }
+
+
+
 
     @Data
     @AllArgsConstructor
@@ -110,29 +131,21 @@ public class UserDtos
     @Data
     public static class UserPostRequest
     {
-        private String u_uid;
         private String u_email;
         private String u_password;
         private String u_nickname;
-        private String u_image;
-        private float u_latitude;
-        private float u_longitude;
-
     }
-
     @Data
-    public static class UserPostResponse
+    public static class UserSigninPostRequest
     {
-        private String msg;
-        private String status;
-        private String token;
-        public UserPostResponse(String msg, String status, String token)
-        {
-            this.msg = msg;
-            this.status = status;
-            this.token = token;
-        }
+
+        private String u_email;
+        private String u_password;
+
     }
+
+
+
     @Data
     public static class UserSigninPostResponse
     {
@@ -159,8 +172,8 @@ public class UserDtos
     @AllArgsConstructor
     public static class NicknameSearchGetResponse<T>
     {
-        private boolean duplicate;
-        private int count;
+        private String Message;
+        private int status;
         private T data;
 
     }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Transactional(readOnly=true)
@@ -53,34 +54,21 @@ public class UserService
     }
 
     //u_id =   table column
-    public Long findByUuid(String u_uid)
+    public List<User> findByUuid(String u_uid)
     {
-        Long u_id = userRepository.findIdByUuid(u_uid);
-        return u_id;
+        List<User> users = userRepository.findIdByUuid(u_uid);
+        return users;
     }
 
     //Nickname duplicate check search api
-    public List<User> findOneByNickName(String userNickname){ return userRepository.findOneByNickName(userNickname);}
-
-    @Transactional
-    public String findOneByEmailPasswordToken(String userEmail,String userPassword,String userToken)
+    public List<User> findOneByNickName(String userNickname)
     {
-        User user = userRepository.findOneByEmailPassword( userEmail,userPassword);
-        Long u_id = userRepository.findIdByUuid(userToken);
-        if(user instanceof User)
-        {
-            if (user.getId() == u_id)
-            {
-                return "okall";
-            } else {
-                userRepository.tokenUpdate(user.getU_nickname());
-                return user.getU_uid();
-            }
-        }
-        else
-        {
-            return "emailpassworderror";
-        }
+        return userRepository.findOneByNickName(userNickname);
+    }
+
+    public List<User> findOneByEmailPassword(String userEmail,String userPassword)
+    {
+        return userRepository.findOneByEmailPassword(userEmail,userPassword);
     }
 
 }
