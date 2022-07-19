@@ -2,6 +2,7 @@ package hackathon.nomadworker.repository;
 
 
 import hackathon.nomadworker.domain.User;
+import hackathon.nomadworker.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
@@ -22,7 +23,8 @@ public class UserRepository
         user.setU_email(u_email);
         user.setU_password(u_password);
         user.setU_nickname(u_nickname);
-
+        user.setU_latitude((float) 38.11);
+        user.setU_longitude((float) 128.111);
         em.persist(user);
     }
 
@@ -46,6 +48,12 @@ public class UserRepository
         em.merge(user);
         return user;
     }
+    public User tokenUpdate(String u_nickname)  {
+        User user = em.find(User.class,u_nickname);
+        user.setU_uid(AuthService.createToken(u_nickname));
+        em.merge(user);
+        return user;
+    }
 
     public User coordinateUpdate(Long u_id,float u_latitude ,float u_longitude)
     {
@@ -62,13 +70,12 @@ public class UserRepository
         em.remove(user);
     }
 
-    public Long findIdByUuid(String u_uid)
+    public List<User> findIdByUuid(String u_uid)
     {
-        User user = em.createQuery("select distinct u from User u" +
-                        " where u.u_uid = :u_uid ", User.class)
-                .setParameter("u_uid", u_uid)
-                .getSingleResult();
-        return user.getId();
+        TypedQuery<User> query  = em.createQuery("select distinct u from User u" + " where u.u_uid = :u_uid ", User.class)
+                .setParameter("u_uid", u_uid);
+
+        return query.getResultList();
     }
 
     //For search v1
@@ -84,6 +91,12 @@ public class UserRepository
         return query.getResultList();
     }
 
+    public List<User> findOneByEmailPassword(String userEmail,String userPassword)
+    {
+        String jpql = "select u from User u where u.u_email like :userEmail and u.u_password like :userPassword";
+        TypedQuery<User>query = em.createQuery(jpql, User.class).setParameter("userEmail", userEmail ).setParameter("userPassword", userPassword ).setMaxResults(1000);
+        return query.getResultList();
+    }
 
 
 
