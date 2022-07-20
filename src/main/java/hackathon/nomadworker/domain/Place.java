@@ -1,5 +1,6 @@
 package hackathon.nomadworker.domain;
 
+import org.locationtech.jts.geom.Point;
 import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,6 +38,8 @@ public class Place {
         private float p_longitude;
 
         private Integer rent_price;
+
+        private Point point;
 
         @OneToMany(mappedBy = "place",cascade = CascadeType.ALL)
         private List<Feed> feedList = new ArrayList<>();

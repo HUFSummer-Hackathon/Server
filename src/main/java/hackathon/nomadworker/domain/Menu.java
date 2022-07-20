@@ -20,7 +20,7 @@ public class Menu {
 
     private Integer m_price;
 
-    @OneToOne(mappedBy = "menu", fetch= LAZY)
+    @OneToOne(mappedBy = "menu",cascade = CascadeType.ALL,fetch= LAZY)
     private Place place;
 }
 
