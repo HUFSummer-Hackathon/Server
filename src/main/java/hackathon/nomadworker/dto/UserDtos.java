@@ -173,13 +173,16 @@ public class UserDtos
         }
     }
     @Data
-    @AllArgsConstructor
-    public static class NicknameSearchGetResponse<T>
+    public static class NicknameSearchGetResponse
     {
-        private String Message;
+        private String message;
         private int status;
-        private T data;
 
+        public NicknameSearchGetResponse(String message, int status)
+        {
+            this.message = message;
+            this.status = status;
+        }
     }
 
 }
