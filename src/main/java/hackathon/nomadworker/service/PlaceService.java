@@ -15,10 +15,7 @@ public class PlaceService {
 
 
 
-    public List<Place> findplacesnerBy(String place_tag)
-    {
-        placeRepository.getNearByRestaurants
-    }
+    public void findplacesnearBy(String place_tag) {}
 
 
 }
