@@ -68,7 +68,7 @@ public class UserApiController
     {
         userService.updateCoordinate(u_uid,request.getLatitude(),request.getLongitude());
 
-        return new UserCoordinatePutResponse(201,"갱신 성공");
+        return new UserCoordinatePutResponse("갱신 성공",200);
     }
 
 
