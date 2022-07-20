@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.naming.ServiceUnavailableException;
+
 @RestControllerAdvice
 public class ExceptionController {
 
@@ -55,6 +57,13 @@ public class ExceptionController {
     public Response SignatureException(Exception e) {
         e.printStackTrace();
         return new Response("404", "SignatureException");
+    }
+
+    @ExceptionHandler(ServiceUnavailableException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Response ServiceUnavailableExpection(Exception e) {
+        e.printStackTrace();
+        return new Response("503", "Service Unavailable");
     }
 
     //Response DTO
