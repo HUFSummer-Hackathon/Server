@@ -58,23 +58,24 @@ public class UserDtos
 
     @Data
     public static class UserDto
-    {
+    {   private long u_id;
         private String u_uid;
         private String u_email;
         private String u_password;
         private String u_nickname;
         private String u_image;
-        private float u_latitude;
-        private float u_longitude;
+//        private float u_latitude;
+//        private float u_longitude;
         public UserDto(User user)
         {
+            this.u_id = user.getId();
             this.u_uid = user.getU_uid();
             this.u_email = user.getU_email();
             this.u_password= user.getU_password();
             this.u_nickname = user.getU_nickname();
             this.u_image = user.getU_image();
-            this.u_latitude = user.getU_latitude();
-            this.u_longitude = user.getU_longitude();
+//            this.u_latitude = user.getU_latitude();
+//            this.u_longitude = user.getU_longitude();
         }
     }
 
