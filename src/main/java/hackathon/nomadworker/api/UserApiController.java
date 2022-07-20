@@ -60,7 +60,16 @@ public class UserApiController
         }else { // 중복이 없으면 false
             return new NicknameSearchGetResponse("사용가능한 닉네임 입니다",200, collect);
         }
-
     }
+
+    @PutMapping(value = "api/user/geographic", produces = "application/json;charset=UTF-8")
+    public UserCoordinatePutResponse usercoordinateupdate(@RequestHeader("Authorization") String u_uid,
+                                                    @Valid @RequestBody UserCoordinatePutRequest request)
+    {
+        userService.updateCoordinate(u_uid,request.getLatitude(),request.getLongitude());
+
+        return new UserCoordinatePutResponse(201,"갱신 성공");
+    }
+
 
 }

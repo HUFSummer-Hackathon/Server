@@ -39,6 +39,14 @@ public class UserDtos
     }
 
 
+    @Data @AllArgsConstructor
+    public static class UserPutResponse
+    {
+        private int status;
+        private String message;
+
+    }
+
 
 
     @Data
@@ -108,24 +116,19 @@ public class UserDtos
 
     }
 
-    @Data
+    @Data @AllArgsConstructor
     public static class UserCoordinatePutRequest
     {
-        @NotEmpty
+
         private float latitude;
-        @NotEmpty
         private float longitude;
     }
 
-
-    public static class UserPutResponse extends OneUserResponse
+    @Data @AllArgsConstructor
+    public static class UserCoordinatePutResponse
     {
-        private String status;
-        public UserPutResponse(User user, String status)
-        {
-            super(user);
-            this.status = status;
-        }
+       private int status;
+       private String message;
     }
 
     @Data
