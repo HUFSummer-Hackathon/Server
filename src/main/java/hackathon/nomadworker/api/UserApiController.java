@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
+import java.security.SignatureException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +60,27 @@ public class UserApiController
             return new NicknameSearchGetResponse("중복된 닉네임 입니다",400, collect);
         }else { // 중복이 없으면 false
             return new NicknameSearchGetResponse("사용가능한 닉네임 입니다",200, collect);
+        }
+
+    }
+
+    @PostMapping(value="/api/user/signin", produces = "application/json;charset=UTF-8")
+    public UserSignInResponse SignIn(@Valid @RequestBody UserSignInRequest request)
+    {
+        System.out.println(request.getU_email());
+        System.out.println(request.getU_password());
+        //Service 전송 및 Get
+        User user = userService.SignIn(request.getU_email(), request.getU_password());
+        UserPostResponse data = new UserPostResponse(user.getU_nickname(), user.getU_uid(), user.getU_latitude(), user.getU_longitude());
+
+        if(user.getU_uid() == null) {
+            return new UserSignInResponse("아이디, 비밀번호 불일치", 400, data);
+        }
+        else if (user.getU_uid() != null) {
+            return new UserSignInResponse("로그인 성공", 200, data);
+        }
+        else {
+            return new UserSignInResponse("오류!",401, null);
         }
 
     }

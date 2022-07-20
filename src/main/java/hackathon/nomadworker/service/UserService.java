@@ -24,6 +24,40 @@ public class UserService
         userRepository.post(u_uid,u_email,u_password,u_nickname) ;
     }
 
+    //==Sign In==//
+    public User SignIn(String u_email, String u_password)
+    {
+        User user = userRepository.signIn(u_email, u_password);
+        System.out.println("hi");
+        System.out.println(user.getU_uid());
+        System.out.println(user.getU_email().getClass().getName());
+        System.out.println(user.getU_email());
+        System.out.println(user.getU_password());
+        System.out.println(user.getU_password().getClass().getName());
+        if(user.getU_email().equals(u_email) == true && user.getU_password().equals(u_password) == true)
+        {
+            user.setU_latitude((float)38.11);
+            user.setU_longitude((float)128.111);
+        }
+        else if(user.getU_email() != u_email || user.getU_password() != u_password)
+        {
+            user.setU_nickname(null);
+            user.setU_uid(null);
+            user.setU_latitude((float)0.0);
+            user.setU_longitude((float)0.0);
+        }
+        else{
+            return null;
+        }
+
+        System.out.println("result");
+        System.out.println(user.getU_email());
+        System.out.println(user.getU_nickname());
+        System.out.println(user.getU_uid());
+        System.out.println(user.getU_password());
+       return user;
+    }
+
 
     // UserRepository 의 findAll 정의 (쿼리문이 적혀 있음 )
     public List<User> findUsers()
