@@ -139,8 +139,9 @@ public class UserDtos
         private String u_password;
         private String u_nickname;
     }
+
     @Data
-    public static class UserSigninPostRequest
+    public static class UserSignInRequest
     {
 
         private String u_email;
@@ -148,21 +149,15 @@ public class UserDtos
 
     }
 
-
-
     @Data
-    public static class UserSigninPostResponse
+    @AllArgsConstructor
+    public static class UserSignInResponse<T>
     {
         private String msg;
-        private String status;
-        private String token;
-        public UserSigninPostResponse(String msg, String status, String token)
-        {
-            this.msg = msg;
-            this.status = status;
-            this.token = token;
-        }
+        private int status;
+        private T data;
     }
+
     @Data
     public static class UserDeleteResponse
     {
@@ -172,6 +167,7 @@ public class UserDtos
             this.status = status;
         }
     }
+
     @Data
     public static class NicknameSearchGetResponse
     {

@@ -28,6 +28,13 @@ public class UserRepository
         em.persist(user);
     }
 
+    public User signIn(String u_email, String u_password)
+    {
+        TypedQuery<User> query  = em.createQuery("select distinct u from User u" + " where u.u_email = :u_email ", User.class)
+                .setParameter("u_email", u_email);
+        return query.getSingleResult();
+    }
+
     public User findOne(Long id)
     {
         return em.find(User.class,id);
