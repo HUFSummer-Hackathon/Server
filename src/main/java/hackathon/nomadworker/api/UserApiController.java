@@ -53,16 +53,17 @@ public class UserApiController
     public NicknameSearchGetResponse NicknameSearch(@Param("userNickname") String userNickname)
     {
         List<User> users = userService.findOneByNickName(userNickname);
-        List<UserDto> collect = users.stream()
-                .map(f -> new UserDto(f))
+        List<UserDto> collect = users.stream().map(f -> new UserDto(f))
                 .collect(Collectors.toList());
+
+        NicknameSearchGetResponse result;
+
         if(!collect.isEmpty()) {
-            NicknameSearchGetResponse result = new NicknameSearchGetResponse("중복된 닉네임 입니다",400, collect);
-            return result;
+            result = new NicknameSearchGetResponse("중복된 닉네임 입니다", 400);
         }else { // 중복이 없으면 false
-            NicknameSearchGetResponse result =  new NicknameSearchGetResponse("사용가능한 닉네임 입니다",200, collect);
-            return result;
+            result = new NicknameSearchGetResponse("사용가능한 닉네임 입니다", 200);
         }
+        return result;
 
     }
 
