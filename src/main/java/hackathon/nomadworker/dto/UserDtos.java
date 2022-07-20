@@ -128,8 +128,8 @@ public class UserDtos
     @Data @AllArgsConstructor
     public static class UserCoordinatePutResponse
     {
-        private String message;
         private int status;
+        private String message;
     }
 
     @Data
@@ -161,15 +161,18 @@ public class UserDtos
     @Data
     public static class UserDeleteResponse
     {
+        private String message;
         private String status;
+
         public UserDeleteResponse(String status)
         {
+            this.message = message;
             this.status = status;
         }
     }
 
     @Data
-    public static class NicknameSearchGetResponse
+    public static class NicknameSearchGetResponse<T>
     {
         private String message;
         private int status;
