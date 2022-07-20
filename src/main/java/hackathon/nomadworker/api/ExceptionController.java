@@ -19,49 +19,50 @@ public class ExceptionController {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Response ServerException2(Exception e) {
         e.printStackTrace();
-        return new Response("500", "서버 에러");
+        return new Response("서버에러", 500);
     }
 
     @ExceptionHandler(MissingRequestHeaderException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Response MissingRequestHeaderException(Exception e) {
         e.printStackTrace();
-        return new Response("400", "MissingRequestHeaderException");
+        return new Response("MissingRequestHeaderException",400);
     }
 
     @ExceptionHandler(UnsupportedJwtException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Response UnsupportedJwtException(Exception e) {
         e.printStackTrace();
-        return new Response("401", "UnsupportedJwtException");
+        return new Response( "UnsupportedJwtException",401);
     }
 
     @ExceptionHandler(MalformedJwtException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Response MalformedJwtException(Exception e) {
         e.printStackTrace();
-        return new Response("402", "MalformedJwtException");
+        return new Response( "MalformedJwtException",402);
     }
 
     @ExceptionHandler(ExpiredJwtException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Response ExpiredJwtException(Exception e) {
         e.printStackTrace();
-        return new Response("403", "ExpiredJwtException");
+        return new Response( "ExpiredJwtException",403);
     }
 
     @ExceptionHandler(SignatureException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Response SignatureException(Exception e) {
         e.printStackTrace();
-        return new Response("404", "SignatureException");
+        return new Response( "SignatureException",404);
     }
 
     //Response DTO
     @Data
     @AllArgsConstructor
-    static class Response {
-        private String code;
-        private String msg;
+    static class Response
+    {
+        private String message;
+        private int stauts;
     }
 }

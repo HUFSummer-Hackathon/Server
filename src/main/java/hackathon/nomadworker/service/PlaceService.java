@@ -12,4 +12,17 @@ public class PlaceService {
     private final PlaceRepository placeRepository;
     public List<Place> findPlacesByCategory(String place_tag) {return placeRepository.findPlacesByCategory(place_tag);
     }
+
+
+
+    public List<Place> findplacesnerBy(String place_tag)
+    {
+        placeRepository.getNearByRestaurants
+    }
+
+
 }
+
+
+
+

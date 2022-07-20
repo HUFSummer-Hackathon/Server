@@ -1,9 +1,13 @@
 package hackathon.nomadworker.repository;
 
 import hackathon.nomadworker.domain.Place;
+import hackathon.nomadworker.util.Direction;
+import hackathon.nomadworker.util.GeometryUtil;
+import hackathon.nomadworker.util.Location;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -35,6 +39,28 @@ public class PlaceRepository {
         return query.getResultList();
     }
 
+
+    public List<Place> getNearByRestaurants(Double latitude, Double longitude, Double distance)
+    {
+        Location northEast = GeometryUtil
+                .calculate(latitude, longitude, distance, Direction.NORTHEAST.getBearing());
+        Location southWest = GeometryUtil
+                .calculate(latitude, longitude, distance, Direction.SOUTHWEST.getBearing());
+
+        double x1 = northEast.getLatitude();
+        double y1 = northEast.getLongitude();
+        double x2 = southWest.getLatitude();
+        double y2 = southWest.getLongitude();
+
+        String pointFormat = String.format("'LINESTRING(%f %f, %f %f)')", x1, y1, x2, y2);
+         Query query = em.createNativeQuery("SELECT p.id, p.p_cate,p.p_name,p.p_image,p_addr "
+                        + "FROM place AS p "
+                        + "WHERE MBRContains(ST_LINESTRINGFROMTEXT(" + pointFormat + ", a.point)", Place.class)
+                .setMaxResults(10);
+
+        List<Place> places = query.getResultList();
+        return places;
+    }
 
 
 
