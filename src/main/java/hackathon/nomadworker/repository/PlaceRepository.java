@@ -28,5 +28,16 @@ public class PlaceRepository {
         return query.getResultList();
     }
 
+
+    public List<Place> findPlacesByCategory(String place_cat) {
+        String jpql = "select p from Place p where p.p_cate like :place_cat";
+        TypedQuery<Place> query = em.createQuery(jpql, Place.class).setParameter("place_cat",place_cat).setMaxResults(1000);
+        return query.getResultList();
+    }
+
+
+
+
+
 }
 

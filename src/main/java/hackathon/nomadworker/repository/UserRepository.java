@@ -77,12 +77,14 @@ public class UserRepository
         em.remove(user);
     }
 
-    public List<User> findIdByUuid(String u_uid)
+    public Long findIdByUuid(String u_uid)
     {
-        TypedQuery<User> query  = em.createQuery("select distinct u from User u" + " where u.u_uid = :u_uid ", User.class)
-                .setParameter("u_uid", u_uid);
+        User user = em.createQuery("select distinct u from User u" +
+                        " where u.u_uid = :u_uid ", User.class)
+                .setParameter("u_uid", u_uid)
+                .getSingleResult();
 
-        return query.getResultList();
+        return user.getId();
     }
 
     //For search v1
