@@ -4,10 +4,13 @@ package hackathon.nomadworker.repository;
 import hackathon.nomadworker.domain.User;
 import hackathon.nomadworker.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -27,14 +30,33 @@ public class UserRepository
         user.setU_longitude((float) 128.111);
         em.persist(user);
     }
-
+/*
     public User signIn(String u_email, String u_password)
     {
-        TypedQuery<User> query  = em.createQuery("select distinct u from User u" + " where u.u_email = :u_email ", User.class)
+        User user = null;
+        TypedQuery<User> emailQuery  = em.createQuery("select distinct u from User u" + " where u.u_email = :u_email ", User.class)
                 .setParameter("u_email", u_email);
-        return query.getSingleResult();
-    }
+        user = emailQuery.getSingleResult();
+        if (user == null){
+            TypedQuery<User> pwQuery  = em.createQuery("select distinct u from User u" + " where u.u_password = :u_password ", User.class)
+                    .setParameter("u_password", u_password);
+            return pwQuery.getSingleResult();
+        }
 
+        return emailQuery.getSingleResult();
+    }
+*/
+    public User signIn(String u_email, String u_password) throws Exception
+    {
+        User user = null;
+        try{
+            TypedQuery<User> emailQuery  = em.createQuery("select distinct u from User u" + " where u.u_email = :u_email ", User.class)
+                    .setParameter("u_email", u_email);
+            return emailQuery.getSingleResult();
+        } catch(NoResultException n) {
+            return user;
+        }
+    }
     public User findOne(Long id)
     {
         return em.find(User.class,id);

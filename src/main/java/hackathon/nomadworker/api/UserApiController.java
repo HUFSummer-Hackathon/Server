@@ -77,20 +77,21 @@ public class UserApiController
     }
 
     @PostMapping(value="/api/user/signin", produces = "application/json;charset=UTF-8")
-    public UserSignInResponse SignIn(@Valid @RequestBody UserSignInRequest request)
-    {
+    public UserSignInResponse SignIn(@Valid @RequestBody UserSignInRequest request) throws Exception {
         User user = userService.SignIn(request.getU_email(), request.getU_password());
-        UserPostResponse data = new UserPostResponse(user.getU_nickname(), user.getU_uid(), user.getU_latitude(), user.getU_longitude());
+        UserSignInResponse result = null;
 
-        if(user.getU_uid() == null) {
-            return new UserSignInResponse("아이디, 비밀번호 불일치", 400, data);
+        if(user == null) {
+            UserPostResponse data2 = new UserPostResponse(null, null, (float)0.0, (float)0.0);
+            result = new UserSignInResponse("아이디, 비밀번호 불일치", 400, data2);
         }
         else if (user.getU_uid() != null) {
-            return new UserSignInResponse("로그인 성공", 200, data);
+            UserPostResponse data = new UserPostResponse(user.getU_nickname(), user.getU_uid(), user.getU_latitude(), user.getU_longitude());
+            result = new UserSignInResponse("로그인 성공", 200, data);
         }
-        else {
-            return new UserSignInResponse("오류!",401, null);
-        }
+
+        return result;
+
     }
 
 }

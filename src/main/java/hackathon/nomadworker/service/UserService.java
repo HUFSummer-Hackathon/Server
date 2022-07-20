@@ -4,6 +4,7 @@ package hackathon.nomadworker.service;
 import hackathon.nomadworker.domain.User;
 import hackathon.nomadworker.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,27 +26,33 @@ public class UserService
     }
 
     //==Sign In==//
-    public User SignIn(String u_email, String u_password)
-    {
-        User user = userRepository.signIn(u_email, u_password);
+    public User SignIn(String u_email, String u_password) throws Exception {
+        User result = null;
 
-        if(user.getU_email().equals(u_email) == true && user.getU_password().equals(u_password) == true)
+        User user = userRepository.signIn(u_email, u_password);
+        try
         {
-            user.setU_latitude((float)38.11);
-            user.setU_longitude((float)128.111);
-        }
-        else if(user.getU_email() != u_email || user.getU_password() != u_password)
-        {
+
+            if (user.getU_email().equals(u_email) == true && user.getU_password().equals(u_password) == true) {
+                user.setU_latitude((float) 38.11);
+                user.setU_longitude((float) 128.111);
+            } else if (user.getU_email().equals(u_email) == false || user.getU_password().equals(u_password) == false) {
+                user.setU_nickname(null);
+                user.setU_uid(null);
+                user.setU_latitude((float) 0.0);
+                user.setU_longitude((float) 0.0);
+            }
+            result = user;
+
+        }catch(EmptyResultDataAccessException e) {
             user.setU_nickname(null);
             user.setU_uid(null);
-            user.setU_latitude((float)0.0);
-            user.setU_longitude((float)0.0);
+            user.setU_latitude((float) 0.0);
+            user.setU_longitude((float) 0.0);
+            result = user;
+        }finally {
+            return result;
         }
-        else{
-            return null;
-        }
-
-       return user;
     }
 
 
