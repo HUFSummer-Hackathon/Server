@@ -53,16 +53,27 @@ public class UserApiController
     public NicknameSearchGetResponse NicknameSearch(@Param("userNickname") String userNickname)
     {
         List<User> users = userService.findOneByNickName(userNickname);
-        List<UserDto> collect = users.stream()
-                .map(f -> new UserDto(f))
+        List<UserDto> collect = users.stream().map(f -> new UserDto(f))
                 .collect(Collectors.toList());
-        if(!collect.isEmpty()) {
-            return new NicknameSearchGetResponse("중복된 닉네임 입니다",400, collect);
-        }else { // 중복이 없으면 false
-            return new NicknameSearchGetResponse("사용가능한 닉네임 입니다",200, collect);
-        }
 
+        if(!collect.isEmpty()) {
+            NicknameSearchGetResponse result = new NicknameSearchGetResponse("중복된 닉네임 입니다",400);
+            return result;
+        }else { // 중복이 없으면 false
+            NicknameSearchGetResponse result = new NicknameSearchGetResponse("사용가능한 닉네임 입니다",200);
+            return result;
+        }
     }
+
+    @PutMapping(value = "api/user/geographic", produces = "application/json;charset=UTF-8")
+    public UserCoordinatePutResponse usercoordinateupdate(@RequestHeader("Authorization") String u_uid,
+                                                    @Valid @RequestBody UserCoordinatePutRequest request)
+    {
+        userService.updateCoordinate(u_uid,request.getLatitude(),request.getLongitude());
+
+        return new UserCoordinatePutResponse("갱신 성공",200);
+    }
+
 
     @PostMapping(value="/api/user/signin", produces = "application/json;charset=UTF-8")
     public UserSignInResponse SignIn(@Valid @RequestBody UserSignInRequest request)
@@ -84,5 +95,6 @@ public class UserApiController
         }
 
     }
+
 
 }

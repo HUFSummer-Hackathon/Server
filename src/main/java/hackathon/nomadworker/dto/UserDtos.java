@@ -39,6 +39,14 @@ public class UserDtos
     }
 
 
+    @Data @AllArgsConstructor
+    public static class UserPutResponse
+    {
+        private int status;
+        private String message;
+
+    }
+
 
 
     @Data
@@ -50,7 +58,7 @@ public class UserDtos
 
     @Data
     public static class UserDto
-    {
+    {   private long u_id;
         private String u_uid;
         private String u_email;
         private String u_password;
@@ -60,6 +68,7 @@ public class UserDtos
         private float u_longitude;
         public UserDto(User user)
         {
+            this.u_id = user.getId();
             this.u_uid = user.getU_uid();
             this.u_email = user.getU_email();
             this.u_password= user.getU_password();
@@ -108,24 +117,19 @@ public class UserDtos
 
     }
 
-    @Data
+    @Data @AllArgsConstructor
     public static class UserCoordinatePutRequest
     {
-        @NotEmpty
+
         private float latitude;
-        @NotEmpty
         private float longitude;
     }
 
-
-    public static class UserPutResponse extends OneUserResponse
+    @Data @AllArgsConstructor
+    public static class UserCoordinatePutResponse
     {
-        private String status;
-        public UserPutResponse(User user, String status)
-        {
-            super(user);
-            this.status = status;
-        }
+        private String message;
+        private int status;
     }
 
     @Data
@@ -165,13 +169,16 @@ public class UserDtos
     }
 
     @Data
-    @AllArgsConstructor
-    public static class NicknameSearchGetResponse<T>
+    public static class NicknameSearchGetResponse
     {
-        private String Message;
+        private String message;
         private int status;
-        private T data;
 
+        public NicknameSearchGetResponse(String message, int status)
+        {
+            this.message = message;
+            this.status = status;
+        }
     }
 
 }
