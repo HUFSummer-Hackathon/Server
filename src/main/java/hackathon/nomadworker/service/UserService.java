@@ -78,10 +78,10 @@ public class UserService
     }
 
     //u_id =   table column
-    public List<User> findByUuid(String u_uid)
+    public Long findByUuid(String u_uid)
     {
-        List<User> users = userRepository.findIdByUuid(u_uid);
-        return users;
+        Long u_id = userRepository.findIdByUuid(u_uid);
+        return u_id;
     }
 
     //Nickname duplicate check search api
@@ -94,5 +94,13 @@ public class UserService
     {
         return userRepository.findOneByEmailPassword(userEmail,userPassword);
     }
+
+    public User updateCoordinate(String u_uid,float u_latitude, float u_longitude)
+    {
+        Long u_id = findByUuid(u_uid);
+        return userRepository.coordinateUpdate(u_id, u_latitude, u_longitude);
+    }
+
+
 
 }
