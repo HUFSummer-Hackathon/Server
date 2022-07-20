@@ -57,8 +57,7 @@ public class UserApiController
                 .collect(Collectors.toList());
         if(!collect.isEmpty()) {
             return new NicknameSearchGetResponse("중복된 닉네임 입니다",400, collect);
-        }else
-        { // 중복이 없으면 false
+        }else{ // 중복이 없으면 false
             return new NicknameSearchGetResponse("사용가능한 닉네임 입니다",200, collect);
         }
     }
