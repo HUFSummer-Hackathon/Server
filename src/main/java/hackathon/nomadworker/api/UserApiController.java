@@ -67,9 +67,6 @@ public class UserApiController
     @PostMapping(value="/api/user/signin", produces = "application/json;charset=UTF-8")
     public UserSignInResponse SignIn(@Valid @RequestBody UserSignInRequest request)
     {
-        System.out.println(request.getU_email());
-        System.out.println(request.getU_password());
-        //Service 전송 및 Get
         User user = userService.SignIn(request.getU_email(), request.getU_password());
         UserPostResponse data = new UserPostResponse(user.getU_nickname(), user.getU_uid(), user.getU_latitude(), user.getU_longitude());
 
@@ -82,7 +79,6 @@ public class UserApiController
         else {
             return new UserSignInResponse("오류!",401, null);
         }
-
     }
 
 }

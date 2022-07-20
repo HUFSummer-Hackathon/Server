@@ -28,12 +28,7 @@ public class UserService
     public User SignIn(String u_email, String u_password)
     {
         User user = userRepository.signIn(u_email, u_password);
-        System.out.println("hi");
-        System.out.println(user.getU_uid());
-        System.out.println(user.getU_email().getClass().getName());
-        System.out.println(user.getU_email());
-        System.out.println(user.getU_password());
-        System.out.println(user.getU_password().getClass().getName());
+
         if(user.getU_email().equals(u_email) == true && user.getU_password().equals(u_password) == true)
         {
             user.setU_latitude((float)38.11);
@@ -50,11 +45,6 @@ public class UserService
             return null;
         }
 
-        System.out.println("result");
-        System.out.println(user.getU_email());
-        System.out.println(user.getU_nickname());
-        System.out.println(user.getU_uid());
-        System.out.println(user.getU_password());
        return user;
     }
 
