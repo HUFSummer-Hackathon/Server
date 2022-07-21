@@ -15,7 +15,15 @@ public class PlaceService {
 
 
 
-    public void findplacesnearBy(String place_tag) {}
+    public List<Place> findPlacesByCoordinate(float latitude,float longitude)
+    {   // 반견 1km
+        return placeRepository.getNearByCoordinate((double)latitude, (double)longitude,(double)1);
+    }
+
+    public List<Place> findPlacesall()
+    {
+        return  placeRepository.findAll();
+    }
 
 
 }

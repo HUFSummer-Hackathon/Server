@@ -39,7 +39,7 @@ public class Place {
 
         private Integer rent_price;
 
-        private Point point;
+        private Point p_gpoint;
 
         @OneToMany(mappedBy = "place",cascade = CascadeType.ALL)
         private List<Feed> feedList = new ArrayList<>();
