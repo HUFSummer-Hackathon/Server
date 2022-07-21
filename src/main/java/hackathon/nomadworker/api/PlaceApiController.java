@@ -21,7 +21,7 @@ public class PlaceApiController {
 
     @GetMapping(value="/api/place/location" , produces = "application/json;charset=UTF-8")
     public PlaceResultResponse placeByCatagoryGet(@RequestHeader("Authorization") String u_uid,
-                                                  @RequestParam("location_Category") String p_cate) {
+                                                  @RequestParam("locationCategory") String p_cate) {
         List<Place> places = placeService.findPlacesByCategory(p_cate);
         if (places.isEmpty())
         {
