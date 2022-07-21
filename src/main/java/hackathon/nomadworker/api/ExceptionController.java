@@ -63,6 +63,6 @@ public class ExceptionController {
     static class Response
     {
         private String message;
-        private int stauts;
+        private int status;
     }
 }
