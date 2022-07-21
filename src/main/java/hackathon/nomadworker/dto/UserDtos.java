@@ -153,7 +153,7 @@ public class UserDtos
     @AllArgsConstructor
     public static class UserSignInResponse<T>
     {
-        private String msg;
+        private String message;
         private int status;
         private T data;
     }
