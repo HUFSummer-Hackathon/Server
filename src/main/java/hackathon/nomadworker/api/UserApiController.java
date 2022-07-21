@@ -49,7 +49,7 @@ public class UserApiController
         return new UserResult(collect.size(), collect);
     }
 
-    @GetMapping(value = "/api/user/nicknamecheck", produces = "application/json;charset=UTF-8")
+    @GetMapping(value = "/api/user/nickname", produces = "application/json;charset=UTF-8")
     public NicknameSearchGetResponse NicknameSearch(@Param("userNickname") String userNickname)
     {
         List<User> users = userService.findOneByNickName(userNickname);

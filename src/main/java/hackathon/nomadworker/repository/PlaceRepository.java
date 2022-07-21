@@ -40,7 +40,7 @@ public class PlaceRepository {
     }
 
 
-    public List<Place> getNearByRestaurants(Double latitude, Double longitude, Double distance)
+    public List<Place> getNearByCoordinate(Double latitude, Double longitude, Double distance)
     {
         Location northEast = GeometryUtil
                 .calculate(latitude, longitude, distance, Direction.NORTHEAST.getBearing());
@@ -53,15 +53,16 @@ public class PlaceRepository {
         double y2 = southWest.getLongitude();
 
         String pointFormat = String.format("'LINESTRING(%f %f, %f %f)')", x1, y1, x2, y2);
-         Query query = em.createNativeQuery("SELECT p.id, p.p_cate,p.p_name,p.p_image,p_addr "
-                        + "FROM place AS p "
-                        + "WHERE MBRContains(ST_LINESTRINGFROMTEXT(" + pointFormat + ", a.point)", Place.class)
-                .setMaxResults(10);
+        Query query = em.createNativeQuery("SELECT * \n" +
+                "FROM  place AS p \n"+
+                "WHERE MBRContains(ST_LINESTRINGFROMTEXT(" + pointFormat + ",p.p_gpoint)",Place.class).setMaxResults(15);
+
+
 
         List<Place> places = query.getResultList();
+        System.out.println(places);
         return places;
     }
-
 
 
 

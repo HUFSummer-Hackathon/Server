@@ -33,5 +33,29 @@ public class PlaceApiController {
         }
 
     }
+    @GetMapping(value = "/api/place/near", produces = "application/json;charset=UTF-8")
+    public PlaceResultResponse placeByCoordinateGet(@RequestHeader("Authorization") String u_uid,
+                                                    @RequestParam("latitude") float latitude,
+                                                    @RequestParam("longitude") float longitude) {
+        List<Place> places = placeService.findPlacesByCoordinate(latitude,longitude);
+        if (places.isEmpty()) {
+            return new PlaceResultResponse("근처 장소 조회 실패", 400, null);
+        } else {
+            List<PlaceDtoCoordinate> collect = places.stream().map(place -> new PlaceDtoCoordinate(place)).collect(Collectors.toList());
+            return new PlaceResultResponse("근처 장소 조회 성공", 200, collect);
+        }
+    }
+
+    // 개발용 장소 전체 조회
+    @GetMapping(value = "/api/places",produces = "application/json;charset=UTF-8")
+    public PlaceResultResponse plaecallGet() {
+        List<Place> places = placeService.findPlacesall();
+        if (places.isEmpty()) {
+            return new PlaceResultResponse("장소 조회 실패", 400, null);
+        } else {
+            List<PlaceDto> collect = places.stream().map(place -> new PlaceDto(place)).collect(Collectors.toList());
+            return new PlaceResultResponse(" 장소 조회 성공", 200, collect);
+        }
+    }
 
 }
