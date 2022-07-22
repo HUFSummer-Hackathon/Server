@@ -68,6 +68,11 @@ public class UserService
         return userRepository.findOne(userid);
     }
 
+    public User findOnebyToken(String u_uid)
+    {
+        return userRepository.findOnebyToken(u_uid);
+    }
+
     /// update method for api put
     @Transactional  User updateImage(Long u_id,String u_image)
     {

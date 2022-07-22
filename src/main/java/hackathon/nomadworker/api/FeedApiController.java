@@ -4,14 +4,19 @@ import hackathon.nomadworker.domain.Feed;
 import hackathon.nomadworker.domain.User;
 import hackathon.nomadworker.dto.FeedDtos.*;
 import hackathon.nomadworker.service.FeedService;
+import hackathon.nomadworker.service.FileUploadService;
+import hackathon.nomadworker.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @RestController
@@ -19,9 +24,25 @@ import java.util.stream.Collectors;
 public class FeedApiController {
 
     private final FeedService feedService;
+    private final UserService userService;
+    private final FileUploadService fileUploadService;
+
+    @PostMapping(value = "/api/feeds/new")
+    public String uploadFeed(@RequestHeader("Authorization") String u_uid, @RequestParam MultipartFile file,
+    @RequestParam String feed_content, @RequestParam Long p_id) {
+        String imageUrl = fileUploadService.uploadImage(file);
+        Date today = new Date();
+        Locale currentLocale = new Locale("KOREAN", "KOREA");
+        String pattern = "yyyyMMddHHmmss"; //hhmmss로 시간,분,초만 뽑기도 가능
+        SimpleDateFormat formatter = new SimpleDateFormat(pattern, currentLocale);
+        String time = formatter.format(today);
+        feedService.feedPost(u_uid, feed_content, p_id, imageUrl, time);
+        return ( "성공~" );
+    }
 
     @GetMapping(value = "api/feeds/total", produces = "application/json;charset=UTF-8")
-    public Result feedAll(){
+    public Result feedAll()
+    {
         List<Feed> feedAll = feedService.feedAll();
         List<FeedDto> collect = feedAll.stream()
                 .map(f -> new FeedDto(f))
@@ -30,7 +51,8 @@ public class FeedApiController {
     }
 
     @GetMapping(value = "api/feeds/usertotal", produces = "application/json;charset=UTF-8")
-    public Result feedUserTotal(@RequestHeader("Authorization") String u_uid){
+    public Result feedUserTotal(@RequestHeader("Authorization") String u_uid)
+    {
         User feedUserTotal = feedService.feedUserTotal(u_uid);
         List<Feed> feed = feedUserTotal.getFeedList();
         ArrayList a = new ArrayList();
@@ -43,6 +65,15 @@ public class FeedApiController {
 
         return new Result("유저 피드 전체 조회 성공", 200 , collect);
 
+    }
+
+    @GetMapping(value = "api/feeds/one", produces = "application/json;charset=UTF-8")
+    public Result feedUserOne(@RequestHeader("Authorization") String u_uid, @Param("f_id") Long f_id)
+    {
+        User findOnebyToken = userService.findOnebyToken(u_uid);
+        Feed feedUserOne = feedService.feedUserOne(u_uid, f_id);
+        FeedOneDto feedOneDto = new FeedOneDto(findOnebyToken, feedUserOne);
+        return new Result("단일 피드 조회 성공", 200, feedOneDto);
     }
 
 }

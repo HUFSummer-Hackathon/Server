@@ -64,6 +64,14 @@ public class UserRepository
         return em.find(User.class,id);
     }
 
+    public User findOnebyToken(String u_uid)
+    {
+        return em.createQuery("select distinct u from User u" +
+                        " where u.u_uid = :u_uid ", User.class)
+                .setParameter("u_uid", u_uid)
+                .getSingleResult();
+    }
+
     // 회원 전체 조회
     public List<User> findAll()
     {
