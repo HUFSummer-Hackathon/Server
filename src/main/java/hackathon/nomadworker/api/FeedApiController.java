@@ -41,7 +41,7 @@ public class FeedApiController {
     }
 
     @GetMapping(value = "api/feeds/total", produces = "application/json;charset=UTF-8")
-    public Result feedAll()
+    public Result feedAll(@RequestHeader("Authorization") String u_uid)
     {
         List<Feed> feedAll = feedService.feedAll();
         List<FeedDto> collect = feedAll.stream()
