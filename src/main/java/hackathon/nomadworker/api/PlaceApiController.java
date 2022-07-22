@@ -70,18 +70,18 @@ public class PlaceApiController {
 
         if (place == null )
         {
-           return new PlaceResultResponse("근처 장소 조회 실패", 400, null);
+           return new PlaceResultResponse("장소 상세 조회 실패", 400, null);
         } else
         {
             if (collect.size()==0)
             {
                 PlaceDetailDto result = new PlaceDetailDto(place, null);
-                return new PlaceResultResponse("근처 장소 조회 성공", 200, result);
+                return new PlaceResultResponse("장소 상세 조회 성공", 200, result);
             }
             else {
 
                 PlaceDetailDto result = new PlaceDetailDto(place,collect);
-                return new PlaceResultResponse("근처 장소 조회 성공", 200, result);
+                return new PlaceResultResponse("장소 상세 조회 성공", 200, result);
             }
         }
 
