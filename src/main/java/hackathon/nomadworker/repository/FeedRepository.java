@@ -34,7 +34,9 @@ public class FeedRepository {
 
     //모든 피드 조회
     public List<Feed> findALL() {
-        return em.createQuery("select f from Feed f", Feed.class)
+        return em.createQuery("select f from Feed f " +
+                        "join fetch f.user u " +
+                        "join fetch f.place p", Feed.class)
                 .setMaxResults(10)
                 .getResultList();
     }

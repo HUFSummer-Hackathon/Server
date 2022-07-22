@@ -25,6 +25,13 @@ public class UserService
         userRepository.post(u_uid,u_email,u_password,u_nickname) ;
     }
 
+    public User userImagePost(String u_uid, String imageUrl)
+    {
+        Long u_id = userRepository.findOnebyToken(u_uid).getId();
+        return userRepository.imageUpdate(u_id,imageUrl);
+    }
+
+
     //==Sign In==//
     public User SignIn(String u_email, String u_password) throws Exception {
         User result = null;
