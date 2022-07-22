@@ -1,11 +1,13 @@
 package hackathon.nomadworker.repository;
 
 import hackathon.nomadworker.domain.Feed;
+import hackathon.nomadworker.domain.Menu;
 import hackathon.nomadworker.domain.Place;
 import hackathon.nomadworker.util.Direction;
 import hackathon.nomadworker.util.GeometryUtil;
 import hackathon.nomadworker.util.Location;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
@@ -16,9 +18,11 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class PlaceRepository {
+
+    @Autowired
     private final EntityManager em;
 
-    public Place findOne(Long id) {
+    public Place getPlacesById(Long id) {
         return em.find(Place.class, id);
     }
 
@@ -71,6 +75,14 @@ public class PlaceRepository {
                         "join fetch f.place p " +
                         "order by f.f_like desc ", Feed.class).setMaxResults(10).getResultList();
         return feed;
+    }
+
+    public List<Menu> placeMenuAllByPlaceId(Long p_id)
+    {
+        String jpql = " select m from Menu m  where m.place.id = :p_id ";
+        TypedQuery<Menu> query = em.createQuery(jpql, Menu.class).setParameter("p_id",p_id).setMaxResults(50);
+
+        return query.getResultList();
     }
 
 }

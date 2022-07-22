@@ -4,6 +4,7 @@ package hackathon.nomadworker.repository;
 import hackathon.nomadworker.domain.User;
 import hackathon.nomadworker.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
@@ -17,6 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserRepository
 {
+    @Autowired
     private final EntityManager em;
 
     public void post(String u_uid, String u_email, String u_password, String u_nickname)
