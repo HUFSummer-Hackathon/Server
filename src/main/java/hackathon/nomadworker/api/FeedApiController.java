@@ -28,7 +28,7 @@ public class FeedApiController {
     private final FileUploadService fileUploadService;
 
     @PostMapping(value = "/api/feeds/new")
-    public String uploadFeed(@RequestHeader("Authorization") String u_uid, @RequestParam MultipartFile file,
+    public PostResponse uploadFeed(@RequestHeader("Authorization") String u_uid, @RequestParam MultipartFile file,
     @RequestParam String feed_content, @RequestParam Long p_id) {
         String imageUrl = fileUploadService.uploadImage(file);
         Date today = new Date();
@@ -37,7 +37,7 @@ public class FeedApiController {
         SimpleDateFormat formatter = new SimpleDateFormat(pattern, currentLocale);
         String time = formatter.format(today);
         feedService.feedPost(u_uid, feed_content, p_id, imageUrl, time);
-        return ( "성공~" );
+        return new PostResponse("피드 작성 성공", 200);
     }
 
     @GetMapping(value = "api/feeds/total", produces = "application/json;charset=UTF-8")

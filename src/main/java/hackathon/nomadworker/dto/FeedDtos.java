@@ -12,6 +12,18 @@ public class FeedDtos {
 
 
     @Data
+    public static class PostResponse
+    {
+        private String message;
+        private int status;
+
+        public PostResponse(String message, int status) {
+            this.message = message;
+            this.status = status;
+        }
+    }
+
+    @Data
     @AllArgsConstructor
     public static class Result<T> {
         private String message;
@@ -29,18 +41,24 @@ public class FeedDtos {
     @Data
     @AllArgsConstructor
     public static class FeedDto {
-        private Long id;
+        private String u_name;
+        private String u_profile;
+        private Long p_id;
+        private Long f_id;
         private String f_image;
         private String f_content;
         private int f_like;
-        private String f_time;
+        private String p_name;
 
         public FeedDto(Feed f){
-            this.id =  f.getId();
+            this.u_name = f.getUser().getU_nickname();
+            this.u_profile = f.getUser().getU_image();
+            this.p_id = f.getPlace().getId();
+            this.f_id =  f.getId();
             this.f_image = f.getF_image();
             this.f_content = f.getF_content();
             this.f_like = f.getF_like();
-            this.f_time = f.getF_time();
+            this.p_name = f.getPlace().getP_name();
         }
     }
 

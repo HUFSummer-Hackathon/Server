@@ -32,6 +32,7 @@ public class UserRepository
         user.setU_longitude((float) 128.111);
         em.persist(user);
     }
+
 /*
     public User signIn(String u_email, String u_password)
     {
