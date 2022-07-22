@@ -63,7 +63,7 @@ public class ExceptionController {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Response ServiceUnavailableExpection(Exception e) {
         e.printStackTrace();
-        return new Response("503", "Service Unavailable");
+        return new Response("Service Unavailable", 503);
     }
 
     //Response DTO
