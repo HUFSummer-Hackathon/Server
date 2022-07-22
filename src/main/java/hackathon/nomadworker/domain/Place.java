@@ -46,17 +46,10 @@ public class Place {
         @OneToMany(mappedBy = "place", cascade = CascadeType.ALL)
         private List<Feed> feedList = new ArrayList<>();
 
-<<<<<<< HEAD
         @JsonIgnore
         @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
         @JoinColumn(name = "m_id")
         private Menu menu;
-=======
-
-        @OneToMany
-        private List<Menu> menu = new ArrayList<>();
->>>>>>> f1c2e517cbdbaf41bd07a1191847b15400b0cdac
-
 
         public void addFeed(Feed feed){
                 this.feedList.add(feed);
