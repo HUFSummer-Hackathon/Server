@@ -43,6 +43,7 @@ public class Place {
 
         private Point p_gpoint;
 
+        @JsonIgnore
         @OneToMany(mappedBy = "place", cascade = CascadeType.ALL)
         private List<Feed> feedList = new ArrayList<>();
 

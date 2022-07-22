@@ -24,13 +24,13 @@ public class Feed {
     private int f_like;
     private String f_time;
 
-    @JsonIgnore
+
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "p_id")
     private Place place;
 
     // 사용자 테이블
-    @JsonIgnore
+
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "u_id")
     private User user;

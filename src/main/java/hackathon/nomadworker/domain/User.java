@@ -1,5 +1,6 @@
 package hackathon.nomadworker.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,8 +25,10 @@ public class User {
 
     private String u_password;
 
+    @JsonIgnore
     private String u_nickname;
 
+    @JsonIgnore
     private String u_image;
 
     private float u_latitude;
