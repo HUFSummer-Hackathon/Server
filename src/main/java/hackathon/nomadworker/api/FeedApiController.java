@@ -1,12 +1,15 @@
 package hackathon.nomadworker.api;
 
 import hackathon.nomadworker.domain.Feed;
+import hackathon.nomadworker.domain.User;
 import hackathon.nomadworker.dto.FeedDtos.*;
 import hackathon.nomadworker.service.FeedService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,4 +27,21 @@ public class FeedApiController {
                 .collect(Collectors.toList());
         return new Result(collect.size(), collect);
     }
+
+    @GetMapping(value = "api/feeds/usertotal", produces = "application/json;charset=UTF-8")
+    public Result feedUserTotal(@RequestHeader("Authorization") String u_uid){
+        User feedUserTotal = feedService.feedUserTotal(u_uid);
+        List<Feed> feed = feedUserTotal.getFeedList();
+        ArrayList a = new ArrayList();
+        for(Feed i : feed)
+        {
+            FeedList feedlist = new FeedList(i);
+            a.add(feedlist);
+        }
+        FeedUserTotalDto collect = new FeedUserTotalDto(feedUserTotal ,a);
+
+        return new Result(1, collect);
+
+    }
+
 }
