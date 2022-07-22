@@ -25,15 +25,20 @@ public class JwtProvider{
         int rightLimit = 122; // letter 'z'
         int targetStringLength = 40;
         Random random = new Random();
+        random.setSeed(System.currentTimeMillis());
+
 
         String generatedString = random.ints(leftLimit, rightLimit + 1)
                 .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
                 .limit(targetStringLength)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
-        String encodedURL = Base64Utils.encodeToUrlSafeString(generatedString.getBytes());
 
-        return encodedURL;
+
+          //String encodedURL = Base64Utils.encodeToUrlSafeString(generatedString.getBytes());
+        //jwt 생성시 인코딩을 해준다.
+
+        return generatedString;
     }
 
     public static String createToken(String u_nickname) {
@@ -45,11 +50,17 @@ public class JwtProvider{
         headers.put("typ", "JWT");
         headers.put("alg", "HS256");
 
+
+        String randstring = createRandomnum();
         //payload 설정
         Map<String, Object> payloads = new HashMap<>();
-        payloads.put("KEY", "HelloWorld");
+        payloads.put("KEY", randstring);
         payloads.put("NickName",u_nickname);
+
+
         //Key key = Keys.hmacShaKeyFor(createRandomnum().getBytes(StandardCharsets.UTF_8));
+
+
         // 토큰 Builder
         String jwt = Jwts.builder()
                 .setHeader(headers) // Headers 설정
@@ -59,6 +70,8 @@ public class JwtProvider{
                 .setSubject("AccessToken") // 토큰 용도
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact(); // 토큰 생성
+
+        System.out.println(jwt);
 
         return jwt;
     }
