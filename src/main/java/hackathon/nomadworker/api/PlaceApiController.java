@@ -1,5 +1,6 @@
 package hackathon.nomadworker.api;
 
+import hackathon.nomadworker.domain.Feed;
 import hackathon.nomadworker.domain.Place;
 import hackathon.nomadworker.dto.PlaceDtos.*;
 import hackathon.nomadworker.service.PlaceService;
@@ -56,6 +57,15 @@ public class PlaceApiController {
             List<PlaceDto> collect = places.stream().map(place -> new PlaceDto(place)).collect(Collectors.toList());
             return new PlaceResultResponse(" 장소 조회 성공", 200, collect);
         }
+    }
+
+    @GetMapping(value = "api/place/recommend", produces = "application/json;charset=UTF-8")
+    public PlaceResultResponse place() {
+        List<Feed> recommend = placeService.getRecommendPlace();
+        List<placeRecommendDto> collect = recommend.stream()
+                .map(f -> new placeRecommendDto(f))
+                .collect(Collectors.toList());
+        return new PlaceResultResponse("추천 근무 장소 조회 성공",200,collect);
     }
 
 }

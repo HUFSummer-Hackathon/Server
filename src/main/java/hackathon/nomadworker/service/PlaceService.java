@@ -1,5 +1,6 @@
 package hackathon.nomadworker.service;
 
+import hackathon.nomadworker.domain.Feed;
 import hackathon.nomadworker.domain.Place;
 import hackathon.nomadworker.repository.PlaceRepository;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,10 @@ public class PlaceService {
         return  placeRepository.findAll();
     }
 
+    public List<Feed> getRecommendPlace()
+    {
+        return placeRepository.getRecommendPlace();
+    }
 
 }
 

@@ -1,5 +1,6 @@
 package hackathon.nomadworker.repository;
 
+import hackathon.nomadworker.domain.Feed;
 import hackathon.nomadworker.domain.Place;
 import hackathon.nomadworker.util.Direction;
 import hackathon.nomadworker.util.GeometryUtil;
@@ -26,9 +27,9 @@ public class PlaceRepository {
                 .getResultList();
     }
 
-    public List<Place> findOneByNickName(String palceName) {
-        String jpql = "select p from Place p where p.p_name like :palceName";
-        TypedQuery<Place> query = em.createQuery(jpql, Place.class).setParameter("palceName", palceName).setMaxResults(1000);
+    public List<Place> findOneByNickName(String placeName) {
+        String jpql = "select p from Place p where p.p_name like :placeName";
+        TypedQuery<Place> query = em.createQuery(jpql, Place.class).setParameter("placeName", placeName).setMaxResults(1000);
         return query.getResultList();
     }
 
@@ -53,8 +54,8 @@ public class PlaceRepository {
         double y2 = southWest.getLongitude();
 
         String pointFormat = String.format("'LINESTRING(%f %f, %f %f)')", x1, y1, x2, y2);
-        Query query = em.createNativeQuery("SELECT * \n" +
-                "FROM  place AS p \n"+
+        Query query = em.createNativeQuery("SELECT * \n"+
+                "From place As p \n" +
                 "WHERE MBRContains(ST_LINESTRINGFROMTEXT(" + pointFormat + ",p.p_gpoint)",Place.class).setMaxResults(15);
 
 
@@ -64,7 +65,13 @@ public class PlaceRepository {
         return places;
     }
 
-
+    public List<Feed> getRecommendPlace()
+    {
+        List<Feed> feed =  em.createQuery("select f from Feed f " +
+                        "join fetch f.place p " +
+                        "order by f.f_like desc ", Feed.class).setMaxResults(10).getResultList();
+        return feed;
+    }
 
 }
 
