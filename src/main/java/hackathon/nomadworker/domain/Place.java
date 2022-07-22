@@ -45,20 +45,15 @@ public class Place {
         private List<Feed> feedList = new ArrayList<>();
 
 
-        @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
-        @JoinColumn(name = "m_id")
-        private Menu menu;
+        @OneToMany
+        private List<Menu> menu = new ArrayList<>();
 
-        // 연관관계 메서드 //
-
-        public void setMenu(Menu menu){
-                this.menu = menu;
-                menu.setPlace(this);
-        }
 
         public void addFeed(Feed feed){
                 this.feedList.add(feed);
                 feed.setPlace(this);
         }
+
+
 
 }

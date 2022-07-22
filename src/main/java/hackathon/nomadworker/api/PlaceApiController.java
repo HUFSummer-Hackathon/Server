@@ -1,5 +1,6 @@
 package hackathon.nomadworker.api;
 
+import hackathon.nomadworker.domain.Menu;
 import hackathon.nomadworker.domain.Place;
 import hackathon.nomadworker.dto.PlaceDtos.*;
 import hackathon.nomadworker.service.PlaceService;
@@ -57,5 +58,34 @@ public class PlaceApiController {
             return new PlaceResultResponse(" 장소 조회 성공", 200, collect);
         }
     }
+
+
+    @GetMapping(value = "/api/place/detail",produces = "application/json;charset=UTF-8")
+    public PlaceResultResponse placeByCoordinateGet(@RequestHeader("Authorization") String u_uid,
+                                                    @RequestParam("placeId") Long p_id)
+    {
+        Place place = placeService.findPlacesById(p_id);
+        List <Menu> menus= placeService.placeMenuAll(p_id);
+        List<menuDto> collect = menus.stream().map(menu -> new menuDto(menu)).collect(Collectors.toList());
+
+        if (place == null )
+        {
+           return new PlaceResultResponse("근처 장소 조회 실패", 400, null);
+        } else
+        {
+            if (collect.size()==0)
+            {
+                PlaceDetailDto result = new PlaceDetailDto(place, null);
+                return new PlaceResultResponse("근처 장소 조회 성공", 200, result);
+            }
+            else {
+
+                PlaceDetailDto result = new PlaceDetailDto(place,collect);
+                return new PlaceResultResponse("근처 장소 조회 성공", 200, result);
+            }
+        }
+
+    }
+
 
 }
