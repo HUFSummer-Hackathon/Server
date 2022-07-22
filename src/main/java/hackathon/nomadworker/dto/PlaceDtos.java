@@ -1,5 +1,6 @@
 package hackathon.nomadworker.dto;
 
+import hackathon.nomadworker.domain.Feed;
 import hackathon.nomadworker.domain.Menu;
 import hackathon.nomadworker.domain.Place;
 
@@ -80,7 +81,7 @@ public class PlaceDtos {
 
         private Integer rent_price;
 
-//        private Point p_gpoint;
+        //private Point p_gpoint;
 
         public PlaceDto(Place place) {
             this.p_id = place.getId();
@@ -137,8 +138,24 @@ public class PlaceDtos {
             this.p_latitude =place.getP_latitude();
             this.p_longitude = place.getP_longitude();
             this.rent_price =place.getRent_price();
-            this.menu = menu;
+            //this.p_gpoint = place.getP_gpoint();
+        }
+    }
 
+    @Data
+    @AllArgsConstructor
+    public static class placeRecommendDto
+    {
+        private long p_id;
+        private String p_cate;
+        private String p_name;
+        private String p_image;
+
+        public placeRecommendDto(Feed f){
+            this.p_id = f.getPlace().getId();
+            this.p_cate = f.getPlace().getP_cate();
+            this.p_name = f.getPlace().getP_name();
+            this.p_image = f.getPlace().getP_image();
         }
 
 

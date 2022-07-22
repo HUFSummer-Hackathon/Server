@@ -1,11 +1,13 @@
 package hackathon.nomadworker.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import static javax.persistence.FetchType.*;
 
 @Entity
 @Getter
@@ -22,12 +24,14 @@ public class Feed {
     private int f_like;
     private String f_time;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "p_id")
     private Place place;
 
     // 사용자 테이블
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "u_id")
     private User user;
 

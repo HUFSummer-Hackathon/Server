@@ -1,5 +1,6 @@
 package hackathon.nomadworker.api;
 
+import hackathon.nomadworker.domain.Feed;
 import hackathon.nomadworker.domain.Menu;
 import hackathon.nomadworker.domain.Place;
 import hackathon.nomadworker.dto.PlaceDtos.*;
@@ -59,6 +60,14 @@ public class PlaceApiController {
         }
     }
 
+    @GetMapping(value = "api/place/recommend", produces = "application/json;charset=UTF-8")
+    public PlaceResultResponse place() {
+        List<Feed> recommend = placeService.getRecommendPlace();
+        List<placeRecommendDto> collect = recommend.stream()
+                .map(f -> new placeRecommendDto(f))
+                .collect(Collectors.toList());
+        return new PlaceResultResponse("추천 근무 장소 조회 성공",200,collect);
+    }
 
     @GetMapping(value = "/api/place/detail",produces = "application/json;charset=UTF-8")
     public PlaceResultResponse placeByCoordinateGet(@RequestHeader("Authorization") String u_uid,
@@ -86,6 +95,4 @@ public class PlaceApiController {
         }
 
     }
-
-
 }

@@ -1,5 +1,6 @@
 package hackathon.nomadworker.service;
 
+import hackathon.nomadworker.domain.Feed;
 import hackathon.nomadworker.domain.Menu;
 import hackathon.nomadworker.domain.Place;
 import hackathon.nomadworker.dto.PlaceDtos.*;
@@ -30,11 +31,15 @@ public class PlaceService {
         return  placeRepository.findAll();
     }
 
+    public List<Feed> getRecommendPlace()
+    {
+        return placeRepository.getRecommendPlace();
+    }
+
     public Place findPlacesById(Long p_id)
     {
         return  placeRepository.getPlacesById(p_id);
     }
-
 
     @Transactional(readOnly = true)
     public List<Menu> placeMenuAll(Long id)
