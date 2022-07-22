@@ -102,6 +102,7 @@ public class UserService
         return userRepository.findOneByEmailPassword(userEmail,userPassword);
     }
 
+    @Transactional
     public User updateCoordinate(String u_uid,float u_latitude, float u_longitude)
     {
         Long u_id = findByUuid(u_uid);
