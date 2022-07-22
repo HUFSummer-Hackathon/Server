@@ -5,6 +5,7 @@ import hackathon.nomadworker.domain.User;
 import hackathon.nomadworker.dto.FeedDtos.*;
 import hackathon.nomadworker.service.FeedService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +26,7 @@ public class FeedApiController {
         List<FeedDto> collect = feedAll.stream()
                 .map(f -> new FeedDto(f))
                 .collect(Collectors.toList());
-        return new Result(collect.size(), collect);
+        return new Result("피드 불러오기 성공", 200 , collect);
     }
 
     @GetMapping(value = "api/feeds/usertotal", produces = "application/json;charset=UTF-8")
@@ -40,7 +41,7 @@ public class FeedApiController {
         }
         FeedUserTotalDto collect = new FeedUserTotalDto(feedUserTotal ,a);
 
-        return new Result(1, collect);
+        return new Result("유저 피드 전체 조회 성공", 200 , collect);
 
     }
 
