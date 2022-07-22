@@ -13,7 +13,8 @@ public class FeedDtos {
     @Data
     @AllArgsConstructor
     public static class Result<T> {
-        private int count;
+        private String message;
+        private int status;
         private T data;
     }
 
