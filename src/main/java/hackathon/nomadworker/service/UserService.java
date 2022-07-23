@@ -88,8 +88,6 @@ public class UserService
     {
         Long u_id = userRepository.findOnebyToken(u_uid).getId();
         String u_image = userRepository.findOnebyToken(u_uid).getU_image();
-        System.out.println("-------------------");
-        System.out.println(u_image);
         if(u_image != null){ //s3 data 삭제
             ///FileUploadService.fileUploadService.
             String result =  s3Service.deleteObject(u_image); // 기존 이미지 삭제
