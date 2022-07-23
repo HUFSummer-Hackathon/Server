@@ -48,4 +48,13 @@ public class FeedService {
         Feed oneFeed = feedRepository.feedUserOne(u_id, f_id);
         return oneFeed;
     }
+
+    public Feed findOne(Long f_id)
+    {
+        return feedRepository.findOne(f_id);
+    }
+
+
+
+
 }

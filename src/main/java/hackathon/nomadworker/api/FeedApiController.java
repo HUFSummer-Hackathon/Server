@@ -2,9 +2,11 @@ package hackathon.nomadworker.api;
 
 import hackathon.nomadworker.domain.Feed;
 import hackathon.nomadworker.domain.User;
+import hackathon.nomadworker.domain.User_Like;
 import hackathon.nomadworker.dto.FeedDtos.*;
 import hackathon.nomadworker.service.FeedService;
 import hackathon.nomadworker.service.FileUploadService;
+import hackathon.nomadworker.service.UserLikeService;
 import hackathon.nomadworker.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
@@ -13,10 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -26,6 +25,8 @@ public class FeedApiController {
     private final FeedService feedService;
     private final UserService userService;
     private final FileUploadService fileUploadService;
+
+    private final UserLikeService userLikeService;
 
     @PostMapping(value = "/api/feeds/new")
     public PostResponse uploadFeed(@RequestHeader("Authorization") String u_uid, @RequestParam MultipartFile file,
@@ -75,5 +76,37 @@ public class FeedApiController {
         FeedOneDto feedOneDto = new FeedOneDto(findOnebyToken, feedUserOne);
         return new Result("단일 피드 조회 성공", 200, feedOneDto);
     }
+
+    @PostMapping(value = "/api/feeds/likes")
+    public Result feedUserlike(@RequestHeader("Authorization") String u_uid, @Valid @RequestBody FeeLikeRequest request)
+    {
+         User user = userService.findOnebyToken(u_uid);
+         Long u_id = user.getId();
+         Long f_id = request.getF_id();
+
+         List<User_Like> subsByFacId = userLikeService.findUserLikesByFacId(f_id);
+        long count = subsByFacId.stream().count();
+
+        if(f_id != null) {
+            if (subsByFacId.stream().anyMatch(s -> Objects.equals(s.getUser().getId(), u_id))) {
+                //     "이미 좋아요를 하고 있습니다.";
+                userLikePostDeleteResponse result = new userLikePostDeleteResponse(count - 1, false);
+                // Delete
+                userLikeService.deleteByUserFac(u_id, f_id);
+                return new Result("좋아요 취소", 200, result);
+            }
+
+            User_Like userLike = new User_Like();
+            userLike.setUser(userService.findOne(u_id));
+            userLike.setFeed(feedService.findOne(f_id));
+            userLikeService.newUser_Like(userLike);
+            userLikePostDeleteResponse result = new userLikePostDeleteResponse(count + 1, true);
+            return new Result("좋아요 성공", 200, result);
+        }else{return new Result("좋아요 실패", 400, null);}
+    }
+
+
+
+
 
 }
