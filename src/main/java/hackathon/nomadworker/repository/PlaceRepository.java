@@ -3,6 +3,7 @@ package hackathon.nomadworker.repository;
 import hackathon.nomadworker.domain.Feed;
 
 import hackathon.nomadworker.domain.Place;
+import hackathon.nomadworker.domain.User;
 import hackathon.nomadworker.util.Direction;
 import hackathon.nomadworker.util.GeometryUtil;
 import hackathon.nomadworker.util.Location;
@@ -80,15 +81,22 @@ public class PlaceRepository {
 
     public List<Place> searchPlace(String p_cate, String p_storeType, String p_name)
     {
-            List<Place> place = em.createQuery("select p from Place p " +
-                            "where p.p_cate =: p_cate " +
-                            "and p.p_storeType =: p_storeType " +
-                            "and p.p_name =: p_name", Place.class)
-                    .setParameter("p_cate", p_cate)
-                    .setParameter("p_storeType", p_storeType)
-                    .setParameter("p_name", p_name)
-                    .getResultList();
-            return place;
+        List<Place> place = em.createQuery("select p from Place p " +
+                        "where p.p_cate =: p_cate " +
+                        //"and p.p_storeType =: p_storeType " +
+                        "and p.p_name =: p_name", Place.class)
+                .setParameter("p_cate", p_cate)
+                //.setParameter("p_storeType", p_storeType)
+                .setParameter("p_name", p_name)
+                .getResultList();
+
+        return place;
+    }
+
+    public List<Place> searchOneByName(String p_name) {
+        String jpql = "select p from Place p where p.p_name like :p_name";
+        TypedQuery<Place> query = em.createQuery(jpql, Place.class).setParameter("p_name", "%" + p_name +  "%").setMaxResults(1000);
+        return query.getResultList();
     }
 }
 

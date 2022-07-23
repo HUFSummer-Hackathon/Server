@@ -123,6 +123,18 @@ public class PlaceApiController {
         return new PlaceResultResponse("장소 검색 성공", 200, collect);
     }
 
+    @GetMapping(value = "/api/search/placetag",produces = "application/json;charset=UTF-8")
+    public PlaceResultResponse searchOneByName(@RequestHeader("Authorization") String u_uid,
+                                               @Valid @RequestParam("placeName") String p_name)
+    {
+        List<Place> places = placeService.searchOnebyName(p_name);
+        List<placeSearchOneByNameDto> collect = places.stream()
+                .map(p -> new placeSearchOneByNameDto(p))
+                .collect(Collectors.toList());
+        return new PlaceResultResponse("검색 완료", 200, collect);
+    }
+
+
 
 
 

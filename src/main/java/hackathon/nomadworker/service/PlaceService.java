@@ -45,13 +45,12 @@ public class PlaceService {
     public List<Place> searchPlace(String p_cate, String p_storeType, String p_name)
     {
         List<Place> places = searchPlace(p_cate, p_storeType, p_name);
-        if(places != null)
-        {
-            return places;
-        }
-        else {
-            return null;
-        }
+        return places;
+    }
+
+    public List<Place> searchOnebyName(String p_name)
+    {
+        return placeRepository.searchOneByName(p_name);
     }
 
 }
