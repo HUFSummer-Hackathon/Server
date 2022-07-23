@@ -44,7 +44,7 @@ public class PlaceService {
 
     public List<Place> searchPlace(String p_cate, String p_storeType, String p_name)
     {
-        List<Place> places = searchPlace(p_cate, p_storeType, p_name);
+        List<Place> places = placeRepository.searchPlace(p_cate, p_storeType, p_name);
         return places;
     }
 
