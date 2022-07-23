@@ -31,7 +31,6 @@ public class UserService
         return userRepository.imageUpdate(u_id,imageUrl);
     }
 
-
     //==Sign In==//
     public User SignIn(String u_email, String u_password) throws Exception {
         User result = null;
@@ -80,15 +79,17 @@ public class UserService
         return userRepository.findOnebyToken(u_uid);
     }
 
-    /// update method for api put
-    @Transactional  User updateImage(Long u_id,String u_image)
-    {
-        return userRepository.imageUpdate(u_id, u_image);
-    }
 
-    @Transactional  User updateCoordinate(Long u_id,float u_latitude,float u_longitude)
+    @Transactional
+    public User userImageUpdate(String u_uid, String imageUrl)
     {
-        return userRepository.coordinateUpdate(u_id,u_latitude,u_longitude);
+        Long u_id = userRepository.findOnebyToken(u_uid).getId();
+        String u_image = userRepository.findOnebyToken(u_uid).getU_image();
+        if(u_image != null){ //s3 data 삭제
+            ///FileUploadService.fileUploadService.
+        }
+
+        return userRepository.imageUpdate(u_id,imageUrl);
     }
 
     @Transactional
