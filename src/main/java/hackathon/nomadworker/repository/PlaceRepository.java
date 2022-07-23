@@ -83,10 +83,10 @@ public class PlaceRepository {
     {
         List<Place> place = em.createQuery("select p from Place p " +
                         "where p.p_cate =: p_cate " +
-                        //"and p.p_storeType =: p_storeType " +
-                        "and p.p_name =: p_name", Place.class)
+                        "and p.p_storeType =: p_storeType " +
+                        "and p.p_name =: p_name ", Place.class)
                 .setParameter("p_cate", p_cate)
-                //.setParameter("p_storeType", p_storeType)
+                .setParameter("p_storeType", p_storeType)
                 .setParameter("p_name", p_name)
                 .getResultList();
 
