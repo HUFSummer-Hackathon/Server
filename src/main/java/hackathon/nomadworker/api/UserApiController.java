@@ -10,14 +10,9 @@ import hackathon.nomadworker.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-
 import javax.validation.Valid;
-import java.security.SignatureException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -28,7 +23,6 @@ public class UserApiController
     private final UserService userService;
     private final AuthService authService;
 
-    private final FileUploadService fileUploadService;
 
 
     @PostMapping(value="/api/user" , produces = "application/json;charset=UTF-8")
@@ -97,4 +91,21 @@ public class UserApiController
         return result;
 
     }
+    @GetMapping("/api/user/profile")
+    public UserResultResponse Userinfo(@RequestHeader("Authorization") String u_uid)
+    {
+        User user = userService.findOnebyToken(u_uid);
+        UserinfoResponse result = new UserinfoResponse(user.getU_image(),user.getU_nickname());
+        if (result!= null) {
+            return new UserResultResponse("회원 정보 조회 성공", 200, result);
+        }
+        else{
+            return new UserResultResponse("회원 정보 조회 실패", 400, null);
+        }
+    }
+
+
+
+
+
 }
