@@ -1,17 +1,13 @@
 package hackathon.nomadworker.api;
-
 import hackathon.nomadworker.domain.Feed;
-import hackathon.nomadworker.domain.Menu;
 import hackathon.nomadworker.domain.Place;
 import hackathon.nomadworker.dto.PlaceDtos.*;
 import hackathon.nomadworker.service.PlaceService;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -77,24 +73,14 @@ public class PlaceApiController {
                                                     @RequestParam("placeId") Long p_id)
     {
         Place place = placeService.findPlacesById(p_id);
-        List <Menu> menus= placeService.placeMenuAll(p_id);
-        List<menuDto> collect = menus.stream().map(menu -> new menuDto(menu)).collect(Collectors.toList());
 
         if (place == null )
         {
            return new PlaceResultResponse("장소 상세 조회 실패", 400, null);
         } else
         {
-            if (collect.size()==0)
-            {
-                PlaceDetailDto result = new PlaceDetailDto(place, null);
+                PlaceDetailDto result = new PlaceDetailDto(place);
                 return new PlaceResultResponse("장소 상세 조회 성공", 200, result);
-            }
-            else {
-
-                PlaceDetailDto result = new PlaceDetailDto(place,collect);
-                return new PlaceResultResponse("장소 상세 조회 성공", 200, result);
-            }
         }
 
     }

@@ -1,16 +1,16 @@
 package hackathon.nomadworker.service;
 
 import hackathon.nomadworker.domain.Feed;
-import hackathon.nomadworker.domain.Menu;
+
 import hackathon.nomadworker.domain.Place;
-import hackathon.nomadworker.dto.PlaceDtos.*;
+
 import hackathon.nomadworker.repository.PlaceRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Service
 @AllArgsConstructor
@@ -41,11 +41,6 @@ public class PlaceService {
         return  placeRepository.getPlacesById(p_id);
     }
 
-    @Transactional(readOnly = true)
-    public List<Menu> placeMenuAll(Long id)
-    {
-        return placeRepository.placeMenuAllByPlaceId(id);
-    }
 
     public List<Place> searchPlace(String p_cate, String p_storeType, String p_name)
     {
