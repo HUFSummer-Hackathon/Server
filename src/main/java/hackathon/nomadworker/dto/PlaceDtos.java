@@ -80,7 +80,7 @@ public class PlaceDtos {
         private float p_latitude;
         private float p_longitude;
 
-        private Integer rent_price;
+        private String rent_price;
 
         //private Point p_gpoint;
 
@@ -125,7 +125,7 @@ public class PlaceDtos {
         private float p_longitude;
         private String p_storeType;
         private T menu;
-        private Integer rent_price;
+        private String rent_price;
         public PlaceDetailDto(Place place, T menu)
         {
             this.p_id = place.getId();
