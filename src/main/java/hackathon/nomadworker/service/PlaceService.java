@@ -23,7 +23,7 @@ public class PlaceService {
 
     public List<Place> findPlacesByCoordinate(float latitude,float longitude)
     {   // 반견 1km
-        return placeRepository.getNearByCoordinate((double)latitude, (double)longitude,(double)1);
+        return placeRepository.getNearByCoordinate((double)latitude, (double)longitude,(double)3);
     }
 
     public List<Place> findPlacesall()
