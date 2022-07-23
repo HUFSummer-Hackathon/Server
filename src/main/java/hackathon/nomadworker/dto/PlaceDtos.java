@@ -169,8 +169,7 @@ public class PlaceDtos {
 
     @Data
     @AllArgsConstructor
-    public static class placeSearchDto
-    {
+    public static class placeSearchDto {
         private long p_id;
         private String place_name;
         private String place_address;
@@ -178,7 +177,7 @@ public class PlaceDtos {
         private String place_weekendtime;
         private String p_image;
 
-        public placeSearchDto(Place p){
+        public placeSearchDto(Place p) {
             this.p_id = p.getId();
             this.place_name = p.getP_name();
             this.place_address = p.getP_addr();
@@ -187,14 +186,19 @@ public class PlaceDtos {
             this.p_image = p.getP_image();
 
         }
-
     }
 
+    @Data
+    @AllArgsConstructor
+    public static class placeSearchOneByNameDto {
+        private long p_id;
+        private String place_name;
 
+        public placeSearchOneByNameDto(Place p) {
+            this.p_id = p.getId();
+            this.place_name = p.getP_name();
 
-
-
-
-
+        }
+    }
 
 }
