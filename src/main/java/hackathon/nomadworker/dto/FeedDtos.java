@@ -37,6 +37,12 @@ public class FeedDtos {
         private String feed_content;
         private Long p_id;
     }
+    @Data
+    public static class FeeLikeRequest
+    {
+        private Long f_id;
+    }
+
 
     @Data
     @AllArgsConstructor
@@ -108,6 +114,20 @@ public class FeedDtos {
             this.u_image = u.getU_image();
             this.u_nickname = u.getU_nickname();
         }
+    }
+
+
+    @Data
+    public static class userLikePostDeleteResponse
+    {
+        Boolean like_status;
+        Long like_count;
+
+        public userLikePostDeleteResponse(Long cnt, Boolean status) {
+            this.like_count = cnt;
+            this.like_status = status;
+        }
+
     }
 
 }

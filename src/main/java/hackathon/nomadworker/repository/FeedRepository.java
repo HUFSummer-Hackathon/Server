@@ -41,6 +41,13 @@ public class FeedRepository {
                 .getResultList();
     }
 
+    public Feed findOne(Long id)
+    {
+        return em.find(Feed.class,id);
+    }
+
+
+
     public User feedUserTotal(String u_uid) {
         return em.createQuery("select u from User u " +
                 "join fetch u.feedList fl " +
