@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.naming.ServiceUnavailableException;
+import javax.persistence.NoResultException;
 
 @RestControllerAdvice
 public class ExceptionController {
@@ -65,6 +66,13 @@ public class ExceptionController {
         e.printStackTrace();
         return new Response("Service Unavailable", 503);
     }
+
+    //@ExceptionHandler(NoResultException.class)
+    //@ResponseStatus(HttpStatus.NO_CONTENT)
+    //public Response NoContentExpection(Exception e) {
+     //   e.printStackTrace();
+     //   return new Response("No results", 400);
+    //}
 
     //Response DTO
     @Data

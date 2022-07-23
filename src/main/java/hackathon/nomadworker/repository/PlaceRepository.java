@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -85,5 +86,17 @@ public class PlaceRepository {
         return query.getResultList();
     }
 
+    public List<Place> searchPlace(String p_cate, String p_storeType, String p_name)
+    {
+            List<Place> place = em.createQuery("select p from Place p " +
+                            "where p.p_cate =: p_cate " +
+                            "and p.p_storeType =: p_storeType " +
+                            "and p.p_name =: p_name", Place.class)
+                    .setParameter("p_cate", p_cate)
+                    .setParameter("p_storeType", p_storeType)
+                    .setParameter("p_name", p_name)
+                    .getResultList();
+            return place;
+    }
 }
 

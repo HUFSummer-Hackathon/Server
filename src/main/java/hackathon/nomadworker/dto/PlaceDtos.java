@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 public class PlaceDtos {
+
     @Data
     @AllArgsConstructor
     public static class PlaceResultResponse<T> {
@@ -160,7 +161,6 @@ public class PlaceDtos {
 
     }
 
-
     @Data
     public static class placecathomeresponse
     {
@@ -176,6 +176,31 @@ public class PlaceDtos {
         }
 
     }
+
+    @Data
+    @AllArgsConstructor
+    public static class placeSearchDto
+    {
+        private long p_id;
+        private String place_name;
+        private String place_address;
+        private String place_weektime;
+        private String place_weekendtime;
+        private String p_image;
+
+        public placeSearchDto(Place p){
+            this.p_id = p.getId();
+            this.place_name = p.getP_name();
+            this.place_address = p.getP_addr();
+            this.place_weektime = p.getP_weekt();
+            this.place_weekendtime = p.getP_weekndt();
+            this.p_image = p.getP_image();
+
+        }
+
+    }
+
+
 
 
 
