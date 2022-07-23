@@ -7,7 +7,8 @@ import javax.persistence.*;
 
 import static javax.persistence.FetchType.LAZY;
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 public class Menu {
 
     @Id @GeneratedValue
@@ -18,7 +19,8 @@ public class Menu {
 
     private Integer m_price;
 
-    @OneToOne(mappedBy = "menu",cascade = CascadeType.ALL,fetch= LAZY)
-    private Place place;
+
+ @OneToOne(mappedBy = "menu",cascade = CascadeType.ALL,fetch= LAZY)
+ private Place place;
 }
 
