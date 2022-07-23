@@ -1,5 +1,6 @@
 package hackathon.nomadworker.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,8 +20,8 @@ public class Menu {
 
     private Integer m_price;
 
-
- @OneToOne(mappedBy = "menu",cascade = CascadeType.ALL,fetch= LAZY)
- private Place place;
+    @JsonIgnore
+    @OneToOne(mappedBy = "menu",cascade = CascadeType.ALL, fetch = LAZY)
+    private Place place;
 }
 

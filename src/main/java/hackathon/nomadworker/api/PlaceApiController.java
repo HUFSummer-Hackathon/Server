@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -97,6 +98,7 @@ public class PlaceApiController {
         }
 
     }
+
     @GetMapping(value = "/api/place/category",produces = "application/json;charset=UTF-8")
     public PlaceResultResponse placecathome(@RequestHeader("Authorization") String u_uid)
     {
@@ -120,6 +122,19 @@ public class PlaceApiController {
                 return new PlaceResultResponse("근무 장소 카테고리 조회 성공", 200, arrayOfdata);
         }
 
+    }
+
+    @GetMapping(value = "/api/search/place",produces = "application/json;charset=UTF-8")
+    public PlaceResultResponse searchPlace(@RequestHeader("Authorization") String u_uid,
+                                           @Valid @RequestParam("place_cat") String p_cate,
+                                           @RequestParam("place_Storetype") String p_storeType,
+                                           @RequestParam("place_name") String p_name)
+    {
+        List<Place> places = placeService.searchPlace(p_cate, p_storeType, p_name);
+        List<placeSearchDto> collect = places.stream()
+                .map(p -> new placeSearchDto(p))
+                .collect(Collectors.toList());
+        return new PlaceResultResponse("장소 검색 성공", 200, collect);
     }
 
 
