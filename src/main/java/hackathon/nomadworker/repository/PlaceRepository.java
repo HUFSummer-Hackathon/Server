@@ -1,7 +1,7 @@
 package hackathon.nomadworker.repository;
 
 import hackathon.nomadworker.domain.Feed;
-import hackathon.nomadworker.domain.Menu;
+
 import hackathon.nomadworker.domain.Place;
 import hackathon.nomadworker.util.Direction;
 import hackathon.nomadworker.util.GeometryUtil;
@@ -76,13 +76,7 @@ public class PlaceRepository {
         return feed;
     }
 
-    public List<Menu> placeMenuAllByPlaceId(Long p_id)
-    {
-        String jpql = " select m from Menu m  where m.place.id = :p_id ";
-        TypedQuery<Menu> query = em.createQuery(jpql, Menu.class).setParameter("p_id",p_id).setMaxResults(50);
 
-        return query.getResultList();
-    }
 
     public List<Place> searchPlace(String p_cate, String p_storeType, String p_name)
     {

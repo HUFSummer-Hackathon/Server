@@ -1,7 +1,6 @@
 package hackathon.nomadworker.dto;
 
 import hackathon.nomadworker.domain.Feed;
-import hackathon.nomadworker.domain.Menu;
 import hackathon.nomadworker.domain.Place;
 
 import lombok.AllArgsConstructor;
@@ -100,17 +99,7 @@ public class PlaceDtos {
         }
     }
 
-    @Data @AllArgsConstructor
-    public static class menuDto
-    {
-        private String m_menu;
-        private  int m_price;
 
-        public menuDto(Menu menu) {
-            this.m_menu = menu.getM_menu();
-            this.m_price = menu.getM_price();
-        }
-    }
     @Data @AllArgsConstructor
     public static class PlaceDetailDto<T>
     {
@@ -124,9 +113,9 @@ public class PlaceDtos {
         private float p_latitude;
         private float p_longitude;
         private String p_storeType;
-        private T menu;
+
         private String rent_price;
-        public PlaceDetailDto(Place place, T menu)
+        public PlaceDetailDto(Place place)
         {
             this.p_id = place.getId();
             this.p_cate = place.getP_cate();
