@@ -104,6 +104,7 @@ public class FeedApiController {
             if (subsByFeedId.stream().anyMatch(s -> Objects.equals(s.getUser().getId(), u_id))) {
                 //     "이미 좋아요를 하고 있습니다.";
                 userLikePostDeleteResponse result = new userLikePostDeleteResponse(count - 1, false);
+                feedService.feedUserLikeUpdate(f_id, (int) (count-1));
                 // Delete
                 userLikeService.deleteByUserFac(u_id, f_id);
                 return new Result("좋아요 취소", 200, result);
@@ -114,6 +115,8 @@ public class FeedApiController {
             userLike.setFeed(feedService.findOne(f_id));
             userLikeService.newUser_Like(userLike);
             userLikePostDeleteResponse result = new userLikePostDeleteResponse(count + 1, true);
+            feedService.feedUserLikeUpdate(f_id, (int) (count+1));
+
             return new Result("좋아요 성공", 200, result);
         }else{return new Result("좋아요 실패", 400, null);}
     }

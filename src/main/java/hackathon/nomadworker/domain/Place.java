@@ -52,7 +52,8 @@ public class Place {
         @JoinColumn(name = "m_id")
         private Menu menu;
 
-        public void addFeed(Feed feed){
+        public void addFeed(Feed feed)
+        {
                 this.feedList.add(feed);
                 feed.setPlace(this);
         }

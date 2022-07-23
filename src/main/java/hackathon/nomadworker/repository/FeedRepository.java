@@ -31,6 +31,13 @@ public class FeedRepository {
         feed.setF_like(0);
         em.persist(feed);
     }
+    public Feed feedUserLikeUpdate(Long id,int cnt)
+        {
+            Feed feed = em.find(Feed.class,id);
+            feed.setF_like(cnt);
+
+            return feed;
+        }
 
     //모든 피드 조회
     public List<Feed> findALL() {

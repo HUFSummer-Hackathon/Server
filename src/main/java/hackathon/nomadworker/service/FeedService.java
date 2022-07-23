@@ -53,7 +53,11 @@ public class FeedService {
     {
         return feedRepository.findOne(f_id);
     }
-
+    @Transactional
+    public Feed feedUserLikeUpdate(Long f_id,int cnt)
+    {
+        return feedRepository.feedUserLikeUpdate(f_id,cnt);
+    }
 
 
 
