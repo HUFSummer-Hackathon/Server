@@ -73,8 +73,21 @@ public class FeedApiController {
     {
         User findOnebyToken = userService.findOnebyToken(u_uid);
         Feed feedUserOne = feedService.feedUserOne(u_uid, f_id);
-        FeedOneDto feedOneDto = new FeedOneDto(findOnebyToken, feedUserOne);
-        return new Result("단일 피드 조회 성공", 200, feedOneDto);
+        List<User_Like> subsByFeedId = userLikeService.findUserLikesByFeedId(f_id);
+        boolean like_status = false;
+        long count = subsByFeedId.stream().count();
+
+        if(f_id != null)
+        {
+            if (subsByFeedId.stream().anyMatch(s -> Objects.equals(s.getUser().getU_uid(), u_uid)))
+            {
+                like_status = true;
+            }
+
+            FeedOneDto feedOneDto = new FeedOneDto(findOnebyToken, feedUserOne, like_status);
+            return new Result("단일 피드 조회 성공", 200, feedOneDto);
+        }
+        else{return new Result("단일 피드 조회 실패", 400, null);}
     }
 
     @PostMapping(value = "/api/feeds/likes")
@@ -84,11 +97,11 @@ public class FeedApiController {
          Long u_id = user.getId();
          Long f_id = request.getF_id();
 
-         List<User_Like> subsByFacId = userLikeService.findUserLikesByFacId(f_id);
-        long count = subsByFacId.stream().count();
+         List<User_Like> subsByFeedId = userLikeService.findUserLikesByFeedId(f_id);
+        long count = subsByFeedId.stream().count();
 
         if(f_id != null) {
-            if (subsByFacId.stream().anyMatch(s -> Objects.equals(s.getUser().getId(), u_id))) {
+            if (subsByFeedId.stream().anyMatch(s -> Objects.equals(s.getUser().getId(), u_id))) {
                 //     "이미 좋아요를 하고 있습니다.";
                 userLikePostDeleteResponse result = new userLikePostDeleteResponse(count - 1, false);
                 // Delete

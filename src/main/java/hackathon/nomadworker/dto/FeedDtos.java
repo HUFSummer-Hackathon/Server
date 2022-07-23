@@ -102,14 +102,16 @@ public class FeedDtos {
         private String f_image;
         private String f_content;
         private int f_like_count;
+        private boolean like_status;
         private String f_time;
         private String u_image;
         private String u_nickname;
 
-        public FeedOneDto(User u, Feed f){
+        public FeedOneDto(User u, Feed f, boolean s){
             this.f_image = f.getF_image();
             this.f_content = f.getF_content();
             this.f_like_count = f.getF_like();
+            this.like_status = s;
             this.f_time = f.getF_time();
             this.u_image = u.getU_image();
             this.u_nickname = u.getU_nickname();
