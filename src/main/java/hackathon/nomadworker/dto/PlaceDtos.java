@@ -158,7 +158,28 @@ public class PlaceDtos {
             this.p_image = f.getPlace().getP_image();
         }
 
+    }
 
+
+    @Data
+    public static class placecathomeresponse
+    {
+        private String thumbnail_image_url;
+
+        private String location;
+
+        public placecathomeresponse(String url ,String location)
+        {
+            this.thumbnail_image_url = url;
+            this.location = location;
+
+        }
 
     }
+
+
+
+
+
+
 }
