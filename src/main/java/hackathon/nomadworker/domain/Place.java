@@ -38,7 +38,6 @@ public class Place {
 
         private float p_latitude;
         private float p_longitude;
-
         private String rent_price;
 
         private Point p_gpoint;
@@ -46,11 +45,6 @@ public class Place {
         @JsonIgnore
         @OneToMany(mappedBy = "place", cascade = CascadeType.ALL)
         private List<Feed> feedList = new ArrayList<>();
-
-        @JsonIgnore
-        @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
-        @JoinColumn(name = "m_id")
-        private Menu menu;
 
         public void addFeed(Feed feed)
         {
