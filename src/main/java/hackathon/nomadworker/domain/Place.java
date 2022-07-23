@@ -39,7 +39,7 @@ public class Place {
         private float p_latitude;
         private float p_longitude;
 
-        private Integer rent_price;
+        private String rent_price;
 
         private Point p_gpoint;
 

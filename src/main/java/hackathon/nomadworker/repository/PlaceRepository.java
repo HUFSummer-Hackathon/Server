@@ -63,8 +63,6 @@ public class PlaceRepository {
                 "From place As p \n" +
                 "WHERE MBRContains(ST_LINESTRINGFROMTEXT(" + pointFormat + ",p.p_gpoint)",Place.class).setMaxResults(15);
 
-
-
         List<Place> places = query.getResultList();
         System.out.println(places);
         return places;
