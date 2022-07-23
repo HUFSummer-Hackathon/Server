@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import java.util.List;
@@ -95,4 +97,36 @@ public class PlaceApiController {
         }
 
     }
+    @GetMapping(value = "/api/place/category",produces = "application/json;charset=UTF-8")
+    public PlaceResultResponse placecathome(@RequestHeader("Authorization") String u_uid)
+    {
+        ArrayList<placecathomeresponse> arrayOfdata = new ArrayList<>();
+        arrayOfdata.add(new placecathomeresponse("https://user-images.githubusercontent.com/51078673/179384322-884b8302-6c21-46ce-8d46-c29745796fcc.jpg",
+                "서울"));
+        arrayOfdata.add(new placecathomeresponse( "https://user-images.githubusercontent.com/51078673/179384435-2e54b08a-27a9-4f59-946a-77f110801914.png",
+                "강릉"));
+
+                arrayOfdata.add(new placecathomeresponse("https://user-images.githubusercontent.com/51078673/179384474-a48ca515-c4f8-4f99-bfa3-59655484e291.jpg",
+                        "제주"));
+                        arrayOfdata.add(new placecathomeresponse("https://user-images.githubusercontent.com/51078673/179384495-429fe737-6611-40d0-b81b-26ab615fc746.jpg",
+                                "부산"));
+
+
+        if (arrayOfdata == null )
+        {
+            return new PlaceResultResponse("근무 장소 카테고리 조회 실패", 400, null);
+        } else
+        {
+                return new PlaceResultResponse("근무 장소 카테고리 조회 성공", 200, arrayOfdata);
+        }
+
+    }
+
+
+
+
+
+
+
+
 }

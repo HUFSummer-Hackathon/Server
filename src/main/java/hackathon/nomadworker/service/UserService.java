@@ -2,6 +2,7 @@ package hackathon.nomadworker.service;
 
 
 import hackathon.nomadworker.domain.User;
+import hackathon.nomadworker.external.UploadService;
 import hackathon.nomadworker.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 
 @Transactional(readOnly=true)
@@ -18,6 +19,8 @@ import java.util.stream.Collectors;
 public class UserService
 {
     private final UserRepository userRepository;
+//    private final FileUploadService fileUploadService;
+    private final UploadService s3Service;
 
     @Transactional
     public void userPost(String u_uid, String u_email, String u_password, String u_nickname)
@@ -79,17 +82,23 @@ public class UserService
         return userRepository.findOnebyToken(u_uid);
     }
 
-
+    // s3 에 올라간 imageurl 을 받는다.
     @Transactional
     public User userImageUpdate(String u_uid, String imageUrl)
     {
         Long u_id = userRepository.findOnebyToken(u_uid).getId();
         String u_image = userRepository.findOnebyToken(u_uid).getU_image();
+        System.out.println("-------------------");
+        System.out.println(u_image);
         if(u_image != null){ //s3 data 삭제
             ///FileUploadService.fileUploadService.
-        }
+            String result =  s3Service.deleteObject(u_image); // 기존 이미지 삭제
 
-        return userRepository.imageUpdate(u_id,imageUrl);
+            return userRepository.imageUpdate(u_id,imageUrl);
+
+        }else {
+            return userRepository.imageUpdate(u_id,imageUrl);
+        }
     }
 
     @Transactional

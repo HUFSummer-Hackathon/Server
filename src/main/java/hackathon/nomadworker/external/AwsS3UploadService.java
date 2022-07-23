@@ -4,8 +4,11 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import hackathon.nomadworker.external.dto.component.S3Component;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
+
+import hackathon.nomadworker.external. dto.component.S3Component;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
@@ -25,6 +28,23 @@ public class AwsS3UploadService implements UploadService {
     @Override
     public String getFileUrl(String fileName) {
         return amazonS3.getUrl(component.getBucket(), fileName).toString();
+    }
+
+//    @Override
+//    public String deleteObject(String fileName) {
+//        System.out.println("result:"+ fileName);
+//        amazonS3.deleteObject(component.getBucket(), fileName);
+//        return fileName;
+//    }
+
+
+    // @Async annotation ensures that the method is executed in a different background thread
+    // but not consume the main thread.
+    @Async @Override
+    public String deleteObject(String fileName) {
+        DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(component.getBucket(),fileName);
+        amazonS3.deleteObject(deleteObjectRequest);
+        return fileName;
     }
 
 }

@@ -18,8 +18,7 @@ public class Menu {
 
     private Integer m_price;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name="p_id")
+    @OneToOne(mappedBy = "menu",cascade = CascadeType.ALL,fetch= LAZY)
     private Place place;
 }
 
