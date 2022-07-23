@@ -7,7 +7,8 @@ import javax.persistence.*;
 
 import static javax.persistence.FetchType.LAZY;
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 public class Menu {
 
     @Id @GeneratedValue
@@ -18,7 +19,7 @@ public class Menu {
 
     private Integer m_price;
 
-    @ManyToOne(fetch = LAZY)
+    @OneToOne(fetch = LAZY)
     @JoinColumn(name="p_id")
     private Place place;
 }
