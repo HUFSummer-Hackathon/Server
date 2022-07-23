@@ -47,7 +47,7 @@ public class Place {
         @OneToMany(mappedBy = "place", cascade = CascadeType.ALL)
         private List<Feed> feedList = new ArrayList<>();
 
-
+        @JsonIgnore
         @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
         @JoinColumn(name = "m_id")
         private Menu menu;
@@ -56,12 +56,4 @@ public class Place {
                 this.feedList.add(feed);
                 feed.setPlace(this);
         }
-
-        public void addMenu(Menu menu){
-                this.menu = menu;
-                menu.setPlace(this);
-        }
-
-
-
 }

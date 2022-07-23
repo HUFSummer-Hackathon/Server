@@ -27,7 +27,7 @@ public class UserLikeService
     }
 
     @Transactional
-    public List<User_Like> findUserLikesByFacId(Long id){return userLikeRepository.findByFacId(id);}
+    public List<User_Like> findUserLikesByFeedId(Long id){return userLikeRepository.findByFacId(id);}
 
 
 }
