@@ -42,9 +42,8 @@ public class UserDtos
     @Data @AllArgsConstructor
     public static class UserPutResponse
     {
-        private int status;
         private String message;
-
+        private int status;
     }
 
 

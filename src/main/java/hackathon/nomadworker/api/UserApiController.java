@@ -4,11 +4,13 @@ import static hackathon.nomadworker.dto.UserDtos.*;
 
 import hackathon.nomadworker.domain.User;
 import hackathon.nomadworker.service.AuthService;
+import hackathon.nomadworker.service.FileUploadService;
 import hackathon.nomadworker.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.validation.Valid;
@@ -25,6 +27,8 @@ public class UserApiController
 
     private final UserService userService;
     private final AuthService authService;
+
+    private final FileUploadService fileUploadService;
 
 
     @PostMapping(value="/api/user" , produces = "application/json;charset=UTF-8")
@@ -71,7 +75,7 @@ public class UserApiController
     public UserCoordinatePutResponse usercoordinateupdate(@RequestHeader("Authorization") String u_uid,
                                                           @Valid @RequestBody UserCoordinatePutRequest request)
     {
-        userService.updateCoordinate(u_uid, request.getLatitude(),request.getLongitude());
+        User result=userService.updateCoordinate(u_uid, request.getLatitude(),request.getLongitude());
 
         return new UserCoordinatePutResponse("갱신 성공", 200);
     }
@@ -93,5 +97,19 @@ public class UserApiController
         return result;
 
     }
+    @PutMapping(value = "api/user/profile")
+    public UserPutResponse profileUpdate(@RequestHeader("Authorization") String u_uid, @RequestParam MultipartFile file)
+    {
+        String imageUrl =  fileUploadService.uploadImage(file);
+        User result = userService.userImageUpdate(u_uid, imageUrl);
+        if (result ==null)
+        {
+            return  new UserPutResponse("fail",400);
+        }
+        else{
+            return  new UserPutResponse("suc",200);
+        }
+    }
+
 
 }
