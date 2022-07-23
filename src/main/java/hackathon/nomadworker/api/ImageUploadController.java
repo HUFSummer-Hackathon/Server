@@ -16,12 +16,13 @@ public class ImageUploadController {
     private final FileUploadService fileUploadService;
     private final UserService userService;
 
-    @PostMapping("/api/user/image")
-    public PutResponse uploadImage(@RequestHeader("Authorization") String u_uid, @RequestPart MultipartFile file) {
+    @PutMapping("/api/user/profile")
+    public PutResponse uploadImage(@RequestHeader("Authorization") String u_uid, @RequestParam MultipartFile file) {
         String imageUrl =  fileUploadService.uploadImage(file);
         User result = userService.userImagePost(u_uid, imageUrl);
         return new PutResponse("이미지 업로드 성공", 200, result.getU_image());
     }
 
     //@DeleteMapping("/api/user/image/delete")
+    //public DeleteResponse deleteImage(@RequestHeader("Authorization") String u_uid, )
 }

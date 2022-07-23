@@ -17,4 +17,16 @@ public class ImageDtos {
             this.u_image = u_image;
         }
     }
+
+    @Data
+    public static class DeleteResponse
+    {
+        private String message;
+        private int status;
+
+        public DeleteResponse(String message, int status) {
+            this.message = message;
+            this.status = status;
+        }
+    }
 }

@@ -97,19 +97,4 @@ public class UserApiController
         return result;
 
     }
-    @PutMapping(value = "api/user/profile")
-    public UserPutResponse profileUpdate(@RequestHeader("Authorization") String u_uid, @RequestParam MultipartFile file)
-    {
-        String imageUrl =  fileUploadService.uploadImage(file);
-        User result = userService.userImageUpdate(u_uid, imageUrl);
-        if (result ==null)
-        {
-            return  new UserPutResponse("fail",400);
-        }
-        else{
-            return  new UserPutResponse("suc",200);
-        }
-    }
-
-
 }
