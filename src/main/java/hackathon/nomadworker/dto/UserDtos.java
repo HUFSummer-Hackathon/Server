@@ -148,6 +148,19 @@ public class UserDtos
 
     }
 
+
+    @Data
+    public static class UserinfoResponse
+    {
+        private String u_nickname;
+        private String u_image;
+        public UserinfoResponse(String url, String u_nickname)
+        {
+            this.u_nickname = u_nickname;
+            this.u_image = url;
+        }
+    }
+
     @Data
     @AllArgsConstructor
     public static class UserSignInResponse<T>

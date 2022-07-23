@@ -33,7 +33,7 @@ public class FeedApiController {
         String imageUrl = fileUploadService.uploadImage(file);
         Date today = new Date();
         Locale currentLocale = new Locale("KOREAN", "KOREA");
-        String pattern = "yyyyMMddHHmmss"; //hhmmss로 시간,분,초만 뽑기도 가능
+        String pattern = "yyyyMMddHHmmss";
         SimpleDateFormat formatter = new SimpleDateFormat(pattern, currentLocale);
         String time = formatter.format(today);
         feedService.feedPost(u_uid, feed_content, p_id, imageUrl, time);
