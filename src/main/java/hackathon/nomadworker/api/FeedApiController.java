@@ -15,10 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -81,7 +78,7 @@ public class FeedApiController {
     }
 
     @PostMapping(value = "/api/feeds/likes")
-    public Result feedUserlike(@RequestParam("Authorization") String u_uid, @Valid @RequestBody FeeLikeRequest request)
+    public Result feedUserlike(@RequestHeader("Authorization") String u_uid, @Valid @RequestBody FeeLikeRequest request)
     {
          User user = userService.findOnebyToken(u_uid);
          Long u_id = user.getId();
@@ -91,7 +88,7 @@ public class FeedApiController {
         long count = subsByFacId.stream().count();
 
         if(f_id != null) {
-            if (subsByFacId.stream().anyMatch(s -> s.getUser().getId() == u_id)) {
+            if (subsByFacId.stream().anyMatch(s -> Objects.equals(s.getUser().getId(), u_id))) {
                 //     "이미 좋아요를 하고 있습니다.";
                 userLikePostDeleteResponse result = new userLikePostDeleteResponse(count - 1, false);
                 // Delete
