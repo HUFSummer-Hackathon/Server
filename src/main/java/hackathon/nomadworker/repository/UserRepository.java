@@ -1,17 +1,16 @@
 package hackathon.nomadworker.repository;
 
-
 import hackathon.nomadworker.domain.User;
 import hackathon.nomadworker.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
+
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.Optional;
+
 
 
 @Repository

@@ -1,6 +1,6 @@
 package hackathon.nomadworker.domain;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.locationtech.jts.geom.Point;
 import javax.persistence.*;
@@ -10,7 +10,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static javax.persistence.FetchType.LAZY;
+
 
 
 @Entity

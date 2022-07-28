@@ -32,29 +32,37 @@ public class FeedApiController {
     public PostResponse uploadFeed(@RequestHeader("Authorization") String u_uid, @RequestParam MultipartFile file,
     @RequestParam String feed_content, @RequestParam Long p_id) {
         String imageUrl = fileUploadService.uploadImage(file);
-        Date today = new Date();
-        Locale currentLocale = new Locale("KOREAN", "KOREA");
-        String pattern = "yyyyMMddHHmmss";
-        SimpleDateFormat formatter = new SimpleDateFormat(pattern, currentLocale);
-        String time = formatter.format(today);
-        feedService.feedPost(u_uid, feed_content, p_id, imageUrl, time);
-        return new PostResponse("피드 작성 성공", 200);
+        if (imageUrl !=null) {
+            Date today = new Date();
+            Locale currentLocale = new Locale("KOREAN", "KOREA");
+            String pattern = "yyyyMMddHHmmss";
+            SimpleDateFormat formatter = new SimpleDateFormat(pattern, currentLocale);
+            String time = formatter.format(today);
+            feedService.feedPost(u_uid, feed_content, p_id, imageUrl, time);
+            return new PostResponse("피드 작성 성공", 200);
+        }
+        else{return new PostResponse("피드 작성 실패", 400);}
+
     }
 
     @GetMapping(value = "api/feeds/total", produces = "application/json;charset=UTF-8")
     public FeedResultResponse feedAll(@RequestHeader("Authorization") String u_uid)
     {
         List<Feed> feedAll = feedService.feedAll();
+        if(!feedAll.isEmpty()){
         List<FeedDto> collect = feedAll.stream()
                 .map(f -> new FeedDto(f))
                 .collect(Collectors.toList());
         return new FeedResultResponse("피드 불러오기 성공", 200 , collect);
+        }else{return new FeedResultResponse("피드 불러오기 살패", 400 , null);}
+
     }
 
     @GetMapping(value = "api/feeds/usertotal", produces = "application/json;charset=UTF-8")
     public FeedResultResponse feedUserTotal(@RequestHeader("Authorization") String u_uid)
     {
         User feedUserTotal = feedService.feedUserTotal(u_uid);
+        if (feedUserTotal!=null){
         List<Feed> feed = feedUserTotal.getFeedList();
         ArrayList a = new ArrayList();
         for(Feed i : feed)
@@ -65,6 +73,11 @@ public class FeedApiController {
         FeedUserTotalDto collect = new FeedUserTotalDto(feedUserTotal ,a);
 
         return new FeedResultResponse("유저 피드 전체 조회 성공", 200 , collect);
+        }else {
+            return new FeedResultResponse("유저 피드 전체 조회 실패 ", 400 ,null);
+        }
+
+
 
     }
 
@@ -75,7 +88,7 @@ public class FeedApiController {
         Feed feedUserOne = feedService.feedUserOne(u_uid, f_id);
         List<User_Like> subsByFeedId = userLikeService.findUserLikesByFeedId(f_id);
         boolean like_status = false;
-        long count = subsByFeedId.stream().count();
+
 
         if(f_id != null)
         {

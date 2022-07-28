@@ -1,13 +1,13 @@
 package hackathon.nomadworker.auth;
 
-import com.mysql.cj.util.Base64Decoder;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.stereotype.Component;
-import org.springframework.util.Base64Utils;
+
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;

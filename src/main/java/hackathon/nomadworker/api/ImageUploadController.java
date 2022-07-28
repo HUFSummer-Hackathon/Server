@@ -1,7 +1,7 @@
 package hackathon.nomadworker.api;
 
 import hackathon.nomadworker.domain.User;
-import hackathon.nomadworker.dto.FeedDtos;
+;
 import hackathon.nomadworker.dto.ImageDtos.*;
 import hackathon.nomadworker.service.FileUploadService;
 import hackathon.nomadworker.service.UserService;

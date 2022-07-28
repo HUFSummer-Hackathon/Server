@@ -5,7 +5,7 @@ import hackathon.nomadworker.domain.Place;
 import hackathon.nomadworker.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.NoRepositoryBean;
+
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
