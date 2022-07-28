@@ -10,7 +10,15 @@ import java.util.List;
 
 public class FeedDtos {
 
-
+    //==Response DTO==//
+    @Data
+    @AllArgsConstructor
+    public static class FeedResultResponse<T>
+    {
+        private String message;
+        private int status;
+        private T data;
+    }
     @Data
     public static class PostResponse
     {
@@ -23,13 +31,6 @@ public class FeedDtos {
         }
     }
 
-    @Data
-    @AllArgsConstructor
-    public static class Result<T> {
-        private String message;
-        private int status;
-        private T data;
-    }
 
     @Data
     public static class FeedPostRequest
