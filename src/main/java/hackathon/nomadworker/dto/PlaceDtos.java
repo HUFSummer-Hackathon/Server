@@ -81,7 +81,6 @@ public class PlaceDtos {
 
         private String rent_price;
 
-        //private Point p_gpoint;
 
         public PlaceDto(Place place) {
             this.p_id = place.getId();
@@ -95,7 +94,6 @@ public class PlaceDtos {
             this.p_latitude = place.getP_latitude();
             this.p_longitude = place.getP_longitude();
             this.rent_price = place.getRent_price();
-//            this.p_gpoint = place.getP_gpoint();
         }
     }
 

@@ -42,17 +42,17 @@ public class FeedApiController {
     }
 
     @GetMapping(value = "api/feeds/total", produces = "application/json;charset=UTF-8")
-    public Result feedAll(@RequestHeader("Authorization") String u_uid)
+    public FeedResultResponse feedAll(@RequestHeader("Authorization") String u_uid)
     {
         List<Feed> feedAll = feedService.feedAll();
         List<FeedDto> collect = feedAll.stream()
                 .map(f -> new FeedDto(f))
                 .collect(Collectors.toList());
-        return new Result("피드 불러오기 성공", 200 , collect);
+        return new FeedResultResponse("피드 불러오기 성공", 200 , collect);
     }
 
     @GetMapping(value = "api/feeds/usertotal", produces = "application/json;charset=UTF-8")
-    public Result feedUserTotal(@RequestHeader("Authorization") String u_uid)
+    public FeedResultResponse feedUserTotal(@RequestHeader("Authorization") String u_uid)
     {
         User feedUserTotal = feedService.feedUserTotal(u_uid);
         List<Feed> feed = feedUserTotal.getFeedList();
@@ -64,12 +64,12 @@ public class FeedApiController {
         }
         FeedUserTotalDto collect = new FeedUserTotalDto(feedUserTotal ,a);
 
-        return new Result("유저 피드 전체 조회 성공", 200 , collect);
+        return new FeedResultResponse("유저 피드 전체 조회 성공", 200 , collect);
 
     }
 
     @GetMapping(value = "api/feeds/one", produces = "application/json;charset=UTF-8")
-    public Result feedUserOne(@RequestHeader("Authorization") String u_uid, @Param("f_id") Long f_id)
+    public FeedResultResponse feedUserOne(@RequestHeader("Authorization") String u_uid, @Param("f_id") Long f_id)
     {
         User findOnebyToken = userService.findOnebyToken(u_uid);
         Feed feedUserOne = feedService.feedUserOne(u_uid, f_id);
@@ -85,13 +85,13 @@ public class FeedApiController {
             }
 
             FeedOneDto feedOneDto = new FeedOneDto(findOnebyToken, feedUserOne, like_status);
-            return new Result("단일 피드 조회 성공", 200, feedOneDto);
+            return new FeedResultResponse("단일 피드 조회 성공", 200, feedOneDto);
         }
-        else{return new Result("단일 피드 조회 실패", 400, null);}
+        else{return new FeedResultResponse("단일 피드 조회 실패", 400, null);}
     }
 
     @PostMapping(value = "/api/feeds/likes")
-    public Result feedUserlike(@RequestHeader("Authorization") String u_uid, @Valid @RequestBody FeeLikeRequest request)
+    public FeedResultResponse feedUserlike(@RequestHeader("Authorization") String u_uid, @Valid @RequestBody FeeLikeRequest request)
     {
          User user = userService.findOnebyToken(u_uid);
          Long u_id = user.getId();
@@ -103,22 +103,22 @@ public class FeedApiController {
         if(f_id != null) {
             if (subsByFeedId.stream().anyMatch(s -> Objects.equals(s.getUser().getId(), u_id))) {
                 //     "이미 좋아요를 하고 있습니다.";
-                userLikePostDeleteResponse result = new userLikePostDeleteResponse(count - 1, false);
+                userLikePostDeleteResponse FeedresultResponse = new userLikePostDeleteResponse(count - 1, false);
                 feedService.feedUserLikeUpdate(f_id, (int) (count-1));
                 // Delete
                 userLikeService.deleteByUserFac(u_id, f_id);
-                return new Result("좋아요 취소", 200, result);
+                return new FeedResultResponse("좋아요 취소", 200, FeedresultResponse);
             }
 
             User_Like userLike = new User_Like();
             userLike.setUser(userService.findOne(u_id));
             userLike.setFeed(feedService.findOne(f_id));
             userLikeService.newUser_Like(userLike);
-            userLikePostDeleteResponse result = new userLikePostDeleteResponse(count + 1, true);
+            userLikePostDeleteResponse FeedresultResponse = new userLikePostDeleteResponse(count + 1, true);
             feedService.feedUserLikeUpdate(f_id, (int) (count+1));
 
-            return new Result("좋아요 성공", 200, result);
-        }else{return new Result("좋아요 실패", 400, null);}
+            return new FeedResultResponse("좋아요 성공", 200, FeedresultResponse);
+        }else{return new FeedResultResponse("좋아요 실패", 400, null);}
     }
 
 
