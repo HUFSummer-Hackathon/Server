@@ -7,7 +7,7 @@ import hackathon.nomadworker.domain.Place;
 import hackathon.nomadworker.repository.PlaceRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 

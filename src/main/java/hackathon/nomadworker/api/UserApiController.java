@@ -4,7 +4,7 @@ import static hackathon.nomadworker.dto.UserDtos.*;
 
 import hackathon.nomadworker.domain.User;
 import hackathon.nomadworker.service.AuthService;
-import hackathon.nomadworker.service.FileUploadService;
+
 import hackathon.nomadworker.service.UserService;
 
 import lombok.RequiredArgsConstructor;

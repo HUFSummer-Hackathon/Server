@@ -1,7 +1,7 @@
 package hackathon.nomadworker.service;
 
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import hackathon.nomadworker.external.AwsS3UploadService;
+
 import hackathon.nomadworker.external.UploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

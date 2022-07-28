@@ -3,7 +3,7 @@ package hackathon.nomadworker.repository;
 import hackathon.nomadworker.domain.Feed;
 
 import hackathon.nomadworker.domain.Place;
-import hackathon.nomadworker.domain.User;
+
 import hackathon.nomadworker.util.Direction;
 import hackathon.nomadworker.util.GeometryUtil;
 import hackathon.nomadworker.util.Location;
@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.NoResultException;
+
 import javax.persistence.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.naming.ServiceUnavailableException;
-import javax.persistence.NoResultException;
+
 
 @RestControllerAdvice
 public class ExceptionController {

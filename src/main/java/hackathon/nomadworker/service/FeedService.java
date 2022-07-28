@@ -1,12 +1,11 @@
 package hackathon.nomadworker.service;
 
-import hackathon.nomadworker.api.ExceptionController;
 import hackathon.nomadworker.domain.Feed;
 import hackathon.nomadworker.domain.Place;
 import hackathon.nomadworker.domain.User;
 import hackathon.nomadworker.repository.FeedRepository;
 import hackathon.nomadworker.repository.PlaceRepository;
-import hackathon.nomadworker.repository.UserRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
