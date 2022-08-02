@@ -52,8 +52,9 @@ public class UserRepository
     {
         User user = null;
         try{
-            TypedQuery<User> emailQuery  = em.createQuery("select distinct u from User u" + " where u.u_email = :u_email ", User.class)
-                    .setParameter("u_email", u_email);
+            TypedQuery<User> emailQuery  = em.createQuery("select distinct u from User u" + " where u.u_email = :u_email and u.u_password like :u_password", User.class)
+                    .setParameter("u_email", u_email)
+                    .setParameter("u_password", u_password );
             return emailQuery.getSingleResult();
         } catch(NoResultException n) {
             return user;
