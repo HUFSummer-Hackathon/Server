@@ -2,6 +2,7 @@ package hackathon.nomadworker.dto;
 
 import hackathon.nomadworker.domain.Feed;
 import hackathon.nomadworker.domain.User;
+import hackathon.nomadworker.domain.User_Reply;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -39,7 +40,7 @@ public class FeedDtos {
         private Long p_id;
     }
     @Data
-    public static class FeeLikeRequest
+    public static class FeedLikeRequest
     {
         private Long f_id;
     }
@@ -132,6 +133,34 @@ public class FeedDtos {
         }
 
     }
+    @Data
+    @AllArgsConstructor
+    public static class NewReplyRequestDto{
+        long f_id ;
+        long u_id ;
+        private String r_content ;
+    }
+
+    @Data
+    public  static class ReplyResponseDto{
+
+        long r_id;
+        String r_content;
+        long u_id;
+        String u_nickname ;
+        String u_image;
+        public ReplyResponseDto(User_Reply r)
+        {
+            this.r_id = r.getId();
+            this.r_content = r.getR_content();
+            this.u_id = r.getUser().getId();
+            this.u_nickname = r.getUser().getU_nickname();
+            this.u_image = r.getUser().getU_image() ;
+        }
+
+    }
+
+
 
 }
 
