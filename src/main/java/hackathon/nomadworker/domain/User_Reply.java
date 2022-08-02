@@ -17,6 +17,7 @@ public class User_Reply {
     @Column(name="r_id")
     private Long id;
 
+    private String r_content;
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name="u_id")
     private User user;
