@@ -43,4 +43,7 @@ public class Feed {
         userLike.setFeed(this);
     }
 
+    @OneToMany(mappedBy ="user", cascade = CascadeType.ALL)
+    private List<User_Reply> userReplyList = new ArrayList<>();
+
 }
