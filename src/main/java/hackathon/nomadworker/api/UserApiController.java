@@ -79,7 +79,7 @@ public class UserApiController
         User user = userService.SignIn(request.getU_email(), request.getU_password());
         UserSignInResponse result = null;
 
-        if(user.getU_uid() == null) {
+        if(user == null) {
             UserPostResponse data2 = new UserPostResponse(null, null, (float)0.0, (float)0.0);
             result = new UserSignInResponse("아이디, 비밀번호 불일치", 400, data2);
         }
