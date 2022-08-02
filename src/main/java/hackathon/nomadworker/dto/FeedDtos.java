@@ -5,6 +5,7 @@ import hackathon.nomadworker.domain.User;
 import hackathon.nomadworker.domain.User_Reply;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 
@@ -136,9 +137,15 @@ public class FeedDtos {
     @Data
     @AllArgsConstructor
     public static class NewReplyRequestDto{
-        long f_id ;
-        long u_id ;
+        private Long f_id ;
+        private Long u_id ;
         private String r_content ;
+    }
+    @Data
+    @NoArgsConstructor
+    public static class DeleteReplyRequestDto{
+        private Long r_id ;
+
     }
 
     @Data

@@ -37,4 +37,13 @@ public class UserReplyService {
     {
         return userReplyRepository.findAllByFeedid(f_id);
     }
+
+    @Transactional(readOnly = true)
+    public User_Reply findOneByReplyId(Long r_id)
+    {
+       return  userReplyRepository.findOne(r_id);
+    }
+
+
+
 }

@@ -152,6 +152,20 @@ public class FeedApiController {
             return new FeedResultResponse("댓글 추가 실패", 400, null);
         }
     }
+    @DeleteMapping(value = "api/feeds/reply")
+    public PostResponse deletereply(@RequestHeader("Authorization") String u_uid, @Valid @RequestBody DeleteReplyRequestDto request)
+    {
+        // requset check
+        System.out.println(request.getR_id());
+        User_Reply user_reply = userReplyService.findOneByReplyId(request.getR_id());
+        if (user_reply != null)
+        {
+            userReplyService.deleteByReplyId(user_reply.getId());
+            return new PostResponse("댓글 삭제 성공",200);
+        }else {
+            return new PostResponse("댓글 삭제 실패",400);
+        }
+    }
 }
 
 
