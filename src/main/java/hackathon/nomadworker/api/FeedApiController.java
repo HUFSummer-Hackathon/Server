@@ -97,7 +97,7 @@ public class FeedApiController {
                 like_status = true;
             }
             List<User_Reply> User_Reply = userReplyService.findRepliesByFeedId(f_id);
-            if (User_Reply != null) {
+            if (!User_Reply.isEmpty()) {
                 List<ReplyResponseDto> collect = User_Reply.stream()
                         .map(r -> new ReplyResponseDto(r))
                         .collect(Collectors.toList());
@@ -106,8 +106,7 @@ public class FeedApiController {
             }
             else
             {
-                String collect = null ;
-                FeedOneDto feedOneDto = new FeedOneDto(feedOne, like_status,collect);
+                FeedOneDto feedOneDto = new FeedOneDto(feedOne, like_status,null);
                 return new FeedResultResponse("단일 피드 조회 성공", 200, feedOneDto);
             }
         } else
