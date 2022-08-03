@@ -79,22 +79,39 @@ public class FeedApiController {
 
     }
 
+    // 피드 단일 조회
     @GetMapping(value = "api/feeds/one", produces = "application/json;charset=UTF-8")
-    public FeedResultResponse feedUserOne(@RequestHeader("Authorization") String u_uid, @Param("f_id") Long f_id) {
+    public FeedResultResponse feedUserOne(@RequestHeader("Authorization") String u_uid, @Param("f_id") Long f_id)
+    {
         User findOnebyToken = userService.findOnebyToken(u_uid);
-        Feed feedUserOne = feedService.feedUserOne(u_uid, f_id);
+        Feed feedOne = feedService.findOne(f_id);
+
         List<User_Like> subsByFeedId = userLikeService.findUserLikesByFeedId(f_id);
         boolean like_status = false;
 
 
-        if (f_id != null) {
-            if (subsByFeedId.stream().anyMatch(s -> Objects.equals(s.getUser().getU_uid(), u_uid))) {
+        if (f_id != null)
+        {
+            if (subsByFeedId.stream().anyMatch(s -> Objects.equals(s.getUser().getU_uid(), u_uid)))
+            {
                 like_status = true;
             }
-
-            FeedOneDto feedOneDto = new FeedOneDto(findOnebyToken, feedUserOne, like_status);
-            return new FeedResultResponse("단일 피드 조회 성공", 200, feedOneDto);
-        } else {
+            List<User_Reply> User_Reply = userReplyService.findRepliesByFeedId(f_id);
+            if (User_Reply != null) {
+                List<ReplyResponseDto> collect = User_Reply.stream()
+                        .map(r -> new ReplyResponseDto(r))
+                        .collect(Collectors.toList());
+                FeedOneDto feedOneDto = new FeedOneDto(feedOne, like_status,collect);
+                return new FeedResultResponse("단일 피드 조회 성공", 200, feedOneDto);
+            }
+            else
+            {
+                String collect = null ;
+                FeedOneDto feedOneDto = new FeedOneDto(feedOne, like_status,collect);
+                return new FeedResultResponse("단일 피드 조회 성공", 200, feedOneDto);
+            }
+        } else
+        {
             return new FeedResultResponse("단일 피드 조회 실패", 400, null);
         }
     }
@@ -156,7 +173,6 @@ public class FeedApiController {
     public PostResponse deletereply(@RequestHeader("Authorization") String u_uid, @Valid @RequestBody DeleteReplyRequestDto request)
     {
         // requset check
-        System.out.println(request.getR_id());
         User_Reply user_reply = userReplyService.findOneByReplyId(request.getR_id());
         if (user_reply != null)
         {

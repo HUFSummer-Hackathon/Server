@@ -53,23 +53,30 @@ public class FeedRepository {
         return em.find(Feed.class,id);
     }
 
-
-
     public User feedUserTotal(String u_uid) {
+        try {
         return em.createQuery("select u from User u " +
                 "join fetch u.feedList fl " +
                 "where u.u_uid = :u_uid", User.class)
                 .setParameter("u_uid", u_uid)
                 .getSingleResult();
+        }catch(NoResultException nre)
+        {
+            return null;
+        }
     }
 
 
     public User findOnebyTokenFeed(String u_uid)
-    {
+    {   try {
         return em.createQuery("select distinct u from User u" +
                     " where u.u_uid = :u_uid ", User.class)
                 .setParameter("u_uid", u_uid)
                 .getSingleResult();
+        }catch(NoResultException nre)
+        {
+        return null;
+        }
     }
 
     public Feed feedUserOne(Long u_id, Long f_id)

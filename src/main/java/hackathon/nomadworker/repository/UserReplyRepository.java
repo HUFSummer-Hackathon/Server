@@ -13,7 +13,6 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-
 public class UserReplyRepository {
     @Autowired
     private final EntityManager em;

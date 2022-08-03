@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 
-
 public class FeedDtos {
 
     //==Response DTO==//
@@ -101,7 +100,8 @@ public class FeedDtos {
 
     @Data
     @AllArgsConstructor
-    public static class FeedOneDto {
+    public static class FeedOneDto<T>
+    {
         private String f_image;
         private String f_content;
         private int f_like_count;
@@ -109,15 +109,17 @@ public class FeedDtos {
         private String f_time;
         private String u_image;
         private String u_nickname;
-
-        public FeedOneDto(User u, Feed f, boolean s){
+        private T reply;
+        public FeedOneDto(Feed f, boolean s,T reply)
+        {
             this.f_image = f.getF_image();
             this.f_content = f.getF_content();
             this.f_like_count = f.getF_like();
             this.like_status = s;
             this.f_time = f.getF_time();
-            this.u_image = u.getU_image();
-            this.u_nickname = u.getU_nickname();
+            this.u_image = f.getUser().getU_image();
+            this.u_nickname = f.getUser().getU_nickname();
+            this.reply = reply;
         }
     }
 
