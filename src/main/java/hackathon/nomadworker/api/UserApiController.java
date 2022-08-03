@@ -75,7 +75,7 @@ public class UserApiController
     public UserSignInResponse SignIn(@Valid @RequestBody UserSignInRequest request) throws Exception {
         User user = userService.SignIn(request.getU_email(), request.getU_password());
         if(user == null) {
-            UserPostResponse data = new UserPostResponse(null,null,null,null,(float)0.0,(float)0.0);
+            UserPostResponse data = new UserPostResponse((long)0,null,null,null,(float)0.0,(float)0.0);
             return new UserSignInResponse("아이디 또는 비밀번호 불일치 계정을 확인해주세요.", 400, data);
         }
         else
