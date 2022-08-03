@@ -24,12 +24,12 @@ public class UserLikeRepository {
         em.remove(userLike);
     }
 
-    public List<User_Like> findByFacId(Long id){
+    public List<User_Like> findByFeedId(Long f_id){
         return em.createQuery("select l from User_Like l" +
                         " join fetch l.user u" +
                         " join fetch l.feed f" +
-                        " where l.feed.id = :id ", User_Like.class)
-                .setParameter("id", id)
+                        " where l.feed.id = :f_id ", User_Like.class)
+                .setParameter("f_id", f_id)
                 .getResultList();
     }
 

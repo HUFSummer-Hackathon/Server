@@ -28,14 +28,24 @@ public class UserDtos
     }
 
 
-    @Data @AllArgsConstructor
+    @Data
     public static class UserPostResponse
     {
+        private Long userid;
+        private String userUrl;
         private String nickname;
         private String token;
         private float latitude;
         private float longitude;
 
+        public UserPostResponse(Long userid, String userUrl, String nickname, String token, float latitude, float longitude) {
+            this.userid = userid;
+            this.userUrl = userUrl;
+            this.nickname = nickname;
+            this.token = token;
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
     }
 
 

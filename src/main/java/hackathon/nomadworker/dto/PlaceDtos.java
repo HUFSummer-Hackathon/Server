@@ -99,7 +99,7 @@ public class PlaceDtos {
 
 
     @Data @AllArgsConstructor
-    public static class PlaceDetailDto<T>
+    public static class PlaceDetailDto
     {
         private long p_id;
         private String p_cate;
@@ -111,7 +111,6 @@ public class PlaceDtos {
         private float p_latitude;
         private float p_longitude;
         private String p_storeType;
-
         private String p_url;
         public PlaceDetailDto(Place place)
         {
@@ -126,8 +125,6 @@ public class PlaceDtos {
             this.p_latitude =place.getP_latitude();
             this.p_longitude = place.getP_longitude();
             this.p_url =place.getRent_price();
-
-
         }
     }
 

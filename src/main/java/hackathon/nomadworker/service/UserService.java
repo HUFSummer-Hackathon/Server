@@ -35,33 +35,10 @@ public class UserService
     }
 
     //==Sign In==//
-    public User SignIn(String u_email, String u_password) throws Exception {
-        User result = null;
-
+    public User SignIn(String u_email, String u_password) throws Exception
+    {
         User user = userRepository.signIn(u_email, u_password);
-        try
-        {
-
-            if (user.getU_email().equals(u_email) == true && user.getU_password().equals(u_password) == true) {
-                user.setU_latitude((float) 38.11);
-                user.setU_longitude((float) 128.111);
-            } else if (user.getU_email().equals(u_email) == false || user.getU_password().equals(u_password) == false) {
-                user.setU_nickname(null);
-                user.setU_uid(null);
-                user.setU_latitude((float) 0.0);
-                user.setU_longitude((float) 0.0);
-            }
-            result = user;
-
-        }catch(EmptyResultDataAccessException e) {
-            user.setU_nickname(null);
-            user.setU_uid(null);
-            user.setU_latitude((float) 0.0);
-            user.setU_longitude((float) 0.0);
-            result = user;
-        }finally {
-            return result;
-        }
+        return user;
     }
 
 
