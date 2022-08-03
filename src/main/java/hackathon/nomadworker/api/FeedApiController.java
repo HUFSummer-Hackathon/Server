@@ -59,25 +59,54 @@ public class FeedApiController {
 
     }
 
+//    @GetMapping(value = "api/feeds/usertotal", produces = "application/json;charset=UTF-8")
+//    public FeedResultResponse feedUserTotal(@RequestHeader("Authorization") String u_uid) {
+//        User feedUserTotal = feedService.feedUserTotal(u_uid);
+//        if (feedUserTotal != null) {
+//            List<Feed> feed = feedUserTotal.getFeedList();
+//            ArrayList a = new ArrayList();
+//            for (Feed i : feed) {
+//                FeedList feedlist = new FeedList(i);
+//                a.add(feedlist);
+//            }
+//            FeedUserTotalDto collect = new FeedUserTotalDto(feedUserTotal, a);
+//
+//            return new FeedResultResponse("유저 피드 전체 조회 성공", 200, collect);
+//        } else {
+//            return new FeedResultResponse("유저 피드 전체 조회 실패 ", 400, null);
+//        }
+//
+//
+//    }
     @GetMapping(value = "api/feeds/usertotal", produces = "application/json;charset=UTF-8")
-    public FeedResultResponse feedUserTotal(@RequestHeader("Authorization") String u_uid) {
-        User feedUserTotal = feedService.feedUserTotal(u_uid);
-        if (feedUserTotal != null) {
+    public FeedResultResponse feedUserTotal(@RequestHeader("Authorization") String u_uid,@Param("u_id") Long u_id)
+    {
+        User feedUserTotal = feedService.feedUserTotal(u_id);
+        System.out.println(feedUserTotal);
+        if (feedUserTotal != null)
+        {
             List<Feed> feed = feedUserTotal.getFeedList();
-            ArrayList a = new ArrayList();
-            for (Feed i : feed) {
-                FeedList feedlist = new FeedList(i);
-                a.add(feedlist);
+            if(!feed.isEmpty()) {
+                ArrayList a = new ArrayList();
+                for (Feed i : feed) {
+                    FeedList feedlist = new FeedList(i);
+                    a.add(feedlist);
+                }
+                FeedUserTotalDto collect = new FeedUserTotalDto(feedUserTotal, a);
+                return new FeedResultResponse("유저 피드 전체 조회 성공", 200, collect);
             }
-            FeedUserTotalDto collect = new FeedUserTotalDto(feedUserTotal, a);
+            else {
+                FeedUserTotalDto collect = new FeedUserTotalDto(feedUserTotal,null);
+                return new FeedResultResponse("유저 피드 전체 조회 성공", 200, collect);
+            }
 
-            return new FeedResultResponse("유저 피드 전체 조회 성공", 200, collect);
         } else {
             return new FeedResultResponse("유저 피드 전체 조회 실패 ", 400, null);
         }
 
 
     }
+
 
     // 피드 단일 조회
     @GetMapping(value = "api/feeds/one", produces = "application/json;charset=UTF-8")

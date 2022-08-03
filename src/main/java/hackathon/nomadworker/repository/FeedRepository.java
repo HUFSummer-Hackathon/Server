@@ -53,12 +53,12 @@ public class FeedRepository {
         return em.find(Feed.class,id);
     }
 
-    public User feedUserTotal(String u_uid) {
+    public User feedUserTotal(Long u_id) {
         try {
         return em.createQuery("select u from User u " +
                 "join fetch u.feedList fl " +
-                "where u.u_uid = :u_uid", User.class)
-                .setParameter("u_uid", u_uid)
+                "where u.id = :u_id", User.class)
+                .setParameter("u_id", u_id)
                 .getSingleResult();
         }catch(NoResultException nre)
         {
