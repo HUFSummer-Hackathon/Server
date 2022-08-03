@@ -45,6 +45,14 @@ public class FeedApiController {
 
     }
 
+    @PostMapping(value = "/api/feeds/tmpnew")
+    public PostResponse uploadFeed(@RequestHeader("Authorization") String u_uid, @RequestParam MultipartFile file)
+    {
+            return new PostResponse("피드 작", 200);
+
+    }
+
+
     @GetMapping(value = "api/feeds/total", produces = "application/json;charset=UTF-8")
     public FeedResultResponse feedAll(@RequestHeader("Authorization") String u_uid) {
         List<Feed> feedAll = feedService.feedAll();
