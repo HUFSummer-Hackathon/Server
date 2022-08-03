@@ -6,6 +6,7 @@ import hackathon.nomadworker.domain.User;
 import hackathon.nomadworker.repository.FeedRepository;
 import hackathon.nomadworker.repository.PlaceRepository;
 
+import hackathon.nomadworker.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ public class FeedService {
     @Autowired
     private final FeedRepository feedRepository;
     private final PlaceRepository placeRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public void feedPost(String u_uid, String feed_content, Long p_id, String imageUrl, String time)
@@ -35,9 +37,13 @@ public class FeedService {
         return feedRepository.findALL();
     }
 
-    public User feedUserTotal(String u_uid)
+    public User feedUserTotal(Long u_id)
     {
-        User feedUserTotal = feedRepository.feedUserTotal(u_uid);
+        User feedUserTotal = feedRepository.feedUserTotal(u_id);
+        if(feedUserTotal == null)
+        {
+            feedUserTotal = userRepository.findOne(u_id);
+        }
         return feedUserTotal;
     }
 
