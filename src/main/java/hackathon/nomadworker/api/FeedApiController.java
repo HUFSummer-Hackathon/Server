@@ -29,7 +29,10 @@ public class FeedApiController {
 
     @PostMapping(value = "/api/feeds/new")
     public PostResponse uploadFeed(@RequestHeader("Authorization") String u_uid, @RequestParam MultipartFile file,
-                                   @RequestParam String feed_content, @RequestParam Long p_id) {
+                                   @RequestParam String feed_content, @RequestParam String p_id) {
+
+        Long place_id = Long.parseLong(p_id);
+
         String imageUrl = fileUploadService.uploadImage(file);
         if (imageUrl != null) {
             Date today = new Date();
@@ -37,7 +40,7 @@ public class FeedApiController {
             String pattern = "yyyyMMddHHmmss";
             SimpleDateFormat formatter = new SimpleDateFormat(pattern, currentLocale);
             String time = formatter.format(today);
-            feedService.feedPost(u_uid, feed_content, p_id, imageUrl, time);
+            feedService.feedPost(u_uid, feed_content,place_id, imageUrl, time);
             return new PostResponse("피드 작성 성공", 200);
         } else {
             return new PostResponse("피드 작성 실패", 400);
@@ -48,8 +51,7 @@ public class FeedApiController {
     @PostMapping(value = "/api/feeds/tmpnew")
     public PostResponse uploadFeed(@RequestHeader("Authorization") String u_uid, @RequestParam MultipartFile file)
     {
-            return new PostResponse("피드 작", 200);
-
+            return new PostResponse("피드", 200);
     }
 
 
