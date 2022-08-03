@@ -27,13 +27,13 @@ public class UserApiController
 
     @PostMapping(value="/api/user" , produces = "application/json;charset=UTF-8")
     public UserResultResponse userPost(@Valid @RequestBody UserPostRequest request) throws Exception {
-
         //토큰 발행
         String token= authService.createToken(request.getU_nickname());
         userService.userPost(token, request.getU_email(),request.getU_password(),request.getU_nickname());
-
+        User user = userService.findOnebyToken(token);
         String message = "회원 등록이 완료되었습니다.";
-        UserPostResponse data = new UserPostResponse(request.getU_nickname(), token,(float)38.11,(float)128.111);
+        UserPostResponse data = new UserPostResponse(user.getId(),
+                user.getU_image(), user.getU_nickname(),user.getU_uid(), user.getU_latitude(),user.getU_longitude());
         UserResultResponse userResultResponse = new UserResultResponse(message, 200, data);
 
         return userResultResponse;
@@ -77,19 +77,16 @@ public class UserApiController
     @PostMapping(value="/api/user/signin", produces = "application/json;charset=UTF-8")
     public UserSignInResponse SignIn(@Valid @RequestBody UserSignInRequest request) throws Exception {
         User user = userService.SignIn(request.getU_email(), request.getU_password());
-        UserSignInResponse result = null;
-
         if(user == null) {
-            UserPostResponse data2 = new UserPostResponse(null, null, (float)0.0, (float)0.0);
-            result = new UserSignInResponse("아이디, 비밀번호 불일치", 400, data2);
+            UserPostResponse data = new UserPostResponse(null,null,null,null,(float)0.0,(float)0.0);
+            return new UserSignInResponse("아이디 또는 비밀번호 불일치 계정을 확인해주세요.", 400, data);
         }
-        else if (user.getU_uid() != null) {
-            UserPostResponse data = new UserPostResponse(user.getU_nickname(), user.getU_uid(), user.getU_latitude(), user.getU_longitude());
-            result = new UserSignInResponse("로그인 성공", 200, data);
+        else
+        {
+            UserPostResponse data = new UserPostResponse(user.getId(),
+                    user.getU_image(), user.getU_nickname(),user.getU_uid(), user.getU_latitude(),user.getU_longitude());
+            return new UserSignInResponse("로그인 성공 !", 200, data);
         }
-
-        return result;
-
     }
     @GetMapping("/api/user/profile")
     public UserResultResponse Userinfo(@RequestHeader("Authorization") String u_uid)

@@ -37,11 +37,9 @@ public class UserService
     //==Sign In==//
     public User SignIn(String u_email, String u_password) throws Exception {
         User result = null;
-
         User user = userRepository.signIn(u_email, u_password);
         try
         {
-
             if (user.getU_email().equals(u_email) == true && user.getU_password().equals(u_password) == true) {
                 user.setU_latitude((float) 38.11);
                 user.setU_longitude((float) 128.111);
