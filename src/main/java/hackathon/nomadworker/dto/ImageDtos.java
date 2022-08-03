@@ -9,12 +9,11 @@ public class ImageDtos {
     {
         private String message;
         private int status;
-        private String u_image;
 
-        public PutResponse(String message, int status, String u_image) {
+
+        public PutResponse(String message, int status) {
             this.message = message;
             this.status = status;
-            this.u_image = u_image;
         }
     }
 

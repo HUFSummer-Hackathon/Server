@@ -23,8 +23,6 @@ public class UserApiController
     private final UserService userService;
     private final AuthService authService;
 
-
-
     @PostMapping(value="/api/user" , produces = "application/json;charset=UTF-8")
     public UserResultResponse userPost(@Valid @RequestBody UserPostRequest request) throws Exception {
         //토큰 발행
@@ -86,19 +84,18 @@ public class UserApiController
             return new UserSignInResponse("로그인 성공 !", 200, data);
         }
     }
-    @GetMapping("/api/user/profile")
-    public UserResultResponse Userinfo(@RequestHeader("Authorization") String u_uid)
-    {
-        User user = userService.findOnebyToken(u_uid);
-        UserinfoResponse result = new UserinfoResponse(user.getU_image(),user.getU_nickname());
-        if (result!= null) {
-            return new UserResultResponse("회원 정보 조회 성공", 200, result);
-        }
-        else{
-            return new UserResultResponse("회원 정보 조회 실패", 400, null);
-        }
-    }
-
+//    @GetMapping("/api/user/profile")
+//    public UserResultResponse Userinfo(@RequestHeader("Authorization") String u_uid)
+//    {
+//        User user = userService.findOnebyToken(u_uid);
+//        UserinfoResponse result = new UserinfoResponse(user.getU_image(),user.getU_nickname());
+//        if (result!= null) {
+//            return new UserResultResponse("회원 정보 조회 성공", 200, result);
+//        }
+//        else{
+//            return new UserResultResponse("회원 정보 조회 실패", 400, null);
+//        }
+//    }
 
 
 
