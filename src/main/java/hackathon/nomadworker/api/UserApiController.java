@@ -32,8 +32,7 @@ public class UserApiController
         userService.userPost(token, request.getU_email(),request.getU_password(),request.getU_nickname());
         User user = userService.findOnebyToken(token);
         String message = "회원 등록이 완료되었습니다.";
-        UserPostResponse data = new UserPostResponse(user.getId(),
-                user.getU_image(), user.getU_nickname(),user.getU_uid(), user.getU_latitude(),user.getU_longitude());
+        UserPostResponse data = new UserPostResponse(user.getId(), user.getU_image(), user.getU_nickname(),user.getU_uid(), user.getU_latitude(),user.getU_longitude());
         UserResultResponse userResultResponse = new UserResultResponse(message, 200, data);
 
         return userResultResponse;
@@ -83,8 +82,7 @@ public class UserApiController
         }
         else
         {
-            UserPostResponse data = new UserPostResponse(user.getId(),
-                    user.getU_image(), user.getU_nickname(),user.getU_uid(), user.getU_latitude(),user.getU_longitude());
+            UserPostResponse data = new UserPostResponse(user.getId(), user.getU_image(), user.getU_nickname(),user.getU_uid(), user.getU_latitude(),user.getU_longitude());
             return new UserSignInResponse("로그인 성공 !", 200, data);
         }
     }
