@@ -5,12 +5,16 @@ import hackathon.nomadworker.domain.User;
 import hackathon.nomadworker.domain.User_Like;
 import hackathon.nomadworker.domain.User_Reply;
 import hackathon.nomadworker.dto.FeedDtos.*;
+import hackathon.nomadworker.dto.UserDtos;
 import hackathon.nomadworker.service.*;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
+import javax.mail.Multipart;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -28,9 +32,11 @@ public class FeedApiController {
 
 
     @PostMapping(value = "/api/feeds/new")
-    public PostResponse uploadFeed(@RequestHeader("Authorization") String u_uid, @RequestParam MultipartFile file,
-                                   @RequestParam String feed_content, @RequestParam String p_id) {
-
+    public PostResponse uploadFeed(@RequestHeader("Authorization") String u_uid,
+                                   @RequestParam MultipartFile file,
+                                   @RequestParam String feed_content,
+                                   @RequestParam String p_id)
+    {
         Long place_id = Long.parseLong(p_id);
 
         String imageUrl = fileUploadService.uploadImage(file);
@@ -47,11 +53,21 @@ public class FeedApiController {
         }
 
     }
-
-    @PostMapping(value = "/api/feeds/tmpnew")
-    public PostResponse uploadFeed(@RequestHeader("Authorization") String u_uid, @RequestParam MultipartFile file)
+    // for andtroid test
+    @PostMapping(value = "/api/feeds/new1")
+    public PostResponse uploadFeed1(@RequestHeader("Authorization") String u_uid, @RequestParam MultipartFile file)
     {
-            return new PostResponse("피드", 200);
+            System.out.println(file.getName());
+            return new PostResponse(file.getName()+"피드", 200);
+    }
+
+    @PostMapping(value = "/api/feeds/new2")
+    public PostResponse uploadFeed2(@RequestHeader("Authorization") String u_uid,
+                                    @RequestPart MultipartFile file,
+                                    @RequestPart Feedpostrequest request)
+    {
+
+        return new PostResponse(request.getP_id()+request.getFeed_content(), 200);
     }
 
 
@@ -68,26 +84,6 @@ public class FeedApiController {
         }
 
     }
-
-//    @GetMapping(value = "api/feeds/usertotal", produces = "application/json;charset=UTF-8")
-//    public FeedResultResponse feedUserTotal(@RequestHeader("Authorization") String u_uid) {
-//        User feedUserTotal = feedService.feedUserTotal(u_uid);
-//        if (feedUserTotal != null) {
-//            List<Feed> feed = feedUserTotal.getFeedList();
-//            ArrayList a = new ArrayList();
-//            for (Feed i : feed) {
-//                FeedList feedlist = new FeedList(i);
-//                a.add(feedlist);
-//            }
-//            FeedUserTotalDto collect = new FeedUserTotalDto(feedUserTotal, a);
-//
-//            return new FeedResultResponse("유저 피드 전체 조회 성공", 200, collect);
-//        } else {
-//            return new FeedResultResponse("유저 피드 전체 조회 실패 ", 400, null);
-//        }
-//
-//
-//    }
     @GetMapping(value = "api/feeds/usertotal", produces = "application/json;charset=UTF-8")
     public FeedResultResponse feedUserTotal(@RequestHeader("Authorization") String u_uid,@Param("u_id") Long u_id)
     {
