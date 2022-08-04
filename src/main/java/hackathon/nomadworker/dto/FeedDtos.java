@@ -6,6 +6,7 @@ import hackathon.nomadworker.domain.User_Reply;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 
@@ -96,6 +97,13 @@ public class FeedDtos {
             this.f_image = f.getF_image();
             this.f_id = f.getId();
         }
+    }
+    @Data
+    @NoArgsConstructor
+    public static class Feedpostrequest
+    {
+        String feed_content;
+         String p_id;
     }
 
     @Data
