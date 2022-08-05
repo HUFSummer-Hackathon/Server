@@ -23,7 +23,7 @@ public class ImageUploadController {
                                    @RequestPart(value = "image", required = false) MultipartFile image)
     {
         String imageUrl =  fileUploadService.uploadImage(image);
-        User result = userService.userImagePost(u_uid, imageUrl);
+        User result = userService.userImageUpdate(u_uid, imageUrl);
         if(result!= null) {
             return new PutResponse("이미지 갱신 성공", 200);
         }else

@@ -89,6 +89,7 @@ public class UserRepository
         em.merge(user);
         return user;
     }
+
     public User tokenUpdate(String u_nickname)  {
         User user = em.find(User.class,u_nickname);
         user.setU_uid(AuthService.createToken(u_nickname));
