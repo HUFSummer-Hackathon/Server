@@ -19,7 +19,8 @@ public class ImageUploadController {
     private final UserService userService;
 
     @PutMapping(value = "/api/user/profile", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public PutResponse uploadImage(@RequestHeader("Authorization") String u_uid, @RequestParam(value = "image", required = false) MultipartFile image)
+    public PutResponse uploadImage(@RequestHeader("Authorization") String u_uid,
+                                   @RequestPart(value = "image", required = false) MultipartFile image)
     {
         String imageUrl =  fileUploadService.uploadImage(image);
         User result = userService.userImagePost(u_uid, imageUrl);
