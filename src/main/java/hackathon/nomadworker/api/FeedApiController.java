@@ -57,6 +57,8 @@ public class FeedApiController {
     @PostMapping(value = "/api/feeds/new1")
     public PostResponse uploadFeed1(@RequestHeader("Authorization") String u_uid, @RequestParam MultipartFile file)
     {
+            String imageUrl = fileUploadService.uploadImage(file);
+
             System.out.println(file.getName());
             return new PostResponse(file.getName()+"피드", 200);
     }
@@ -66,7 +68,6 @@ public class FeedApiController {
                                     @RequestPart MultipartFile file,
                                     @RequestPart Feedpostrequest request)
     {
-
         return new PostResponse(request.getP_id()+request.getFeed_content(), 200);
     }
 

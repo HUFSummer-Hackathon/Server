@@ -103,7 +103,7 @@ public class FeedDtos {
     public static class Feedpostrequest
     {
         String feed_content;
-         String p_id;
+        String p_id;
     }
 
     @Data
