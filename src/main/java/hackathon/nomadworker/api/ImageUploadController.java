@@ -10,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@CrossOrigin
 @RequiredArgsConstructor
 @RestController
 public class ImageUploadController {
@@ -20,7 +19,7 @@ public class ImageUploadController {
 
     @PutMapping(value = "/api/user/profile", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public PutResponse uploadImage(@RequestHeader("Authorization") String u_uid,
-                                   @RequestPart(value = "image", required = false) MultipartFile image)
+                                   @RequestPart(required = false) MultipartFile image)
     {
         String imageUrl =  fileUploadService.uploadImage(image);
         User result = userService.userImageUpdate(u_uid, imageUrl);
