@@ -44,7 +44,6 @@ public class FeedRepository {
         return em.createQuery("select f from Feed f " +
                         "join fetch f.user u " +
                         "join fetch f.place p", Feed.class)
-                .setMaxResults(10)
                 .getResultList();
     }
 
