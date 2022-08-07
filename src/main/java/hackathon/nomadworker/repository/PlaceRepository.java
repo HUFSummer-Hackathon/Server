@@ -76,9 +76,7 @@ public class PlaceRepository {
                         "order by f.f_like desc ", Feed.class).setMaxResults(10).getResultList();
         return feed;
     }
-
-
-
+/*
     public List<Place> searchPlace(String p_cate, String p_storeType, String p_name)
     {
         List<Place> place = em.createQuery("select p from Place p " +
@@ -91,6 +89,17 @@ public class PlaceRepository {
                 .getResultList();
 
         return place;
+    }
+*/
+
+    public List<Place> searchPlace(String p_cate, String p_storeType, String p_name)
+    {
+        String jpql = "select p from Place p where p.p_cate =: p_cate and p.p_storeType =: p_storeType and p.p_name like :p_name";
+        TypedQuery<Place> query = em.createQuery(jpql, Place.class)
+                .setParameter("p_cate", p_cate)
+                .setParameter("p_storeType", p_storeType)
+                .setParameter("p_name", "%" + p_name + "%").setMaxResults(1000);
+        return query.getResultList();
     }
 
     public List<Place> searchOneByName(String p_name) {

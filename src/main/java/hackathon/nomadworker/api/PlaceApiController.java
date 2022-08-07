@@ -117,6 +117,8 @@ public class PlaceApiController {
                                            @RequestParam("place_name") String p_name)
     {
         List<Place> places = placeService.searchPlace(p_cate, p_storeType, p_name);
+        Place a = places.get(0);
+        System.out.println(a.getP_addr());
         List<placeSearchDto> collect = places.stream()
                 .map(p -> new placeSearchDto(p))
                 .collect(Collectors.toList());

@@ -30,6 +30,7 @@ public class Place {
 
         private String p_weekndt;
 
+        @Column(name = "p_addr")
         private String p_addr;
 
         private String p_image;
