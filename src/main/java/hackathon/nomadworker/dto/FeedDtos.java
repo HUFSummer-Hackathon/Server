@@ -19,7 +19,6 @@ public class FeedDtos {
     {
         private String message;
         private int status;
-        private T data;
     }
     @Data
     public static class PostResponse

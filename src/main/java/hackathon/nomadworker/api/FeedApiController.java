@@ -157,7 +157,7 @@ public class FeedApiController {
                 feedService.feedUserLikeUpdate(f_id, (int) (count - 1));
                 // Delete
                 userLikeService.deleteByUserFac(u_id, f_id);
-                return new FeedResultResponse("좋아요 취소", 200, FeedresultResponse);
+                return new FeedResultResponse("좋아요 취소", 200);
             }
 
             User_Like userLike = new User_Like();
@@ -167,9 +167,9 @@ public class FeedApiController {
             userLikePostDeleteResponse FeedresultResponse = new userLikePostDeleteResponse(count + 1, true);
             feedService.feedUserLikeUpdate(f_id, (int) (count + 1));
 
-            return new FeedResultResponse("좋아요 성공", 200, FeedresultResponse);
+            return new FeedResultResponse("좋아요 성공", 200);
         } else {
-            return new FeedResultResponse("좋아요 실패", 400, null);
+            return new FeedResultResponse("좋아요 실패", 400);
         }
     }
 
