@@ -5,16 +5,13 @@ import hackathon.nomadworker.domain.User;
 import hackathon.nomadworker.domain.User_Like;
 import hackathon.nomadworker.domain.User_Reply;
 import hackathon.nomadworker.dto.FeedDtos.*;
-import hackathon.nomadworker.dto.UserDtos;
+import hackathon.nomadworker.repository.UserLikeRepository2;
 import hackathon.nomadworker.service.*;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartRequest;
 
-import javax.mail.Multipart;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -38,8 +35,8 @@ public class FeedApiController {
                                    @RequestParam String p_id)
     {
         Long place_id = Long.parseLong(p_id);
-
         String imageUrl = fileUploadService.uploadImage(file);
+
         if (imageUrl != null) {
             Date today = new Date();
             Locale currentLocale = new Locale("KOREAN", "KOREA");
@@ -48,48 +45,42 @@ public class FeedApiController {
             String time = formatter.format(today);
             feedService.feedPost(u_uid, feed_content,place_id, imageUrl, time);
             return new PostResponse("피드 작성 성공", 200);
-        } else {
+        }
+        else {
             return new PostResponse("피드 작성 실패", 400);
         }
 
     }
-    // for andtroid test
-    @PostMapping(value = "/api/feeds/new1")
-    public PostResponse uploadFeed1(@RequestHeader("Authorization") String u_uid, @RequestParam MultipartFile file)
-    {
-            String imageUrl = fileUploadService.uploadImage(file);
-
-            System.out.println(file.getName());
-            return new PostResponse(file.getName()+"피드", 200);
-    }
-
-    @PostMapping(value = "/api/feeds/new2")
-    public PostResponse uploadFeed2(@RequestHeader("Authorization") String u_uid,
-                                    @RequestPart MultipartFile file,
-                                    @RequestPart Feedpostrequest request)
-    {
-        return new PostResponse(request.getP_id()+request.getFeed_content(), 200);
-    }
-
 
     @GetMapping(value = "api/feeds/total", produces = "application/json;charset=UTF-8")
-    public FeedResultResponse feedAll(@RequestHeader("Authorization") String u_uid) {
+    public FeedResultResponse feedAll(@RequestHeader("Authorization") String u_uid)
+    {
         List<Feed> feedAll = feedService.feedAll();
+        boolean like_status = false;
+
         if (!feedAll.isEmpty()) {
             List<FeedDto> collect = feedAll.stream()
-                    .map(f -> new FeedDto(f))
+                    .map(f -> new FeedDto(f, like_status))
                     .collect(Collectors.toList());
+            for (FeedDto i : collect)
+            {
+                if(userLikeService.checkUserFeedLike(u_uid, i.getF_id()) == true)
+                {
+                    i.setLike_status(true);
+                }
+            }
             return new FeedResultResponse("피드 불러오기 성공", 200, collect);
-        } else {
+        }
+        else {
             return new FeedResultResponse("피드 불러오기 살패", 400, null);
         }
 
     }
+
     @GetMapping(value = "api/feeds/usertotal", produces = "application/json;charset=UTF-8")
     public FeedResultResponse feedUserTotal(@RequestHeader("Authorization") String u_uid,@Param("u_id") Long u_id)
     {
         User feedUserTotal = feedService.feedUserTotal(u_id);
-        System.out.println(feedUserTotal);
         if (feedUserTotal != null)
         {
             List<Feed> feed = feedUserTotal.getFeedList();
@@ -113,7 +104,6 @@ public class FeedApiController {
 
 
     }
-
 
     // 피드 단일 조회
     @GetMapping(value = "api/feeds/one", produces = "application/json;charset=UTF-8")
@@ -204,6 +194,7 @@ public class FeedApiController {
             return new FeedResultResponse("댓글 추가 실패", 400, null);
         }
     }
+
     @DeleteMapping(value = "api/feeds/reply")
     public PostResponse deletereply(@RequestHeader("Authorization") String u_uid, @Valid @RequestBody DeleteReplyRequestDto request)
     {
@@ -217,6 +208,8 @@ public class FeedApiController {
             return new PostResponse("댓글 삭제 실패",400);
         }
     }
+
+
 }
 
 

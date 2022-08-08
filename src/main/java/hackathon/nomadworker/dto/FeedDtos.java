@@ -56,17 +56,19 @@ public class FeedDtos {
         private Long f_id;
         private String f_image;
         private String f_content;
-        private int f_like;
+        private int f_like_count;
+        private boolean like_status;
         private String p_name;
 
-        public FeedDto(Feed f){
+        public FeedDto(Feed f, boolean like_status){
             this.u_name = f.getUser().getU_nickname();
             this.u_profile = f.getUser().getU_image();
             this.p_id = f.getPlace().getId();
             this.f_id =  f.getId();
             this.f_image = f.getF_image();
             this.f_content = f.getF_content();
-            this.f_like = f.getF_like();
+            this.f_like_count = f.getF_like();
+            this.like_status = like_status;
             this.p_name = f.getPlace().getP_name();
         }
     }

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
@@ -47,10 +49,19 @@ public class UserLikeRepository {
                 .getSingleResult();
     }
 
-
-
-
-
+    public User_Like checkUserLike(Long u_id, Long f_id){
+        try {
+                return em.createQuery("select l from User_Like l " +
+                                "where l.user.id =: u_id " +
+                                "and l.feed.id =: f_id ", User_Like.class)
+                        .setParameter("u_id", u_id)
+                        .setParameter("f_id", f_id)
+                        .getSingleResult();
+        }catch (NoResultException nre)
+        {
+            return null;
+        }
+    }
 
 
 }

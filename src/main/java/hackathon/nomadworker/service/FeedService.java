@@ -3,10 +3,8 @@ package hackathon.nomadworker.service;
 import hackathon.nomadworker.domain.Feed;
 import hackathon.nomadworker.domain.Place;
 import hackathon.nomadworker.domain.User;
-import hackathon.nomadworker.repository.FeedRepository;
-import hackathon.nomadworker.repository.PlaceRepository;
+import hackathon.nomadworker.repository.*;
 
-import hackathon.nomadworker.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +21,7 @@ public class FeedService {
     private final FeedRepository feedRepository;
     private final PlaceRepository placeRepository;
     private final UserRepository userRepository;
+    private final UserLikeRepository2 userLikeRepository2;
 
     @Transactional
     public void feedPost(String u_uid, String feed_content, Long p_id, String imageUrl, String time)
@@ -33,7 +32,8 @@ public class FeedService {
     }
 
     //모든 Feed 조회
-    public List<Feed> feedAll(){
+    public List<Feed> feedAll()
+    {
         return feedRepository.findALL();
     }
 
@@ -58,12 +58,11 @@ public class FeedService {
     {
         return feedRepository.findOne(f_id);
     }
+
     @Transactional
     public Feed feedUserLikeUpdate(Long f_id,int cnt)
     {
         return feedRepository.feedUserLikeUpdate(f_id,cnt);
     }
-
-
 
 }
