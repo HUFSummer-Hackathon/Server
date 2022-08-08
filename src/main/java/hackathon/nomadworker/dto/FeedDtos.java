@@ -13,13 +13,29 @@ import java.util.ArrayList;
 public class FeedDtos {
 
     //==Response DTO==//
+
+    @Data
+    public static class FeedResultResponseNoData
+    {
+        private String message;
+        private int status;
+
+        public FeedResultResponseNoData(String message, int status){
+            this.message = message;
+            this.status = status;
+        }
+    }
+
     @Data
     @AllArgsConstructor
     public static class FeedResultResponse<T>
     {
         private String message;
         private int status;
+        private T data;
     }
+
+
     @Data
     public static class PostResponse
     {
