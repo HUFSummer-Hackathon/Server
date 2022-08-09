@@ -115,7 +115,6 @@ public class FeedApiController {
         List<User_Like> subsByFeedId = userLikeService.findUserLikesByFeedId(f_id);
         boolean like_status = false;
 
-
         if (f_id != null)
         {
             if (subsByFeedId.stream().anyMatch(s -> Objects.equals(s.getUser().getU_uid(), u_uid)))
@@ -177,9 +176,14 @@ public class FeedApiController {
     public FeedResultResponse feedUserreply(@RequestHeader("Authorization") String u_uid, @Valid @RequestBody NewReplyRequestDto request) {
         // respnse
         User user = userService.findOnebyToken(u_uid);
+
+        System.out.println("**");
+        System.out.println(request.getR_date());
+        System.out.println("**");
+
         if (user.getId() == request.getU_id())
         {
-            userReplyService.newReply(request.getR_content(), request.getU_id(), request.getF_id());
+            userReplyService.newReply(request.getR_content(), request.getU_id(), request.getF_id(),request.getR_date());
             List<User_Reply> User_Reply = userReplyService.findRepliesByFeedId(request.getF_id());
             if (!User_Reply.isEmpty()) {
                 List<ReplyResponseDto> collect = User_Reply.stream()
@@ -193,6 +197,13 @@ public class FeedApiController {
         }else {
             return new FeedResultResponse("댓글 추가 실패", 400, null);
         }
+    }
+    @GetMapping(value = "api/feeds/reply")
+    public FeedResultResponse feedUserreplyGet(@RequestHeader("Authorization") String u_uid,@RequestParam Long f_id)
+    {
+
+
+        return new FeedResultResponse("댓글 추가 실패", 400, null);
     }
 
     @DeleteMapping(value = "api/feeds/reply")
@@ -208,6 +219,18 @@ public class FeedApiController {
             return new PostResponse("댓글 삭제 실패",400);
         }
     }
+
+
+
+    @PostMapping(value = "api/feeds/reply/timetest")
+    public FeedResultResponse feedreplytimeGet(@RequestBody PostReplydateTimeRequest request)
+    {
+        System.out.println(request.getRegisDate());
+
+        return new FeedResultResponse("시간", 200, new PostReplydateTimeResponse(request.getRegisDate()));
+    }
+
+
 
 
 }

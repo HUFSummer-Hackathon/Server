@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -17,12 +18,24 @@ public class UserReplyRepository {
     @Autowired
     private final EntityManager em;
 
-    public void post(String reply_content, User user , Feed feed)
+//    public void post(String reply_content, User user , Feed feed)
+//    {
+//        User_Reply userReply = new User_Reply();
+//        userReply.setUser(user);
+//        userReply.setFeed(feed);
+//        userReply.setR_content(reply_content);
+//        em.persist(userReply);
+//    }
+    public void post(String reply_content, User user , Feed feed, LocalDateTime r_date)
     {
         User_Reply userReply = new User_Reply();
         userReply.setUser(user);
         userReply.setFeed(feed);
         userReply.setR_content(reply_content);
+        System.out.println("-----");
+        System.out.println(r_date);
+        System.out.println("-----");
+        userReply.setR_date(r_date);
         em.persist(userReply);
     }
 
@@ -45,6 +58,7 @@ public class UserReplyRepository {
         TypedQuery<User_Reply> query = em.createQuery(jpql, User_Reply.class).setParameter("f_id",f_id).setMaxResults(100);
         return query.getResultList();
     }
+
 
 
 }

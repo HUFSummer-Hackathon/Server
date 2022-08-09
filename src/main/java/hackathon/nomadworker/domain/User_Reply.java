@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import java.time.LocalDateTime;
+
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
@@ -18,6 +20,9 @@ public class User_Reply {
     private Long id;
 
     private String r_content;
+
+    private LocalDateTime r_date;
+
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name="u_id")
     private User user;
@@ -25,4 +30,5 @@ public class User_Reply {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name="f_id")
     private Feed feed;
+
 }
