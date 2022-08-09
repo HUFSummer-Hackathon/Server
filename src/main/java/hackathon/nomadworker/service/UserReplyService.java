@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,10 +23,14 @@ public class UserReplyService {
     private final FeedRepository feedRepository;
 
     @Transactional
-    public void newReply(String reply_content,long u_id,long f_id)
+    public void newReply(String reply_content, long u_id, long f_id, LocalDateTime localDateTime)
     {   User user = userRepository.findOne(u_id);
         Feed feed = feedRepository.findOne(f_id);
-        userReplyRepository.post(reply_content, user , feed);
+        System.out.println("!!!");
+        System.out.println(localDateTime);
+        System.out.println("!!!");
+
+        userReplyRepository.post(reply_content, user , feed,localDateTime);
     }
 
 
