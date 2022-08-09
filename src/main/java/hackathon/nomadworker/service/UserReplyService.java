@@ -26,10 +26,6 @@ public class UserReplyService {
     public void newReply(String reply_content, long u_id, long f_id, LocalDateTime localDateTime)
     {   User user = userRepository.findOne(u_id);
         Feed feed = feedRepository.findOne(f_id);
-        System.out.println("!!!");
-        System.out.println(localDateTime);
-        System.out.println("!!!");
-
         userReplyRepository.post(reply_content, user , feed,localDateTime);
     }
 
@@ -37,12 +33,17 @@ public class UserReplyService {
     @Transactional
     public void deleteByReplyId(Long r_id){userReplyRepository.delete(r_id);}
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<User_Reply> findRepliesByFeedId(Long f_id)
     {
         return userReplyRepository.findAllByFeedid(f_id);
     }
 
+    @Transactional(readOnly = true)
+    public int findRepliesCountByFeedId(Long f_id)
+    {
+        return userReplyRepository.findAllByFeedid(f_id).size();
+    }
     @Transactional(readOnly = true)
     public User_Reply findOneByReplyId(Long r_id)
     {

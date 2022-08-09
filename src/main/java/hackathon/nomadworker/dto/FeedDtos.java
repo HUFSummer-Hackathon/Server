@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -77,8 +77,8 @@ public class FeedDtos {
         private int f_like_count;
         private boolean like_status;
         private String p_name;
-
-        public FeedDto(Feed f, boolean like_status){
+        private int r_count ;
+        public FeedDto(Feed f, boolean like_status,int r_count){
             this.u_name = f.getUser().getU_nickname();
             this.u_profile = f.getUser().getU_image();
             this.p_id = f.getPlace().getId();
@@ -88,6 +88,7 @@ public class FeedDtos {
             this.f_like_count = f.getF_like();
             this.like_status = like_status;
             this.p_name = f.getPlace().getP_name();
+            this.r_count=r_count;
         }
     }
 
@@ -128,26 +129,28 @@ public class FeedDtos {
 
     @Data
     @AllArgsConstructor
-    public static class FeedOneDto<T>
+    public static class FeedOneDto
     {
         private String f_image;
         private String f_content;
         private int f_like_count;
         private boolean like_status;
         private String f_time;
+        private String p_name;
         private String u_image;
         private String u_nickname;
-        private T reply;
-        public FeedOneDto(Feed f, boolean s,T reply)
+        private int r_count ;
+        public FeedOneDto(Feed f, boolean s,int r_count)
         {
             this.f_image = f.getF_image();
             this.f_content = f.getF_content();
             this.f_like_count = f.getF_like();
             this.like_status = s;
             this.f_time = f.getF_time();
+            this.p_name=f.getPlace().getP_name();
             this.u_image = f.getUser().getU_image();
             this.u_nickname = f.getUser().getU_nickname();
-            this.reply = reply;
+            this.r_count = r_count ;
         }
     }
 
