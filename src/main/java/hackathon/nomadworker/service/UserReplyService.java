@@ -23,10 +23,10 @@ public class UserReplyService {
     private final FeedRepository feedRepository;
 
     @Transactional
-    public void newReply(String reply_content, long u_id, long f_id, LocalDateTime localDateTime)
+    public User_Reply newReply(String reply_content, long u_id, long f_id, LocalDateTime localDateTime)
     {   User user = userRepository.findOne(u_id);
         Feed feed = feedRepository.findOne(f_id);
-        userReplyRepository.post(reply_content, user , feed,localDateTime);
+        return userReplyRepository.post(reply_content, user , feed,localDateTime);
     }
 
 

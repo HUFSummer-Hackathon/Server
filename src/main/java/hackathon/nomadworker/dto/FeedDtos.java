@@ -211,6 +211,39 @@ public class FeedDtos {
         }
     }
     @Data
+    public static class NewReply
+    {
+        private long r_id;
+        private String r_content;
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+        private LocalDateTime r_date ;
+        private long u_id;
+        private String u_nickname;
+        private String u_image;
+        public NewReply(User_Reply reply)
+        {
+            this.r_id = reply.getId();
+            this.r_content = reply.getR_content();
+            this.r_date = reply.getR_date();
+            this.u_id = reply.getUser().getId();
+            this.u_nickname = reply.getUser().getU_nickname();
+            this.u_image = reply.getUser().getU_image();
+        }
+    }
+    @Data
+    public  static class PostReplyResponseDto
+    {
+        private NewReply reply;
+        public PostReplyResponseDto(User_Reply reply)
+        {
+            this.reply = new NewReply(reply);
+        }
+    }
+
+
+
+
+    @Data
     public  static class ReplyResponseDto
     {
         long r_id;

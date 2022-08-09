@@ -17,7 +17,7 @@ import java.util.List;
 public class UserReplyRepository {
     @Autowired
     private final EntityManager em;
-    public void post(String reply_content, User user , Feed feed, LocalDateTime r_date)
+    public User_Reply post(String reply_content, User user , Feed feed, LocalDateTime r_date)
     {
         User_Reply userReply = new User_Reply();
         userReply.setUser(user);
@@ -25,6 +25,7 @@ public class UserReplyRepository {
         userReply.setR_content(reply_content);
         userReply.setR_date(r_date);
         em.persist(userReply);
+        return userReply;
     }
 
     public void delete(Long r_id)
