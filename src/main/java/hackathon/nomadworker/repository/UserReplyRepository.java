@@ -17,24 +17,12 @@ import java.util.List;
 public class UserReplyRepository {
     @Autowired
     private final EntityManager em;
-
-//    public void post(String reply_content, User user , Feed feed)
-//    {
-//        User_Reply userReply = new User_Reply();
-//        userReply.setUser(user);
-//        userReply.setFeed(feed);
-//        userReply.setR_content(reply_content);
-//        em.persist(userReply);
-//    }
     public void post(String reply_content, User user , Feed feed, LocalDateTime r_date)
     {
         User_Reply userReply = new User_Reply();
         userReply.setUser(user);
         userReply.setFeed(feed);
         userReply.setR_content(reply_content);
-        System.out.println("-----");
-        System.out.println(r_date);
-        System.out.println("-----");
         userReply.setR_date(r_date);
         em.persist(userReply);
     }

@@ -5,7 +5,6 @@ import hackathon.nomadworker.domain.User;
 import hackathon.nomadworker.domain.User_Like;
 import hackathon.nomadworker.domain.User_Reply;
 import hackathon.nomadworker.dto.FeedDtos.*;
-import hackathon.nomadworker.repository.UserLikeRepository2;
 import hackathon.nomadworker.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
@@ -57,10 +56,10 @@ public class FeedApiController {
     {
         List<Feed> feedAll = feedService.feedAll();
         boolean like_status = false;
-
+        int r_count = 0 ;
         if (!feedAll.isEmpty()) {
             List<FeedDto> collect = feedAll.stream()
-                    .map(f -> new FeedDto(f, like_status))
+                    .map(f -> new FeedDto(f, like_status,r_count))
                     .collect(Collectors.toList());
             for (FeedDto i : collect)
             {
@@ -68,6 +67,7 @@ public class FeedApiController {
                 {
                     i.setLike_status(true);
                 }
+                i.setR_count(userReplyService.findRepliesCountByFeedId(i.getF_id()));
             }
             return new FeedResultResponse("피드 불러오기 성공", 200, collect);
         }
@@ -121,20 +121,11 @@ public class FeedApiController {
             {
                 like_status = true;
             }
-            List<User_Reply> User_Reply = userReplyService.findRepliesByFeedId(f_id);
-            if (!User_Reply.isEmpty()) {
-                List<ReplyResponseDto> collect = User_Reply.stream()
-                        .map(r -> new ReplyResponseDto(r))
-                        .collect(Collectors.toList());
-                FeedOneDto feedOneDto = new FeedOneDto(feedOne, like_status,collect);
-                return new FeedResultResponse("단일 피드 조회 성공", 200, feedOneDto);
-            }
-            else
-            {
-                FeedOneDto feedOneDto = new FeedOneDto(feedOne, like_status,null);
-                return new FeedResultResponse("단일 피드 조회 성공", 200, feedOneDto);
-            }
-        } else
+            int count = userReplyService.findRepliesCountByFeedId(f_id);
+            FeedOneDto feedOneDto = new FeedOneDto(feedOne, like_status,count);
+            return new FeedResultResponse("단일 피드 조회 성공", 200, feedOneDto);
+        }
+        else
         {
             return new FeedResultResponse("단일 피드 조회 실패", 400, null);
         }
@@ -176,11 +167,6 @@ public class FeedApiController {
     public FeedResultResponse feedUserreply(@RequestHeader("Authorization") String u_uid, @Valid @RequestBody NewReplyRequestDto request) {
         // respnse
         User user = userService.findOnebyToken(u_uid);
-
-        System.out.println("**");
-        System.out.println(request.getR_date());
-        System.out.println("**");
-
         if (user.getId() == request.getU_id())
         {
             userReplyService.newReply(request.getR_content(), request.getU_id(), request.getF_id(),request.getR_date());
