@@ -3,8 +3,11 @@ package hackathon.nomadworker.api;
 import static hackathon.nomadworker.dto.UserDtos.*;
 
 import hackathon.nomadworker.domain.User;
+import hackathon.nomadworker.domain.User_Place;
+import hackathon.nomadworker.dto.PlaceDtos;
 import hackathon.nomadworker.service.AuthService;
 
+import hackathon.nomadworker.service.UserPlaceService;
 import hackathon.nomadworker.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -22,6 +26,8 @@ public class UserApiController
 
     private final UserService userService;
     private final AuthService authService;
+
+    private final UserPlaceService userPlaceService;
 
     @PostMapping(value="/api/user" , produces = "application/json;charset=UTF-8")
     public UserResultResponse userPost(@Valid @RequestBody UserPostRequest request) throws Exception {
@@ -84,20 +90,59 @@ public class UserApiController
             return new UserSignInResponse("로그인 성공 !", 200, data);
         }
     }
-//    @GetMapping("/api/user/profile")
-//    public UserResultResponse Userinfo(@RequestHeader("Authorization") String u_uid)
-//    {
-//        User user = userService.findOnebyToken(u_uid);
-//        UserinfoResponse result = new UserinfoResponse(user.getU_image(),user.getU_nickname());
-//        if (result!= null) {
-//            return new UserResultResponse("회원 정보 조회 성공", 200, result);
-//        }
-//        else{
-//            return new UserResultResponse("회원 정보 조회 실패", 400, null);
-//        }
-//    }
 
+    // 저정한 목록을 출력
+    @GetMapping(value="/api/user/placesub", produces = "application/json;charset=UTF-8")
+    public UserResultResponse getPlaceSub(@RequestHeader("Authorization") String u_uid,
+                                          @RequestParam Long u_id)
+    {
+        if(Objects.equals(userService.findOnebyToken(u_uid).getId(), u_id))
+        {
 
+            List<User_Place> user_places=userPlaceService.findPlacesByUId(u_id);
+            List<PlaceSubGetResponse> collect = user_places.stream()
+                    .map(s -> new PlaceSubGetResponse(s))
+                    .collect(Collectors.toList());
+            if(collect.isEmpty()){
+            return new UserResultResponse("장소 조회 성공",200,null);
+            }
+            else{
+                return new UserResultResponse("장소 조회 성공",200,collect);
+            }
+        }
+        else
+        {
+            return new UserResultResponse("장소 조회 실패", 400, null);
+        }
+    }
 
+    @PostMapping(value = "/api/user/placesub", produces = "application/json;charset=UTF-8")
+    public UserResponse postPlaceSub(@RequestHeader("Authorization") String u_uid,
+                                           @Valid @RequestBody PlaceSubPostRequest request)
+    {
+        if(Objects.equals(userService.findOnebyToken(u_uid).getId(), request.getU_id()))
+        {
+            userPlaceService.newUser_Place(request.getU_id(),request.getP_id());
+            return new UserResponse("장소 등록 성공",200);
+        }
+        else
+        {
+            return new UserResponse("장소 등록 실패", 400);
+        }
+    }
+
+    @DeleteMapping(value = "api/user/placesub")
+    public UserResponse deletePlaceSub(@RequestHeader("Authorization") String u_uid,
+                                       @RequestParam Long u_p_id)
+    {
+        if (userService.findOnebyToken(u_uid) != null)
+        {
+            userPlaceService.deleteBy(u_p_id);
+            return new UserResponse("장소 삭제 성공", 200);
+        } else
+        {
+            return new UserResponse("장소 삭제 실패", 400);
+        }
+    }
 
 }
