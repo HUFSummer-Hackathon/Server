@@ -162,34 +162,37 @@ public class FeedApiController {
             return new FeedResultResponseNoData("좋아요 실패", 400);
         }
     }
+    @GetMapping(value = "api/feeds/reply")
+    public FeedResultResponse feedUserreplyGet(@RequestHeader("Authorization") String u_uid,@RequestParam Long f_id)
+    {
+        User user = userService.findOnebyToken(u_uid);
+        Feed feed = feedService.findOne(f_id);
+        if (user.getId()!=0)
+        {
+            List<User_Reply> User_Reply = userReplyService.findRepliesByFeedId(f_id);
+            if (!User_Reply.isEmpty()) {
+                List<ReplyResponseDto> collect = User_Reply.stream()
+                        .map(r -> new ReplyResponseDto(r))
+                        .collect(Collectors.toList());
 
+                return new FeedResultResponse("댓글 조회 성공", 200, new GetReplyResponseDto(feed,collect));
+            } else {
+                return new FeedResultResponse("댓글 조회 실패", 400, null);
+            }
+        }else {
+            return new FeedResultResponse("댓글 조회 실패", 400, null);
+        }
+    }
     @PostMapping(value = "api/feeds/reply")
     public FeedResultResponse feedUserreply(@RequestHeader("Authorization") String u_uid, @Valid @RequestBody NewReplyRequestDto request) {
         // respnse
         User user = userService.findOnebyToken(u_uid);
         if (user.getId() == request.getU_id())
         {
-            userReplyService.newReply(request.getR_content(), request.getU_id(), request.getF_id(),request.getR_date());
-            List<User_Reply> User_Reply = userReplyService.findRepliesByFeedId(request.getF_id());
-            if (!User_Reply.isEmpty()) {
-                List<ReplyResponseDto> collect = User_Reply.stream()
-                        .map(r -> new ReplyResponseDto(r))
-                        .collect(Collectors.toList());
-
-                return new FeedResultResponse("댓글 추가 성공", 200, collect);
-            } else {
-                return new FeedResultResponse("댓글 추가 실패", 400, null);
-            }
-        }else {
-            return new FeedResultResponse("댓글 추가 실패", 400, null);
+            User_Reply userReply= userReplyService.newReply(request.getR_content(), request.getU_id(), request.getF_id(),request.getR_date());
+            return new FeedResultResponse("댓글 추가 성공", 200, new PostReplyResponseDto(userReply));
+            } else {return new FeedResultResponse("댓글 추가 실패", 400, null);
         }
-    }
-    @GetMapping(value = "api/feeds/reply")
-    public FeedResultResponse feedUserreplyGet(@RequestHeader("Authorization") String u_uid,@RequestParam Long f_id)
-    {
-
-
-        return new FeedResultResponse("댓글 추가 실패", 400, null);
     }
 
     @DeleteMapping(value = "api/feeds/reply")

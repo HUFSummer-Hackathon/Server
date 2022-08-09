@@ -182,17 +182,78 @@ public class FeedDtos {
         private Long r_id ;
 
     }
+    @Data
+    public  static class Feedauthor
+    {
+        private String f_content;
+        private String u_nickname ;
+        private String u_image;
+        private String p_name;
+        public Feedauthor(Feed feed)
+        {
+            this.f_content = feed.getF_content();
+            this.u_nickname = feed.getUser().getU_nickname();
+            this.u_image = feed.getUser().getU_image();
+            this.p_name = feed.getPlace().getP_name();
+        }
+    }
 
     @Data
-    public  static class ReplyResponseDto{
+    public  static class GetReplyResponseDto<T>
+    {
+			private Feedauthor author;
+            private T reply;
 
+        public GetReplyResponseDto(Feed feed, T reply)
+        {
+            this.author = new Feedauthor(feed);
+            this.reply = reply;
+        }
+    }
+    @Data
+    public static class NewReply
+    {
+        private long r_id;
+        private String r_content;
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+        private LocalDateTime r_date ;
+        private long u_id;
+        private String u_nickname;
+        private String u_image;
+        public NewReply(User_Reply reply)
+        {
+            this.r_id = reply.getId();
+            this.r_content = reply.getR_content();
+            this.r_date = reply.getR_date();
+            this.u_id = reply.getUser().getId();
+            this.u_nickname = reply.getUser().getU_nickname();
+            this.u_image = reply.getUser().getU_image();
+        }
+    }
+    @Data
+    public  static class PostReplyResponseDto
+    {
+        private NewReply reply;
+        public PostReplyResponseDto(User_Reply reply)
+        {
+            this.reply = new NewReply(reply);
+        }
+    }
+
+
+
+
+    @Data
+    public  static class ReplyResponseDto
+    {
         long r_id;
         String r_content;
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        LocalDateTime r_date ;
         long u_id;
         String u_nickname ;
         String u_image;
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-        LocalDateTime r_date ;
+
         public ReplyResponseDto(User_Reply r)
         {
             this.r_id = r.getId();
@@ -204,6 +265,7 @@ public class FeedDtos {
         }
 
     }
+
 
 
     // Test dto for android
