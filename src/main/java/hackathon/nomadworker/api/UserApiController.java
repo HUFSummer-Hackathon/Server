@@ -122,8 +122,10 @@ public class UserApiController
     {
         if(Objects.equals(userService.findOnebyToken(u_uid).getId(), request.getU_id()))
         {
-            userPlaceService.newUser_Place(request.getU_id(),request.getP_id());
-            return new UserResponse("장소 등록 성공",200);
+            if(userPlaceService.newUser_Place(request.getU_id(),request.getP_id()))
+            {
+                return new UserResponse("장소 등록 성공", 200);
+            }else return new UserResponse("장소 등록 즁복", 200);
         }
         else
         {

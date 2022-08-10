@@ -1,14 +1,15 @@
 package hackathon.nomadworker.repository;
-
 import hackathon.nomadworker.domain.Place;
 import hackathon.nomadworker.domain.User;
-import hackathon.nomadworker.domain.User_Like;
 import hackathon.nomadworker.domain.User_Place;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
@@ -41,6 +42,19 @@ public class UserPlaceRepository
                 .setParameter("u_id", u_id)
                 .getResultList();
     }
-
-
+    public Boolean findUserPlaceByFidUid(Long u_id , Long p_id)
+    {
+        try {
+            String jpql ="select s.id from User_Place s " + "where s.user.id =: u_id " + "and s.place.id =: p_id ";
+            Query query = em.createQuery(jpql, Long.class)
+                    .setParameter("u_id", u_id)
+                    .setParameter("p_id", p_id);
+            query.getSingleResult();
+            return true;
+        }catch (NoResultException nre)
+        {
+            return false;
+        }
+    }
 }
+

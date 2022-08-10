@@ -19,11 +19,17 @@ public class UserPlaceService {
     private final PlaceRepository placeRepository;
 
     @Transactional
-    public void newUser_Place(Long u_id,long p_id)
+    public boolean newUser_Place(Long u_id,Long p_id)
     {
-        User user = userRepository.findOne(u_id);
-        Place place = placeRepository.getPlacesById(p_id);
-        userPlaceRepository.save(user,place);
+        if (!findUserPlaceByFidUid(u_id, p_id))
+        {
+            User user = userRepository.findOne(u_id);
+            Place place = placeRepository.getPlacesById(p_id);
+            userPlaceRepository.save(user, place);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Transactional
@@ -36,6 +42,13 @@ public class UserPlaceService {
     public List<User_Place> findPlacesByUId(Long u_id)
     {
         return  userPlaceRepository.findPlacesByUserId(u_id);
+    }
+
+
+    @Transactional(readOnly = true)
+    public boolean findUserPlaceByFidUid(Long u_id , Long p_id)
+    {
+        return userPlaceRepository.findUserPlaceByFidUid(u_id , p_id);
     }
 
 }
