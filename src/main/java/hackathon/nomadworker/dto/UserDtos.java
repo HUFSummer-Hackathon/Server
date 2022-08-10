@@ -2,8 +2,10 @@ package hackathon.nomadworker.dto;
 
 
 import hackathon.nomadworker.domain.User;
+import hackathon.nomadworker.domain.User_Place;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -50,7 +52,7 @@ public class UserDtos
 
 
     @Data @AllArgsConstructor
-    public static class UserPutResponse
+    public static class UserResponse
     {
         private String message;
         private int status;
@@ -206,4 +208,41 @@ public class UserDtos
         }
     }
 
+    @Data @NoArgsConstructor
+    public  static class PlaceSubPostRequest
+    {
+        private Long u_id;
+        private Long p_id;
+    }
+    @Data
+    public static class PlaceSubGetResponse
+    {
+        private long u_p_id;
+        private long p_id;
+        private String place_name;
+        private String place_address;
+        private String place_weektime;
+        private String place_weekendtime;
+        private String p_image;
+
+        public PlaceSubGetResponse(User_Place s)
+        {
+            this.u_p_id = s.getId();
+            this.p_id = s.getPlace().getId();
+            this.place_name = s.getPlace().getP_name();
+            this.place_address = s.getPlace().getP_addr();
+            this.place_weektime = s.getPlace().getP_weekt();
+            this.place_weekendtime = s.getPlace().getP_weekndt();
+            this.p_image = s.getPlace().getP_image();
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
