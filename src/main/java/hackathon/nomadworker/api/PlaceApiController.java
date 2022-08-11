@@ -4,10 +4,8 @@ import hackathon.nomadworker.domain.Place;
 import hackathon.nomadworker.dto.PlaceDtos.*;
 import hackathon.nomadworker.service.PlaceService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -109,6 +107,13 @@ public class PlaceApiController {
         }
 
     }
+    @PutMapping(value = "/api/place/grade", produces = "application/json;charset=UTF-8")
+    public PlaceGradeResponse gradePlace(@RequestHeader("Authorization") String u_uid, @Valid @RequestParam("placeId") Long p_id,
+                           @RequestParam("placeGrade") float p_grade){
+        placeService.gradePlace(p_id, p_grade);
+        return new PlaceGradeResponse("등록 완료!",200);
+
+    }
 
     @GetMapping(value = "/api/search/place",produces = "application/json;charset=UTF-8")
     public PlaceResultResponse searchPlace(@RequestHeader("Authorization") String u_uid,
@@ -135,6 +140,8 @@ public class PlaceApiController {
                 .collect(Collectors.toList());
         return new PlaceResultResponse("검색 완료", 200, collect);
     }
+
+
 
 
 

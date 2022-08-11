@@ -7,7 +7,9 @@ import hackathon.nomadworker.repository.*;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -23,7 +25,8 @@ public class FeedService {
     private final UserRepository userRepository;
     private final UserLikeRepository2 userLikeRepository2;
 
-    @Transactional
+    @Async
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void feedPost(String u_uid, String feed_content, Long p_id, String imageUrl, String time)
     {
         User user = feedRepository.findOnebyTokenFeed(u_uid);
