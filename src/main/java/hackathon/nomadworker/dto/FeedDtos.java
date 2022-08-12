@@ -182,31 +182,23 @@ public class FeedDtos {
         private Long r_id ;
 
     }
+
     @Data
-    public  static class Feedauthor
+    public  static class GetReplyResponseDto<T>
     {
+
         private String f_content;
         private String u_nickname ;
         private String u_image;
         private String p_name;
-        public Feedauthor(Feed feed)
+        private T reply;
+
+        public GetReplyResponseDto(Feed feed, T reply)
         {
             this.f_content = feed.getF_content();
             this.u_nickname = feed.getUser().getU_nickname();
             this.u_image = feed.getUser().getU_image();
             this.p_name = feed.getPlace().getP_name();
-        }
-    }
-
-    @Data
-    public  static class GetReplyResponseDto<T>
-    {
-			private Feedauthor author;
-            private T reply;
-
-        public GetReplyResponseDto(Feed feed, T reply)
-        {
-            this.author = new Feedauthor(feed);
             this.reply = reply;
         }
     }
