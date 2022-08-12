@@ -18,6 +18,14 @@ public class PlaceDtos {
 
     @Data
     @AllArgsConstructor
+    public static class PlaceGradeResponse{
+        private String message;
+        private int status;
+    }
+
+
+    @Data
+    @AllArgsConstructor
     public static class PlaceByCategoryResponse<T> {
         private String place_tag;
         private T place;

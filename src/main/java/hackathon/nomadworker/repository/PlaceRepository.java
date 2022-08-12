@@ -65,7 +65,6 @@ public class PlaceRepository {
                 "WHERE MBRContains(ST_LINESTRINGFROMTEXT(" + pointFormat + ",p.p_gpoint)",Place.class).setMaxResults(15);
 
         List<Place> places = query.getResultList();
-        System.out.println(places);
         return places;
     }
 
@@ -106,6 +105,17 @@ public class PlaceRepository {
         String jpql = "select p from Place p where p.p_name like :p_name";
         TypedQuery<Place> query = em.createQuery(jpql, Place.class).setParameter("p_name", "%" + p_name +  "%").setMaxResults(1000);
         return query.getResultList();
+    }
+
+    public Place gradePlace(Long p_id){
+        return em.find(Place.class, p_id);
+    }
+
+    public void setgradePlace(Long p_id, float p_grade, Integer p_count) {
+        Place place  = em.find(Place.class, p_id);
+        place.setP_grade(p_grade);
+        place.setP_count(p_count);
+        em.merge(place);
     }
 }
 

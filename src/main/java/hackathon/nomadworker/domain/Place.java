@@ -30,6 +30,10 @@ public class Place {
 
         private String p_weekndt;
 
+        private float p_grade;
+
+        private int p_count;
+
         @Column(name = "p_addr")
         private String p_addr;
 

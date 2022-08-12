@@ -11,6 +11,7 @@ import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 import javax.naming.ServiceUnavailableException;
 
@@ -65,6 +66,13 @@ public class ExceptionController {
     public Response ServiceUnavailableExpection(Exception e) {
         e.printStackTrace();
         return new Response("Service Unavailable", 503);
+    }
+
+    @ExceptionHandler(MissingServletRequestPartException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Response MssingServletRequestPartException(Exception e) {
+        e.printStackTrace();
+        return new Response("파일 형식 혹은 파일 파라미터의 이름 오류 혹은 파일 없음", 405);
     }
 
     //@ExceptionHandler(NoResultException.class)
