@@ -208,7 +208,7 @@ public class FeedDtos {
         private long r_id;
         private String r_content;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-        private LocalDateTime r_date ;
+        private String r_date ;
         private long u_id;
         private String u_nickname;
         private String u_image;
@@ -216,7 +216,7 @@ public class FeedDtos {
         {
             this.r_id = reply.getId();
             this.r_content = reply.getR_content();
-            this.r_date = reply.getR_date();
+            this.r_date = getR_date();
             this.u_id = reply.getUser().getId();
             this.u_nickname = reply.getUser().getU_nickname();
             this.u_image = reply.getUser().getU_image();
@@ -241,7 +241,7 @@ public class FeedDtos {
         long r_id;
         String r_content;
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-        LocalDateTime r_date ;
+        String r_date ;
         long u_id;
         String u_nickname ;
         String u_image;
@@ -250,7 +250,7 @@ public class FeedDtos {
         {
             this.r_id = r.getId();
             this.r_content = r.getR_content();
-            this.r_date = r.getR_date();
+            this.r_date = r.getR_date().toString();
             this.u_id = r.getUser().getId();
             this.u_nickname = r.getUser().getU_nickname();
             this.u_image = r.getUser().getU_image() ;
