@@ -207,16 +207,18 @@ public class FeedDtos {
     {
         private long r_id;
         private String r_content;
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-        private String r_date ;
-        private long u_id;
+//        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+//        private LocalDateTime r_date ;
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        String r_date ;
+         private long u_id;
         private String u_nickname;
         private String u_image;
         public NewReply(User_Reply reply)
         {
             this.r_id = reply.getId();
             this.r_content = reply.getR_content();
-            this.r_date = getR_date();
+            this.r_date = reply.getR_date().toString();
             this.u_id = reply.getUser().getId();
             this.u_nickname = reply.getUser().getU_nickname();
             this.u_image = reply.getUser().getU_image();

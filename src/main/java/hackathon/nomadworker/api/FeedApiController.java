@@ -174,7 +174,6 @@ public class FeedApiController {
                 List<ReplyResponseDto> collect = User_Reply.stream()
                         .map(r -> new ReplyResponseDto(r))
                         .collect(Collectors.toList());
-
                 return new FeedResultResponse("댓글 조회 성공", 200, new GetReplyResponseDto(feed,collect));
             } else {
                 return new FeedResultResponse("댓글 조회 실패", 400, null);
