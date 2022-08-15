@@ -176,7 +176,7 @@ public class FeedApiController {
                         .collect(Collectors.toList());
                 return new FeedResultResponse("댓글 조회 성공", 200, new GetReplyResponseDto(feed,collect));
             } else {
-                return new FeedResultResponse("댓글 조회 실패", 400, null);
+                return new FeedResultResponse("댓글이 없음", 200, null);
             }
         }else {
             return new FeedResultResponse("댓글 조회 실패", 400, null);
@@ -207,19 +207,6 @@ public class FeedApiController {
             return new PostResponse("댓글 삭제 실패",400);
         }
     }
-
-
-
-    @PostMapping(value = "api/feeds/reply/timetest")
-    public FeedResultResponse feedreplytimeGet(@RequestBody PostReplydateTimeRequest request)
-    {
-        System.out.println(request.getRegisDate());
-
-        return new FeedResultResponse("시간", 200, new PostReplydateTimeResponse(request.getRegisDate()));
-    }
-
-
-
 
 }
 
