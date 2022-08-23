@@ -24,6 +24,17 @@ public class PlaceRepository {
     @Autowired
     private final EntityManager em;
 
+    public Place post(String p_cate,String name,String addr,String p_weekt,String p_weekndt,String image,String storeType,float lat,float longi,String rent_price)
+    {
+        Place place = new Place();
+        place.setP_cate(p_cate);
+
+        // make point
+        em.persist(place);
+
+        return place;
+    }
+
     public Place getPlacesById(Long id) {
         return em.find(Place.class, id);
     }

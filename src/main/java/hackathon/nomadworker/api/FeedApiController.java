@@ -176,7 +176,7 @@ public class FeedApiController {
                         .collect(Collectors.toList());
                 return new FeedResultResponse("댓글 조회 성공", 200, new GetReplyResponseDto(feed,collect));
             } else {
-                return new FeedResultResponse("댓글이 없음", 200, null);
+                return new FeedResultResponse("조회 성공 댓글 없음", 200,new GetReplyResponseDto(feed,null));
             }
         }else {
             return new FeedResultResponse("댓글 조회 실패", 400, null);

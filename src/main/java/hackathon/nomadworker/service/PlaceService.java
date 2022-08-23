@@ -4,19 +4,21 @@ import hackathon.nomadworker.domain.Feed;
 
 import hackathon.nomadworker.domain.Place;
 
-import hackathon.nomadworker.dto.PlaceDtos;
+
+import hackathon.nomadworker.dto.DownloadDtos;
 import hackathon.nomadworker.repository.PlaceRepository;
 import lombok.AllArgsConstructor;
-import org.hibernate.service.NullServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionSynchronization;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -92,6 +94,37 @@ public class PlaceService {
         placeRepository.setgradePlace(p_id, placeGrade, placeCount);
         return 200;
     }
+
+
+    public Void newplace(String searchaddress)
+    {
+        String url =  "https://www.google.co.kr/maps/search/";
+        try {
+            Connection.Response res = Jsoup.connect(url+searchaddress).followRedirects(true).execute();
+
+            Document doc = res.parse();
+            Elements metaTags = doc.getElementsByTag("meta");
+            String linkOrigin = metaTags.get(10).attr("content");
+
+            int s = linkOrigin.indexOf("=");
+            int l = linkOrigin.indexOf("%");
+            String longi =linkOrigin.substring(s+1,l);
+
+            s = linkOrigin.indexOf("C");
+            l = linkOrigin.indexOf("&");
+            String lati =linkOrigin.substring(s+1,l);
+
+
+        } catch (
+                IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
+    }
+
+
+
 
 
 
