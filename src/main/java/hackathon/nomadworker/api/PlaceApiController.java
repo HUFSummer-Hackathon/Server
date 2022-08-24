@@ -109,8 +109,8 @@ public class PlaceApiController {
 
     }
     @PutMapping(value = "/api/place/grade", produces = "application/json;charset=UTF-8")
-    public PlaceGradeResponse gradePlace(@RequestHeader("Authorization") @Valid @RequestBody UserDtos.PlaceSubPostRequest request){
-        placeService.gradePlace(request.getP_id(), request.getU_id());
+    public PlaceGradeResponse gradePlace(@RequestHeader("Authorization") @Valid @RequestBody PlaceGradeRequest request){
+        placeService.gradePlace(request.getP_id(), request.getP_grade());
         return new PlaceGradeResponse("등록 완료!",200);
     }
 
