@@ -2,6 +2,7 @@ package hackathon.nomadworker.api;
 import hackathon.nomadworker.domain.Feed;
 import hackathon.nomadworker.domain.Place;
 import hackathon.nomadworker.dto.PlaceDtos.*;
+import hackathon.nomadworker.dto.UserDtos;
 import hackathon.nomadworker.service.PlaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -108,11 +109,9 @@ public class PlaceApiController {
 
     }
     @PutMapping(value = "/api/place/grade", produces = "application/json;charset=UTF-8")
-    public PlaceGradeResponse gradePlace(@RequestHeader("Authorization") String u_uid, @Valid @RequestParam("placeId") Long p_id,
-                           @RequestParam("placeGrade") float p_grade){
-        placeService.gradePlace(p_id, p_grade);
+    public PlaceGradeResponse gradePlace(@RequestHeader("Authorization") @Valid @RequestBody UserDtos.PlaceSubPostRequest request){
+        placeService.gradePlace(request.getP_id(), request.getU_id());
         return new PlaceGradeResponse("등록 완료!",200);
-
     }
 
     @GetMapping(value = "/api/search/place",produces = "application/json;charset=UTF-8")
