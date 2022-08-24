@@ -5,6 +5,7 @@ import hackathon.nomadworker.domain.Place;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 public class PlaceDtos {
 
@@ -21,6 +22,13 @@ public class PlaceDtos {
     public static class PlaceGradeResponse{
         private String message;
         private int status;
+    }
+
+    @Data @NoArgsConstructor
+    public  static class PlaceGradeRequest
+    {
+        private Long p_id;
+        private float p_grade;
     }
 
 
