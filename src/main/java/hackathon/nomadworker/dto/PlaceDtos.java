@@ -24,7 +24,7 @@ public class PlaceDtos {
         private int status;
     }
 
-    @Data @NoArgsConstructor
+    @Data
     public  static class PlaceGradeRequest
     {
         private Long p_id;
