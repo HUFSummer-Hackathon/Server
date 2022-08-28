@@ -41,9 +41,11 @@ public class Place {
 
         private String p_storeType;
 
-        private float p_latitude;
-        private float p_longitude;
         private String rent_price;
+
+        private float p_latitude;
+
+        private float p_longitude;
 
         private Point p_gpoint;
 

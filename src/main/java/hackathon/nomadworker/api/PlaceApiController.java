@@ -1,10 +1,13 @@
 package hackathon.nomadworker.api;
 import hackathon.nomadworker.domain.Feed;
 import hackathon.nomadworker.domain.Place;
+import hackathon.nomadworker.dto.DownloadDtos;
 import hackathon.nomadworker.dto.PlaceDtos.*;
+import hackathon.nomadworker.service.FileUploadService;
 import hackathon.nomadworker.service.PlaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -17,6 +20,7 @@ import java.util.List;
 public class PlaceApiController {
 
     private final PlaceService placeService;
+    private final FileUploadService fileUploadService;
 
     @GetMapping(value="/api/place/location" , produces = "application/json;charset=UTF-8")
     public PlaceResultResponse placeByCatagoryGet(@RequestHeader("Authorization") String u_uid,
@@ -141,14 +145,19 @@ public class PlaceApiController {
         return new PlaceResultResponse("검색 완료", 200, collect);
     }
 
+    @PostMapping(value="/api/place/dataupload" , produces = "application/json;charset=UTF-8")
+    public PlaceResultResponse placeDataUpload(
+            @RequestParam MultipartFile file,@RequestParam String p_cate,@RequestParam String p_name,
+            @RequestParam String p_weekt,@RequestParam String p_weekndt,
+            @RequestParam String p_addr,@RequestParam String storeType, @RequestParam String rent_price
+            )
+    {
+        // call image url first - >  multi part maybe  - >  get rturn image url
+        String imageUrl = fileUploadService.uploadImage(file);
+        PlaceDto result = new PlaceDto(placeService.newplace(p_cate, p_name,p_weekt,p_weekndt,p_addr,imageUrl,storeType,rent_price));
 
+        return new PlaceResultResponse("upload",200,result);
 
-
-
-
-
-
-
-
+    }
 
 }
