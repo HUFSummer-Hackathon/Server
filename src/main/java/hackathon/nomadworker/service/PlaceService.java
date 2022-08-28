@@ -5,13 +5,15 @@ import hackathon.nomadworker.domain.Feed;
 import hackathon.nomadworker.domain.Place;
 
 
-import hackathon.nomadworker.dto.DownloadDtos;
 import hackathon.nomadworker.repository.PlaceRepository;
 import lombok.AllArgsConstructor;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.io.ParseException;
+import org.locationtech.jts.io.WKTReader;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -95,8 +97,64 @@ public class PlaceService {
         return 200;
     }
 
+    /**
+     * @param p_cate
+     * @param name
+     * @param p_weekt
+     * @param p_weekndt
+     * @param p_addr
+     * @param imageurl
+     * @param storeType
+     * @param rent_price
+     * @return  P_addr 을 이용한 위도 경도 좌표를 포함한 객체 db 에 저장후 반환
+     */
+    @Transactional
+    public Place newplace(String p_cate,String name,String p_weekt,String p_weekndt,String p_addr,String imageurl,String storeType,String rent_price)
+    {
+        Place place = new Place();
+        place.setP_cate(p_cate);
+        place.setP_name(name);
+        place.setP_weekt(p_weekt);
+        place.setP_weekndt(p_weekndt);
+        place.setP_grade((float) 0.0);
+        place.setP_count(0);
 
-    public Void newplace(String searchaddress)
+        place.setP_addr(p_addr);
+        place.setP_image(imageurl);
+
+        place.setP_storeType(storeType);
+        place.setRent_price(rent_price);
+
+        // make  instance  of Place
+        // call codordinate
+        String getcoordinate = getcoordinate(p_addr);
+
+        String[] coorarr = getcoordinate.split(" ");
+
+
+        float flongi = Float.parseFloat(coorarr[0]);
+        float flati = Float.parseFloat(coorarr[1]);
+
+        place.setP_latitude(flati);
+        place.setP_longitude(flongi);
+
+        String pointg = String.format("POINT(%s %s)",coorarr[0],coorarr[1]);
+        try {
+            Point pointinput = (Point) new WKTReader().read(pointg);
+            place.setP_gpoint(pointinput);
+            return placeRepository.post(place);
+
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     *
+     * @param searchaddress
+     * @return String : longitude+" " +latitude
+     */
+    public String getcoordinate(String searchaddress)
     {
         String url =  "https://www.google.co.kr/maps/search/";
         try {
@@ -110,20 +168,20 @@ public class PlaceService {
             int l = linkOrigin.indexOf("%");
             String longi =linkOrigin.substring(s+1,l);
 
+
             s = linkOrigin.indexOf("C");
             l = linkOrigin.indexOf("&");
             String lati =linkOrigin.substring(s+1,l);
 
 
+            return  longi+" "+lati ;
         } catch (
-                IOException e) {
+                IOException e)
+        {
             throw new RuntimeException(e);
         }
 
-        return null;
     }
-
-
 
 
 

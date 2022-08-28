@@ -8,6 +8,9 @@ import hackathon.nomadworker.util.Direction;
 import hackathon.nomadworker.util.GeometryUtil;
 import hackathon.nomadworker.util.Location;
 import lombok.RequiredArgsConstructor;
+import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.io.ParseException;
+import org.locationtech.jts.io.WKTReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -24,14 +27,11 @@ public class PlaceRepository {
     @Autowired
     private final EntityManager em;
 
-    public Place post(String p_cate,String name,String addr,String p_weekt,String p_weekndt,String image,String storeType,float lat,float longi,String rent_price)
+    public Place post(Place place)
     {
-        Place place = new Place();
-        place.setP_cate(p_cate);
-
-        // make point
         em.persist(place);
 
+        // make point
         return place;
     }
 
