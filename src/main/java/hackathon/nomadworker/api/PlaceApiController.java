@@ -2,7 +2,6 @@ package hackathon.nomadworker.api;
 import hackathon.nomadworker.domain.Feed;
 import hackathon.nomadworker.domain.Place;
 import hackathon.nomadworker.dto.PlaceDtos.*;
-import hackathon.nomadworker.dto.UserDtos;
 import hackathon.nomadworker.service.PlaceService;
 import hackathon.nomadworker.service.FileUploadService;
 import lombok.RequiredArgsConstructor;
@@ -112,8 +111,8 @@ public class PlaceApiController {
 
     }
     @PutMapping(value = "/api/place/grade", produces = "application/json;charset=UTF-8")
-    public PlaceGradeResponse gradePlace(@RequestHeader("Authorization") @Valid @RequestBody PlaceGradeRequest request){
-        placeService.gradePlace(request.getP_id(), request.getP_grade());
+    public PlaceGradeResponse gradePlace(@RequestHeader("Authorization") String u_uid,@Valid @RequestBody PlaceGradeRequest request){
+        placeService.gradePlace(request.getP_id(),request.getP_grade());
         return new PlaceGradeResponse("등록 완료!",200);
     }
 
