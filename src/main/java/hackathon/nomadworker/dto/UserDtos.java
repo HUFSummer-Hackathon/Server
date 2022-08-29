@@ -223,6 +223,7 @@ public class UserDtos
         private String place_address;
         private String place_weektime;
         private String place_weekendtime;
+        private float placeGrade;
         private String p_image;
 
         public PlaceSubGetResponse(User_Place s)
@@ -233,6 +234,7 @@ public class UserDtos
             this.place_address = s.getPlace().getP_addr();
             this.place_weektime = s.getPlace().getP_weekt();
             this.place_weekendtime = s.getPlace().getP_weekndt();
+            this.placeGrade = s.getPlace().getP_grade();
             this.p_image = s.getPlace().getP_image();
         }
     }
