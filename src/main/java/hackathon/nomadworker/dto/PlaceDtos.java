@@ -126,7 +126,7 @@ public class PlaceDtos {
         private String p_name;
         private String p_weekt;
         private String p_weekndt;
-        private float p_grade;
+        private float placeGrade;
         private String p_addr;
         private String p_image;
         private float p_latitude;
@@ -141,7 +141,7 @@ public class PlaceDtos {
             this.p_image = place.getP_image();
             this.p_weekt = place.getP_weekt();
             this.p_weekndt = place.getP_weekndt();
-            this.p_grade = place.getP_grade();
+            this.placeGrade = place.getP_grade();
             this.p_addr = place.getP_addr();
             this.p_storeType = place.getP_storeType();
             this.p_latitude =place.getP_latitude();
