@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import java.text.DecimalFormat;
 import java.util.List;
 
 @Repository
@@ -124,6 +125,7 @@ public class PlaceRepository {
 
     public void setgradePlace(Long p_id, float p_grade, Integer p_count) {
         Place place  = em.find(Place.class, p_id);
+        p_grade = (float)(Math.round(p_grade * 10) / 10.0);
         place.setP_grade(p_grade);
         place.setP_count(p_count);
         em.merge(place);
