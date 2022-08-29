@@ -29,8 +29,8 @@ public class PlaceDtos {
     @Data
     public  static class PlaceGradeRequest
     {
-        private Long p_id;
-        private float p_grade;
+        private Long placeId;
+        private float placeGrade;
     }
 
 
@@ -49,6 +49,7 @@ public class PlaceDtos {
         private String p_addr;
         private String p_weekt;
         private String p_weekndt;
+        private float placeGrade;
         private String p_image;
 
         public PlaceDtoCat(Place place) {
@@ -57,6 +58,7 @@ public class PlaceDtos {
             this.p_addr = place.getP_addr();
             this.p_weekt = place.getP_weekt();
             this.p_weekndt = place.getP_weekndt();
+            this.placeGrade = place.getP_grade();
             this.p_image = place.getP_image();
         }
     }
@@ -124,6 +126,7 @@ public class PlaceDtos {
         private String p_name;
         private String p_weekt;
         private String p_weekndt;
+        private float p_grade;
         private String p_addr;
         private String p_image;
         private float p_latitude;
@@ -138,6 +141,7 @@ public class PlaceDtos {
             this.p_image = place.getP_image();
             this.p_weekt = place.getP_weekt();
             this.p_weekndt = place.getP_weekndt();
+            this.p_grade = place.getP_grade();
             this.p_addr = place.getP_addr();
             this.p_storeType = place.getP_storeType();
             this.p_latitude =place.getP_latitude();
@@ -188,6 +192,7 @@ public class PlaceDtos {
         private String place_address;
         private String place_weektime;
         private String place_weekendtime;
+        private float placeGrade;
         private String p_image;
 
         public placeSearchDto(Place p) {
@@ -196,6 +201,7 @@ public class PlaceDtos {
             this.place_address = p.getP_addr();
             this.place_weektime = p.getP_weekt();
             this.place_weekendtime = p.getP_weekndt();
+            this.placeGrade = p.getP_grade();
             this.p_image = p.getP_image();
 
         }
