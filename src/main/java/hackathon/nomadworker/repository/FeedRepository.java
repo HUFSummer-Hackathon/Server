@@ -31,6 +31,10 @@ public class FeedRepository {
         feed.setF_like(0);
         em.persist(feed);
     }
+    public void delete(Long id){
+        Feed feed = em.find(Feed.class,id);
+        em.remove(feed);
+    }
     public Feed feedUserLikeUpdate(Long id,int cnt)
         {
             Feed feed = em.find(Feed.class,id);
