@@ -63,9 +63,17 @@ public class FeedService {
     }
 
     @Transactional
-    public Feed feedUserLikeUpdate(Long f_id,int cnt)
-    {
+    public Feed feedUserLikeUpdate(Long f_id,int cnt) {
         return feedRepository.feedUserLikeUpdate(f_id,cnt);
+    }
+
+    /**
+     * @param f_id : Long feed id
+     *  return : none
+     */
+    @Transactional
+    public  void deleteByFid(Long f_id){
+        feedRepository.delete(f_id);
     }
 
 }
