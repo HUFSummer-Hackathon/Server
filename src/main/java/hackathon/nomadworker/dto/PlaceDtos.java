@@ -5,9 +5,6 @@ import hackathon.nomadworker.domain.Place;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.NotNull;
 
 public class PlaceDtos {
 
@@ -26,7 +23,7 @@ public class PlaceDtos {
         private int status;
     }
 
-    @Data
+    @Data @AllArgsConstructor
     public  static class PlaceGradeRequest
     {
         private Long placeId;

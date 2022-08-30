@@ -27,7 +27,7 @@ public class FeedApiController {
     private final UserReplyService userReplyService;
 
 
-    @PostMapping(value = "/api/feeds/new")
+    @PostMapping(value = "/api/feeds/one")
     public PostResponse uploadFeed(@RequestHeader("Authorization") String u_uid,
                                    @RequestParam MultipartFile file,
                                    @RequestParam String feed_content,
@@ -50,6 +50,45 @@ public class FeedApiController {
         }
 
     }
+    // 피드 단일 조회
+    @GetMapping(value = "api/feeds/one", produces = "application/json;charset=UTF-8")
+    public FeedResultResponse feedUserOne(@RequestHeader("Authorization") String u_uid, @Param("f_id") Long f_id)
+    {
+        User findOnebyToken = userService.findOnebyToken(u_uid);
+        Feed feedOne = feedService.findOne(f_id);
+
+        List<User_Like> subsByFeedId = userLikeService.findUserLikesByFeedId(f_id);
+        boolean like_status = false;
+
+        if (f_id != null)
+        {
+            if (subsByFeedId.stream().anyMatch(s -> Objects.equals(s.getUser().getU_uid(), u_uid)))
+            {
+                like_status = true;
+            }
+            int count = userReplyService.findRepliesCountByFeedId(f_id);
+            FeedOneDto feedOneDto = new FeedOneDto(feedOne, like_status,count);
+            return new FeedResultResponse("단일 피드 조회 성공", 200, feedOneDto);
+        }
+        else
+        {
+            return new FeedResultResponse("단일 피드 조회 실패", 400, null);
+        }
+    }
+    @DeleteMapping(value = "api/feeds/one", produces = "application/json;charset=UTF-8")
+    public FeedResultResponseNoData deleteFeed(@RequestHeader("Authorization") String u_uid, @Param("f_id") Long f_id)
+    {
+        User findOnebyToken = userService.findOnebyToken(u_uid);
+        Feed feedOne = feedService.findOne(f_id);
+        String key = feedOne.getF_image().split(".com/")[1];
+        if(fileUploadService.deleteFile(key)!=null)
+        {
+            feedService.deleteByFid(feedOne.getId());
+            return new FeedResultResponseNoData("피드 삭제 완료!", 200);
+        }
+        return new FeedResultResponseNoData("피드 삭제 실패!", 400);
+    }
+
 
     @GetMapping(value = "api/feeds/total", produces = "application/json;charset=UTF-8")
     public FeedResultResponse feedAll(@RequestHeader("Authorization") String u_uid)
@@ -105,31 +144,6 @@ public class FeedApiController {
 
     }
 
-    // 피드 단일 조회
-    @GetMapping(value = "api/feeds/one", produces = "application/json;charset=UTF-8")
-    public FeedResultResponse feedUserOne(@RequestHeader("Authorization") String u_uid, @Param("f_id") Long f_id)
-    {
-        User findOnebyToken = userService.findOnebyToken(u_uid);
-        Feed feedOne = feedService.findOne(f_id);
-
-        List<User_Like> subsByFeedId = userLikeService.findUserLikesByFeedId(f_id);
-        boolean like_status = false;
-
-        if (f_id != null)
-        {
-            if (subsByFeedId.stream().anyMatch(s -> Objects.equals(s.getUser().getU_uid(), u_uid)))
-            {
-                like_status = true;
-            }
-            int count = userReplyService.findRepliesCountByFeedId(f_id);
-            FeedOneDto feedOneDto = new FeedOneDto(feedOne, like_status,count);
-            return new FeedResultResponse("단일 피드 조회 성공", 200, feedOneDto);
-        }
-        else
-        {
-            return new FeedResultResponse("단일 피드 조회 실패", 400, null);
-        }
-    }
 
     @PostMapping(value = "/api/feeds/likes")
     public FeedResultResponseNoData feedUserlike(@RequestHeader("Authorization") String u_uid, @Valid @RequestBody FeedLikeRequest request) {
