@@ -35,7 +35,7 @@ public class Feed {
     @JoinColumn(name = "u_id")
     private User user;
 
-    @OneToMany(mappedBy ="user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy ="feed", cascade = CascadeType.ALL)
     private List<User_Like> userLikeList = new ArrayList<>();
 
     public void addLike(User_Like userLike) {
@@ -43,7 +43,7 @@ public class Feed {
         userLike.setFeed(this);
     }
 
-    @OneToMany(mappedBy ="user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy ="feed", cascade = CascadeType.ALL)
     private List<User_Reply> userReplyList = new ArrayList<>();
 
 }
