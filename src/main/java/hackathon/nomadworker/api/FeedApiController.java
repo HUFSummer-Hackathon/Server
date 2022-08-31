@@ -7,6 +7,7 @@ import hackathon.nomadworker.domain.User_Reply;
 import hackathon.nomadworker.dto.FeedDtos.*;
 import hackathon.nomadworker.service.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class FeedApiController {
 
     private final FeedService feedService;
@@ -80,6 +82,7 @@ public class FeedApiController {
     {
         User findOnebyToken = userService.findOnebyToken(u_uid);
         Feed feedOne = feedService.findOne(f_id);
+        log.info("!!!");
         String key = feedOne.getF_image().split(".com/")[1];
         if(fileUploadService.deleteFile(key)!=null)
         {
