@@ -26,7 +26,7 @@ public class UserLikeService
 
     @Transactional
     public void deleteByUserFac(Long u_id, Long f_id){
-        User_Like userLike = userLikeRepository.findByUserLike(u_id, f_id);
+        User_Like userLike = userLikeRepository.checkUserLike(u_id, f_id);
         userLikeRepository.delete(userLike);
     }
 

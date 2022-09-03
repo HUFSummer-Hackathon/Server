@@ -33,9 +33,20 @@ public class UserPlaceService {
     }
 
     @Transactional
-    public void deleteBy(Long u_p_id)
+    public void deleteByUPID(Long u_p_id)
     {
         userPlaceRepository.delete(u_p_id);
+    }
+
+    /**
+     *
+     * @param u_id
+     * @param p_id
+     */
+    @Transactional
+    public void deleteByUidPid(Long u_id ,Long p_id )
+    {
+        userPlaceRepository.deleteUidPid(u_id,p_id);
     }
 
     @Transactional(readOnly = true)
@@ -44,7 +55,12 @@ public class UserPlaceService {
         return  userPlaceRepository.findPlacesByUserId(u_id);
     }
 
-
+    /**
+     *
+     * @param u_id
+     * @param p_id
+     * @return if user subscribe place  return true  else : false
+     */
     @Transactional(readOnly = true)
     public boolean findUserPlaceByFidUid(Long u_id , Long p_id)
     {
