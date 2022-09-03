@@ -1,12 +1,8 @@
 package hackathon.nomadworker.api;
-
 import static hackathon.nomadworker.dto.UserDtos.*;
-
 import hackathon.nomadworker.domain.User;
 import hackathon.nomadworker.domain.User_Place;
-import hackathon.nomadworker.dto.PlaceDtos;
 import hackathon.nomadworker.service.AuthService;
-
 import hackathon.nomadworker.service.UserPlaceService;
 import hackathon.nomadworker.service.UserService;
 
@@ -115,36 +111,52 @@ public class UserApiController
             return new UserResultResponse("장소 조회 실패", 400, null);
         }
     }
-
+//  -- version 1 :
+//        @PostMapping(value = "/api/user/placesub", produces = "application/json;charset=UTF-8")
+//    public UserResponse postPlaceSub(@RequestHeader("Authorization") String u_uid,
+//                                           @Valid @RequestBody PlaceSubPostRequest request)
+//    {
+//        if(Objects.equals(userService.findOnebyToken(u_uid).getId(), request.getU_id()))
+//        {
+//            if(userPlaceService.newUser_Place(request.getU_id(),request.getP_id()))
+//            {
+//                return new UserResponse("장소 등록 성공", 200);
+//            }
+//        }
+//        return new UserResponse("장소 등록 실패", 400);
+//
+//    }
+//
+//    @DeleteMapping(value = "api/user/placesub")
+//    public UserResponse deletePlaceSub(@RequestHeader("Authorization") String u_uid,
+//                                       @RequestParam Long u_p_id)
+//    {
+//        if (userService.findOnebyToken(u_uid) != null)
+//        {
+//            userPlaceService.deleteBy(u_p_id);
+//            return new UserResponse("장소 삭제 성공", 200);
+//        } else
+//        {
+//            return new UserResponse("장소 삭제 실패", 400);
+//        }
+//    }
+    // tmp version api
     @PostMapping(value = "/api/user/placesub", produces = "application/json;charset=UTF-8")
     public UserResponse postPlaceSub(@RequestHeader("Authorization") String u_uid,
                                            @Valid @RequestBody PlaceSubPostRequest request)
     {
-        if(Objects.equals(userService.findOnebyToken(u_uid).getId(), request.getU_id()))
+        if(request.getU_p_scrab()) //scrabed already
         {
-            if(userPlaceService.newUser_Place(request.getU_id(),request.getP_id()))
-            {
-                return new UserResponse("장소 등록 성공", 200);
-            }else return new UserResponse("장소 등록 중복", 200);
+            userPlaceService.deleteByUidPid(request.getU_id(), request.getP_id());
+            return new UserResponse("장소 등록 취소", 200);
         }
         else
         {
-            return new UserResponse("장소 등록 실패", 400);
+            userPlaceService.newUser_Place(request.getU_id(),request.getP_id());
+            return new UserResponse("장소 등록 성공", 200);
         }
+
     }
 
-    @DeleteMapping(value = "api/user/placesub")
-    public UserResponse deletePlaceSub(@RequestHeader("Authorization") String u_uid,
-                                       @RequestParam Long u_p_id)
-    {
-        if (userService.findOnebyToken(u_uid) != null)
-        {
-            userPlaceService.deleteBy(u_p_id);
-            return new UserResponse("장소 삭제 성공", 200);
-        } else
-        {
-            return new UserResponse("장소 삭제 실패", 400);
-        }
-    }
 
 }

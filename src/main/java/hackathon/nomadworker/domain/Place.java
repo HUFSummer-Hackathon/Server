@@ -18,7 +18,7 @@ import java.util.List;
 @Setter
 public class Place {
 
-        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Id @GeneratedValue(strategy = GenerationType.AUTO)
         @Column(name = "p_id")
         private long id;
 

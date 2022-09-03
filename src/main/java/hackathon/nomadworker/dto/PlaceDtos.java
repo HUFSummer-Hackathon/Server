@@ -3,6 +3,7 @@ package hackathon.nomadworker.dto;
 import hackathon.nomadworker.domain.Feed;
 import hackathon.nomadworker.domain.Place;
 
+import hackathon.nomadworker.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -130,7 +131,8 @@ public class PlaceDtos {
         private float p_longitude;
         private String p_storeType;
         private String p_url;
-        public PlaceDetailDto(Place place)
+        private Boolean u_p_scrab ;
+        public PlaceDetailDto(Place place, Boolean status)
         {
             this.p_id = place.getId();
             this.p_cate = place.getP_cate();
@@ -144,6 +146,8 @@ public class PlaceDtos {
             this.p_latitude =place.getP_latitude();
             this.p_longitude = place.getP_longitude();
             this.p_url =place.getRent_price();
+            this.u_p_scrab = status ;
+
         }
     }
 

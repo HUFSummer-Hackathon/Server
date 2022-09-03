@@ -213,6 +213,8 @@ public class UserDtos
     {
         private Long u_id;
         private Long p_id;
+        private Boolean u_p_scrab ;
+
     }
     @Data
     public static class PlaceSubGetResponse
@@ -226,6 +228,7 @@ public class UserDtos
         private float placeGrade;
         private String p_image;
 
+//        private Boolean u_p_scrab;
         public PlaceSubGetResponse(User_Place s)
         {
             this.u_p_id = s.getId();
@@ -236,6 +239,7 @@ public class UserDtos
             this.place_weekendtime = s.getPlace().getP_weekndt();
             this.placeGrade = s.getPlace().getP_grade();
             this.p_image = s.getPlace().getP_image();
+//            this.u_p_scrab = true;
         }
     }
 }

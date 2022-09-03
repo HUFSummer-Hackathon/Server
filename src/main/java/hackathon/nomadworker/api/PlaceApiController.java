@@ -1,9 +1,12 @@
 package hackathon.nomadworker.api;
 import hackathon.nomadworker.domain.Feed;
 import hackathon.nomadworker.domain.Place;
+import hackathon.nomadworker.domain.User;
 import hackathon.nomadworker.dto.PlaceDtos.*;
 import hackathon.nomadworker.service.PlaceService;
 import hackathon.nomadworker.service.FileUploadService;
+import hackathon.nomadworker.service.UserPlaceService;
+import hackathon.nomadworker.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +23,8 @@ public class PlaceApiController {
 
     private final PlaceService placeService;
     private final FileUploadService fileUploadService;
+    private final UserService userService ;
+    private final UserPlaceService userPlaceService;
 
     @GetMapping(value="/api/place/location" , produces = "application/json;charset=UTF-8")
     public PlaceResultResponse placeByCatagoryGet(@RequestHeader("Authorization") String u_uid,
@@ -70,18 +75,26 @@ public class PlaceApiController {
     }
 
     @GetMapping(value = "/api/place/detail",produces = "application/json;charset=UTF-8")
-    public PlaceResultResponse placeByCoordinateGet(@RequestHeader("Authorization") String u_uid,
-                                                    @RequestParam("placeId") Long p_id)
+    public PlaceResultResponse placeByCoordinateGet(@RequestHeader("Authorization") String u_uid, @RequestParam("placeId") Long p_id)
     {
+        User user = userService.findOnebyToken(u_uid);
         Place place = placeService.findPlacesById(p_id);
-
+        // use u_uid ->  to get info of scrab
         if (place == null )
         {
            return new PlaceResultResponse("장소 상세 조회 실패", 400, null);
         } else
         {
-                PlaceDetailDto result = new PlaceDetailDto(place);
-                return new PlaceResultResponse("장소 상세 조회 성공", 200, result);
+                if(userPlaceService.findUserPlaceByFidUid(user.getId(),p_id)) // 장소를 저장한 경우 .
+                {
+                    PlaceDetailDto result = new PlaceDetailDto(place, true);
+                    return new PlaceResultResponse("장소 상세 조회 성공", 200, result);
+                }
+                else // 장소를 저장 하지 않은 경우 .
+                {
+                    PlaceDetailDto result = new PlaceDetailDto(place, false);
+                    return new PlaceResultResponse("장소 상세 조회 성공", 200, result);
+                }
         }
 
     }
@@ -150,12 +163,18 @@ public class PlaceApiController {
             @RequestParam String p_addr,@RequestParam String storeType, @RequestParam String rent_price
             )
     {
-        // call image url first - >  multi part maybe  - >  get rturn image url
         String imageUrl = fileUploadService.uploadImage(file);
-        PlaceDto result = new PlaceDto(placeService.newplace(p_cate, p_name,p_weekt,p_weekndt,p_addr,imageUrl,storeType,rent_price));
+        try {
+            // call image url first - >  multi part maybe  - >  get rturn image url
+            PlaceDto result = new PlaceDto(placeService.newplace(p_cate, p_name, p_weekt, p_weekndt, p_addr, imageUrl, storeType, rent_price));
 
-        return new PlaceResultResponse("upload",200,result);
-
+            return new PlaceResultResponse("upload", 200, result);
+        }
+        catch (Exception e)
+        {
+            fileUploadService.deleteFile(imageUrl);
+            return new PlaceResultResponse("uploadfail", 400, null);
+        }
     }
 
 }

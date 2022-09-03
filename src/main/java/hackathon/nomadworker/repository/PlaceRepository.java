@@ -8,17 +8,13 @@ import hackathon.nomadworker.util.Direction;
 import hackathon.nomadworker.util.GeometryUtil;
 import hackathon.nomadworker.util.Location;
 import lombok.RequiredArgsConstructor;
-import org.locationtech.jts.geom.Point;
-import org.locationtech.jts.io.ParseException;
-import org.locationtech.jts.io.WKTReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 
 import javax.persistence.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import java.text.DecimalFormat;
+
 import java.util.List;
 
 @Repository
@@ -31,8 +27,7 @@ public class PlaceRepository {
     public Place post(Place place)
     {
         em.persist(place);
-
-        // make point
+        em.flush();
         return place;
     }
 

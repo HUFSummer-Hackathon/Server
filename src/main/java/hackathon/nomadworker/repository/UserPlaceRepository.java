@@ -32,6 +32,14 @@ public class UserPlaceRepository
         User_Place userPlace = em.find(User_Place.class,u_p_id);
         em.remove(userPlace);
     }
+    public void deleteUidPid(Long u_id,Long p_id)
+    {
+        String jpql ="select s from User_Place s " + "where s.user.id =: u_id " + "and s.place.id =: p_id ";
+        Query query = em.createQuery(jpql, User_Place.class)
+                .setParameter("u_id", u_id)
+                .setParameter("p_id", p_id);
+        em.remove(query.getSingleResult());
+    }
 
     public List<User_Place>findPlacesByUserId(Long u_id)
     {
@@ -42,6 +50,13 @@ public class UserPlaceRepository
                 .setParameter("u_id", u_id)
                 .getResultList();
     }
+
+    /**
+     *
+     * @param u_id
+     * @param p_id
+     * @return Boolean if exist return true  , Query is search fo id
+     */
     public Boolean findUserPlaceByFidUid(Long u_id , Long p_id)
     {
         try {
