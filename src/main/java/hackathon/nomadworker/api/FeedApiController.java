@@ -203,7 +203,7 @@ public class FeedApiController {
     public FeedResultResponse feedUserreply(@RequestHeader("Authorization") String u_uid, @Valid @RequestBody NewReplyRequestDto request) {
         // respnse
         User user = userService.findOnebyToken(u_uid);
-        if (user.getId() == request.getU_id())
+        if (Objects.equals(user.getId(), request.getU_id()))
         {
             User_Reply userReply= userReplyService.newReply(request.getR_content(), request.getU_id(), request.getF_id(),request.getR_date());
             return new FeedResultResponse("댓글 추가 성공", 200, new PostReplyResponseDto(userReply));
