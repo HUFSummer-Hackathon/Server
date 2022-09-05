@@ -27,7 +27,7 @@ public class UserRepository
         user.setU_email(u_email);
         user.setU_password(u_password);
         user.setU_nickname(u_nickname);
-        user.setU_image("https://nomadworker.s3.ap-northeast-2.amazonaws.com/1a5f4676-c3d5-4de4-88f1-e462a4e0f8b2.png");
+        user.setU_image("https://nomadworker.s3.ap-northeast-2.amazonaws.com/d7a0f701-83c6-498b-8934-a2df33a57e30.jpg");
         user.setU_latitude((float) 38.11);
         user.setU_longitude((float) 128.111);
         em.persist(user);
