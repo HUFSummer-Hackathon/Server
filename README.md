@@ -1,6 +1,18 @@
 ﻿# Server
 
-서버!
+## Project goal
+
+Gather places and give information for nomad workers in one place to make it easier for people to Search Cafes or Coworking spaces.
+
+## Technology of use
+
+    - Spring Boot
+    - JPA
+    - AWS EC2 ,S3 ,RDS
+    - MySQL
+    - Swagger
+    - Postman
+    - Notion
 
 
 
