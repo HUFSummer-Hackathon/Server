@@ -10,11 +10,12 @@ Gather places and give information for nomad workers in one place to make it eas
     - JPA
     - AWS EC2 ,S3 ,RDS
     - MySQL
-    - Swagger
+    - JWT,SMTP
     - Postman
     - Notion
 
-
+## API Docs
+https://www.notion.so/dev-wotjd/149348a8377b418fa476583a0ce17d11?v=19332af6d87541598edf73f0cb9ff400
 
 ## ERD
 
