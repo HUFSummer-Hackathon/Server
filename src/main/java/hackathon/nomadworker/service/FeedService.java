@@ -57,6 +57,11 @@ public class FeedService {
         return oneFeed;
     }
 
+    /**
+     *
+     * @param f_id
+     * @return Feed 의 객체를 반환
+     */
     public Feed findOne(Long f_id)
     {
         return feedRepository.findOne(f_id);
