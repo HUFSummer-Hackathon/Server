@@ -1,5 +1,5 @@
-﻿# Server
-
+![prize](https://user-images.githubusercontent.com/37647483/197382522-933b0f10-f255-4bca-bcd8-f747bc027c30.jpg)
+# Server
 ## Project goal
 
 Gather places and give information for nomad workers in one place to make it easier for people to Search Cafes or Coworking spaces.
