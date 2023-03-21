@@ -7,7 +7,7 @@ import hackathon.nomadworker.domain.repository.FeedRepository;
 import hackathon.nomadworker.domain.repository.PlaceRepository;
 import hackathon.nomadworker.domain.repository.UserLikeRepository2;
 import hackathon.nomadworker.domain.repository.UserRepository;
-import hackathon.nomadworker.repository.*;
+
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,8 @@
 package hackathon.nomadworker.domain.service;
 
 import hackathon.nomadworker.auth.JwtProvider;
+import hackathon.nomadworker.domain.dto.AuthDtos.TokenDataResponse;
+import hackathon.nomadworker.domain.dto.AuthDtos.TokenResponseNoData;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
