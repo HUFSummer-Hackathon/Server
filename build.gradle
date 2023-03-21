@@ -19,27 +19,29 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.jsoup:jsoup:1.15.4'
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.5.4'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
 	implementation 'io.jsonwebtoken:jjwt-impl:0.11.2'
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+
 	implementation group: 'org.hibernate', name: 'hibernate-spatial', version: '5.6.9.Final'
-	implementation 'org.jsoup:jsoup:1.15.2'
-	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-
-
-	compileOnly 'org.projectlombok:lombok'
-//	runtimeOnly 'com.h2database:h2'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.5.4'
 
 	//mysql
 	implementation 'mysql:mysql-connector-java'
 	implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
+
+	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'mysql:mysql-connector-java'
+
 	annotationProcessor 'org.projectlombok:lombok'
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

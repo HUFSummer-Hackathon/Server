@@ -3,7 +3,7 @@ package hackathon.nomadworker.domain.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-public class authDtos {
+public class AuthDtos {
 
     //==Response DTO==//
     @Data
