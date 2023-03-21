@@ -36,14 +36,14 @@ public class Feed {
     private User user;
 
     @OneToMany(mappedBy ="feed", cascade = CascadeType.ALL)
-    private List<User_Like> userLikeList = new ArrayList<>();
+    private List<UserLike> userLikeList = new ArrayList<>();
 
-    public void addLike(User_Like userLike) {
+    public void addLike(UserLike userLike) {
         this.userLikeList.add(userLike);
         userLike.setFeed(this);
     }
 
     @OneToMany(mappedBy ="feed", cascade = CascadeType.ALL)
-    private List<User_Reply> userReplyList = new ArrayList<>();
+    private List<UserReply> userReplyList = new ArrayList<>();
 
 }

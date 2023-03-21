@@ -1,7 +1,7 @@
 package hackathon.nomadworker.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import hackathon.nomadworker.domain.model.User_Reply;
+import hackathon.nomadworker.domain.model.UserReply;
 import hackathon.nomadworker.domain.model.Feed;
 import hackathon.nomadworker.domain.model.User;
 import lombok.AllArgsConstructor;
@@ -214,7 +214,7 @@ public class FeedDtos {
          private long u_id;
         private String u_nickname;
         private String u_image;
-        public NewReply(User_Reply reply)
+        public NewReply(UserReply reply)
         {
             this.r_id = reply.getId();
             this.r_content = reply.getR_content();
@@ -228,7 +228,7 @@ public class FeedDtos {
     public  static class PostReplyResponseDto
     {
         private NewReply reply;
-        public PostReplyResponseDto(User_Reply reply)
+        public PostReplyResponseDto(UserReply reply)
         {
             this.reply = new NewReply(reply);
         }
@@ -248,7 +248,7 @@ public class FeedDtos {
         String u_nickname ;
         String u_image;
 
-        public ReplyResponseDto(User_Reply r)
+        public ReplyResponseDto(UserReply r)
         {
             this.r_id = r.getId();
             this.r_content = r.getR_content();

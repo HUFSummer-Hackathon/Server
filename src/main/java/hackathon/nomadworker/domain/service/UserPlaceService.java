@@ -1,7 +1,7 @@
 package hackathon.nomadworker.domain.service;
 import hackathon.nomadworker.domain.model.Place;
 import hackathon.nomadworker.domain.model.User;
-import hackathon.nomadworker.domain.model.User_Place;
+import hackathon.nomadworker.domain.model.UserPlace;
 import hackathon.nomadworker.domain.repository.PlaceRepository;
 import hackathon.nomadworker.domain.repository.UserPlaceRepository;
 import hackathon.nomadworker.domain.repository.UserRepository;
@@ -50,7 +50,7 @@ public class UserPlaceService {
     }
 
     @Transactional(readOnly = true)
-    public List<User_Place> findPlacesByUId(Long u_id)
+    public List<UserPlace> findPlacesByUId(Long u_id)
     {
         return  userPlaceRepository.findPlacesByUserId(u_id);
     }

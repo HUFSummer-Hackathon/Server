@@ -15,7 +15,7 @@ import hackathon.nomadworker.domain.dto.PlaceDtos.placeSearchDto;
 import hackathon.nomadworker.domain.dto.PlaceDtos.placeSearchOneByNameDto;
 import hackathon.nomadworker.domain.dto.PlaceDtos.placecathomeresponse;
 import hackathon.nomadworker.domain.service.PlaceService;
-import hackathon.nomadworker.domain.service.FileUploadService;
+import hackathon.nomadworker.infra.aws.s3.FileUploadService;
 import hackathon.nomadworker.domain.service.UserPlaceService;
 import hackathon.nomadworker.domain.service.UserService;
 import lombok.RequiredArgsConstructor;

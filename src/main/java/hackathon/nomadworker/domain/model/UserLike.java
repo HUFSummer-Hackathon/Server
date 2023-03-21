@@ -1,6 +1,5 @@
 package hackathon.nomadworker.domain.model;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,19 +10,20 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Getter
 @Setter
-public class User_Place {
+public class UserLike
+{
+
     @Id
     @GeneratedValue
-    @Column(name="u_p_id")
+    @Column(name="like_id")
     private Long id;
+
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name="u_id")
     private User user;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name="p_id")
-    private Place place;
-
-
+    @JoinColumn(name="f_id")
+    private Feed feed;
 
 }

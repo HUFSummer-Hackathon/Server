@@ -54,7 +54,7 @@ public class Place {
         private List<Feed> feedList = new ArrayList<>();
 
         @OneToMany(mappedBy = "place", cascade = CascadeType.ALL)
-        private List<User_Place> user_placeList = new ArrayList<>();
+        private List<UserPlace> user_placeList = new ArrayList<>();
         public void addFeed(Feed feed)
         {
                 this.feedList.add(feed);

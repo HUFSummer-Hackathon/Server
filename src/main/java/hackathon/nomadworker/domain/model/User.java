@@ -36,18 +36,18 @@ public class User {
     private float u_longitude;
 
     @OneToMany(mappedBy ="user", cascade = CascadeType.ALL)
-    private List<User_Like> userLikeList = new ArrayList<>();
+    private List<UserLike> userLikeList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Feed> feedList = new ArrayList<>();
 
     @OneToMany(mappedBy ="user", cascade = CascadeType.ALL)
-    private List<User_Reply> userReplyList = new ArrayList<>();
+    private List<UserReply> userReplyList = new ArrayList<>();
 
     @OneToMany(mappedBy ="user", cascade = CascadeType.ALL)
-    private List<User_Place> user_placeList = new ArrayList<>();
+    private List<UserPlace> user_placeList = new ArrayList<>();
 
-    public void addLike(User_Like userLike) {
+    public void addLike(UserLike userLike) {
         this.userLikeList.add(userLike);
         userLike.setUser(this);
     }

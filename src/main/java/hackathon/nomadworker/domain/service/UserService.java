@@ -2,7 +2,7 @@ package hackathon.nomadworker.domain.service;
 
 
 import hackathon.nomadworker.domain.model.User;
-import hackathon.nomadworker.infra.UploadService;
+import hackathon.nomadworker.infra.aws.s3.UploadService;
 import hackathon.nomadworker.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

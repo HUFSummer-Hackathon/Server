@@ -4,7 +4,7 @@ package hackathon.nomadworker.domain.service;
 
 import hackathon.nomadworker.domain.model.Feed;
 import hackathon.nomadworker.domain.model.User;
-import hackathon.nomadworker.domain.model.User_Reply;
+import hackathon.nomadworker.domain.model.UserReply;
 import hackathon.nomadworker.domain.repository.FeedRepository;
 import hackathon.nomadworker.domain.repository.UserReplyRepository;
 import hackathon.nomadworker.domain.repository.UserRepository;
@@ -23,7 +23,7 @@ public class UserReplyService {
     private final FeedRepository feedRepository;
 
     @Transactional
-    public User_Reply newReply(String reply_content, long u_id, long f_id, LocalDateTime localDateTime)
+    public UserReply newReply(String reply_content, long u_id, long f_id, LocalDateTime localDateTime)
     {   User user = userRepository.findOne(u_id);
         Feed feed = feedRepository.findOne(f_id);
         return userReplyRepository.post(reply_content, user , feed,localDateTime);
@@ -34,7 +34,7 @@ public class UserReplyService {
     public void deleteByReplyId(Long r_id){userReplyRepository.delete(r_id);}
 
     @Transactional(readOnly = true)
-    public List<User_Reply> findRepliesByFeedId(Long f_id)
+    public List<UserReply> findRepliesByFeedId(Long f_id)
     {
         return userReplyRepository.findAllByFeedid(f_id);
     }
@@ -45,7 +45,7 @@ public class UserReplyService {
         return userReplyRepository.findAllByFeedid(f_id).size();
     }
     @Transactional(readOnly = true)
-    public User_Reply findOneByReplyId(Long r_id)
+    public UserReply findOneByReplyId(Long r_id)
     {
        return  userReplyRepository.findOne(r_id);
     }

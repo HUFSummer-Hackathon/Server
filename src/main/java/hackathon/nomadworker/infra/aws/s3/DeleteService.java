@@ -1,4 +1,4 @@
-package hackathon.nomadworker.infra;
+package hackathon.nomadworker.infra.aws.s3;
 
 public interface DeleteService {
 

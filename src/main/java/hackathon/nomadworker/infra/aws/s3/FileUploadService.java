@@ -1,8 +1,8 @@
-package hackathon.nomadworker.domain.service;
+package hackathon.nomadworker.infra.aws.s3;
 
 import com.amazonaws.services.s3.model.ObjectMetadata;
 
-import hackathon.nomadworker.infra.UploadService;
+import hackathon.nomadworker.infra.aws.s3.UploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

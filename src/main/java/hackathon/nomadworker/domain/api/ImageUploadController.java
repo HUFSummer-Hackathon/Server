@@ -3,7 +3,7 @@ package hackathon.nomadworker.domain.api;
 import hackathon.nomadworker.domain.dto.ImageDtos.PutResponse;
 import hackathon.nomadworker.domain.model.User;
 ;
-import hackathon.nomadworker.domain.service.FileUploadService;
+import hackathon.nomadworker.infra.aws.s3.FileUploadService;
 import hackathon.nomadworker.domain.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;

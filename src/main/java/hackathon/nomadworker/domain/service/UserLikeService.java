@@ -1,7 +1,7 @@
 package hackathon.nomadworker.domain.service;
 
 
-import hackathon.nomadworker.domain.model.User_Like;
+import hackathon.nomadworker.domain.model.UserLike;
 import hackathon.nomadworker.domain.repository.UserLikeRepository;
 import hackathon.nomadworker.domain.repository.UserLikeRepository2;
 import hackathon.nomadworker.domain.repository.UserRepository;
@@ -19,24 +19,24 @@ public class UserLikeService
     private final UserRepository userRepository;
     private final UserLikeRepository2 userLikeRepository2;
     @Transactional
-    public void newUser_Like(User_Like userLike) {
+    public void newUser_Like(UserLike userLike) {
         userLikeRepository.save(userLike);
     }
 
 
     @Transactional
     public void deleteByUserFac(Long u_id, Long f_id){
-        User_Like userLike = userLikeRepository.checkUserLike(u_id, f_id);
+        UserLike userLike = userLikeRepository.checkUserLike(u_id, f_id);
         userLikeRepository.delete(userLike);
     }
 
     @Transactional
-    public List<User_Like> findUserLikesByFeedId(Long f_id){return userLikeRepository.findByFeedId(f_id);}
+    public List<UserLike> findUserLikesByFeedId(Long f_id){return userLikeRepository.findByFeedId(f_id);}
 
     public boolean checkUserFeedLike(String u_uid, Long f_id)
     {
         Long u_id = userRepository.findIdByUuid(u_uid);
-        User_Like userLike = userLikeRepository.checkUserLike(u_id, f_id);
+        UserLike userLike = userLikeRepository.checkUserLike(u_id, f_id);
         if(userLike != null){
             return true;
         }

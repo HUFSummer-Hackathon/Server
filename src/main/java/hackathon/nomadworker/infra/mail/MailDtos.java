@@ -1,4 +1,4 @@
-package hackathon.nomadworker.domain.dto;
+package hackathon.nomadworker.infra.mail;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

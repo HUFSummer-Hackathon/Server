@@ -1,4 +1,4 @@
-package hackathon.nomadworker.infra.dto.component;
+package hackathon.nomadworker.infra.aws.s3;
 
 import lombok.Getter;
 import lombok.Setter;

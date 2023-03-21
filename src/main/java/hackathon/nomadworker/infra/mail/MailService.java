@@ -1,4 +1,4 @@
-package hackathon.nomadworker.domain.service;
+package hackathon.nomadworker.infra.mail;
 
 
 import hackathon.nomadworker.domain.repository.UserRepository;

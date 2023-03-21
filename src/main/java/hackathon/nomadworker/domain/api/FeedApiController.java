@@ -1,16 +1,15 @@
 package hackathon.nomadworker.domain.api;
 
-import hackathon.nomadworker.domain.model.User_Reply;
+import hackathon.nomadworker.domain.model.UserReply;
 import hackathon.nomadworker.domain.model.Feed;
 import hackathon.nomadworker.domain.model.User;
-import hackathon.nomadworker.domain.model.User_Like;
+import hackathon.nomadworker.domain.model.UserLike;
 import hackathon.nomadworker.domain.dto.FeedDtos.*;
 import hackathon.nomadworker.domain.service.FeedService;
-import hackathon.nomadworker.domain.service.FileUploadService;
+import hackathon.nomadworker.infra.aws.s3.FileUploadService;
 import hackathon.nomadworker.domain.service.UserLikeService;
 import hackathon.nomadworker.domain.service.UserReplyService;
 import hackathon.nomadworker.domain.service.UserService;
-import hackathon.nomadworker.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.query.Param;
@@ -64,7 +63,7 @@ public class FeedApiController {
         User findOnebyToken = userService.findOnebyToken(u_uid);
         Feed feedOne = feedService.findOne(f_id);
 
-        List<User_Like> subsByFeedId = userLikeService.findUserLikesByFeedId(f_id);
+        List<UserLike> subsByFeedId = userLikeService.findUserLikesByFeedId(f_id);
         boolean like_status = false;
 
         if (f_id != null)
@@ -159,7 +158,7 @@ public class FeedApiController {
         Long u_id = user.getId();
         Long f_id = request.getF_id();
 
-        List<User_Like> subsByFeedId = userLikeService.findUserLikesByFeedId(f_id);
+        List<UserLike> subsByFeedId = userLikeService.findUserLikesByFeedId(f_id);
         long count = subsByFeedId.stream().count();
 
         if (f_id != null) {
@@ -172,7 +171,7 @@ public class FeedApiController {
                 return new FeedResultResponseNoData("좋아요 취소", 200);
             }
 
-            User_Like userLike = new User_Like();
+            UserLike userLike = new UserLike();
             userLike.setUser(userService.findOne(u_id));
             userLike.setFeed(feedService.findOne(f_id));
             userLikeService.newUser_Like(userLike);
@@ -191,7 +190,7 @@ public class FeedApiController {
         Feed feed = feedService.findOne(f_id);
         if (user.getId()!=0)
         {
-            List<User_Reply> User_Reply = userReplyService.findRepliesByFeedId(f_id);
+            List<UserReply> User_Reply = userReplyService.findRepliesByFeedId(f_id);
             if (!User_Reply.isEmpty()) {
                 List<ReplyResponseDto> collect = User_Reply.stream()
                         .map(r -> new ReplyResponseDto(r))
@@ -210,7 +209,7 @@ public class FeedApiController {
         User user = userService.findOnebyToken(u_uid);
         if (Objects.equals(user.getId(), request.getU_id()))
         {
-            User_Reply userReply= userReplyService.newReply(request.getR_content(), request.getU_id(), request.getF_id(),request.getR_date());
+            UserReply userReply= userReplyService.newReply(request.getR_content(), request.getU_id(), request.getF_id(),request.getR_date());
             return new FeedResultResponse("댓글 추가 성공", 200, new PostReplyResponseDto(userReply));
             } else {return new FeedResultResponse("댓글 추가 실패", 400, null);
         }
@@ -220,7 +219,7 @@ public class FeedApiController {
     public PostResponse deletereply(@RequestHeader("Authorization") String u_uid, @Valid @RequestBody DeleteReplyRequestDto request)
     {
         // requset check
-        User_Reply user_reply = userReplyService.findOneByReplyId(request.getR_id());
+        UserReply user_reply = userReplyService.findOneByReplyId(request.getR_id());
         if (user_reply != null)
         {
             userReplyService.deleteByReplyId(user_reply.getId());

@@ -1,4 +1,4 @@
-package hackathon.nomadworker.infra;
+package hackathon.nomadworker.infra.aws.s3;
 
 import com.amazonaws.services.s3.model.ObjectMetadata;
 

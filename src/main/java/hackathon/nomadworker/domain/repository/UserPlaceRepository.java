@@ -1,7 +1,7 @@
 package hackathon.nomadworker.domain.repository;
 import hackathon.nomadworker.domain.model.Place;
 import hackathon.nomadworker.domain.model.User;
-import hackathon.nomadworker.domain.model.User_Place;
+import hackathon.nomadworker.domain.model.UserPlace;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,31 +21,31 @@ public class UserPlaceRepository
 
     public void save(User user , Place place)
     {
-        User_Place userPlace = new User_Place();
+        UserPlace userPlace = new UserPlace();
         userPlace.setUser(user);
         userPlace.setPlace(place);
         em.persist(userPlace);
     }
 
     public void delete(Long u_p_id){
-        User_Place userPlace = em.find(User_Place.class,u_p_id);
+        UserPlace userPlace = em.find(UserPlace.class,u_p_id);
         em.remove(userPlace);
     }
     public void deleteUidPid(Long u_id,Long p_id)
     {
-        String jpql ="select s from User_Place s " + "where s.user.id =: u_id " + "and s.place.id =: p_id ";
-        Query query = em.createQuery(jpql, User_Place.class)
+        String jpql ="select s from UserPlace s " + "where s.user.id =: u_id " + "and s.place.id =: p_id ";
+        Query query = em.createQuery(jpql, UserPlace.class)
                 .setParameter("u_id", u_id)
                 .setParameter("p_id", p_id);
         em.remove(query.getSingleResult());
     }
 
-    public List<User_Place>findPlacesByUserId(Long u_id)
+    public List<UserPlace>findPlacesByUserId(Long u_id)
     {
-        return em.createQuery("select s from User_Place s" +
+        return em.createQuery("select s from UserPlace s" +
                         " join fetch s.user u" +
                         " join fetch s.place p" +
-                        " where s.user.id = :u_id "+" order by s.id desc ", User_Place.class)
+                        " where s.user.id = :u_id "+" order by s.id desc ", UserPlace.class)
                 .setParameter("u_id", u_id)
                 .getResultList();
     }
@@ -59,7 +59,7 @@ public class UserPlaceRepository
     public Boolean findUserPlaceByFidUid(Long u_id , Long p_id)
     {
         try {
-            String jpql ="select s.id from User_Place s " + "where s.user.id =: u_id " + "and s.place.id =: p_id ";
+            String jpql ="select s.id from UserPlace s " + "where s.user.id =: u_id " + "and s.place.id =: p_id ";
             Query query = em.createQuery(jpql, Long.class)
                     .setParameter("u_id", u_id)
                     .setParameter("p_id", p_id);

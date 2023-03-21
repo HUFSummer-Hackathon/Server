@@ -1,6 +1,5 @@
-package hackathon.nomadworker.domain.api;
-import hackathon.nomadworker.domain.dto.MailDtos.MailResultResponse;
-import hackathon.nomadworker.domain.service.MailService;
+package hackathon.nomadworker.infra.mail;
+import hackathon.nomadworker.infra.mail.MailDtos.MailResultResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;

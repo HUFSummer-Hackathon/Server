@@ -1,8 +1,7 @@
-package hackathon.nomadworker.infra;
+package hackathon.nomadworker.infra.aws.s3;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
-import hackathon.nomadworker.infra.dto.component.S3Component;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

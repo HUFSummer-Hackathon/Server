@@ -2,7 +2,7 @@ package hackathon.nomadworker.domain.dto;
 
 
 import hackathon.nomadworker.domain.model.User;
-import hackathon.nomadworker.domain.model.User_Place;
+import hackathon.nomadworker.domain.model.UserPlace;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -229,7 +229,7 @@ public class UserDtos
         private String p_image;
 
 //        private Boolean u_p_scrab;
-        public PlaceSubGetResponse(User_Place s)
+        public PlaceSubGetResponse(UserPlace s)
         {
             this.u_p_id = s.getId();
             this.p_id = s.getPlace().getId();

@@ -1,7 +1,7 @@
 package hackathon.nomadworker.domain.api;
 import static hackathon.nomadworker.domain.dto.UserDtos.*;
 
-import hackathon.nomadworker.domain.model.User_Place;
+import hackathon.nomadworker.domain.model.UserPlace;
 import hackathon.nomadworker.domain.model.User;
 import hackathon.nomadworker.domain.service.AuthService;
 import hackathon.nomadworker.domain.service.UserPlaceService;
@@ -96,7 +96,7 @@ public class UserApiController
         if(Objects.equals(userService.findOnebyToken(u_uid).getId(), u_id))
         {
 
-            List<User_Place> user_places=userPlaceService.findPlacesByUId(u_id);
+            List<UserPlace> user_places=userPlaceService.findPlacesByUId(u_id);
             List<PlaceSubGetResponse> collect = user_places.stream()
                     .map(s -> new PlaceSubGetResponse(s))
                     .collect(Collectors.toList());
