@@ -1,8 +1,7 @@
-package hackathon.nomadworker.domain.service;
-
+package hackathon.nomadworker.auth.service;
 import hackathon.nomadworker.auth.JwtProvider;
-import hackathon.nomadworker.domain.dto.AuthDtos.TokenDataResponse;
-import hackathon.nomadworker.domain.dto.AuthDtos.TokenResponseNoData;
+import hackathon.nomadworker.auth.dto.AuthDtos.TokenDataResponse;
+import hackathon.nomadworker.auth.dto.AuthDtos.TokenResponseNoData;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,15 +17,12 @@ public class AuthService {
         Claims claims = JwtProvider.parseJwtToken("Bearer "+ token); //토큰 검증
 
         TokenDataResponse tokenDataResponse = new TokenDataResponse(token, claims.getSubject(), claims.getIssuedAt().toString(), claims.getExpiration().toString());
-        //TokenResponse tokenResponse = new TokenResponse("200", "OK", tokenDataResponse);
-        String realToken = tokenDataResponse.getToken();
-        return realToken;
+        return tokenDataResponse.getToken();
     }
 
     public TokenResponseNoData checkToken(String token) throws Exception {
         Claims claims = JwtProvider.parseJwtToken(token);
 
-        TokenResponseNoData tokenResponseNoData = new TokenResponseNoData("200", "success");
-        return tokenResponseNoData;
+        return  new TokenResponseNoData("200", "success");
     }
 }

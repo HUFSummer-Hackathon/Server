@@ -19,7 +19,7 @@ public class JwtProvider{
 
     private static Key key = Keys.hmacShaKeyFor("NOMADWORKER0NOMADWORKER0NOMADWORKER".getBytes(StandardCharsets.UTF_8));
 
-    public static String createRandomnum(){
+    public static String createRandomNumber(){
 
         int leftLimit = 48; // numeral '0'
         int rightLimit = 122; // letter 'z'
@@ -27,16 +27,11 @@ public class JwtProvider{
         Random random = new Random();
         random.setSeed(System.currentTimeMillis());
 
-
         String generatedString = random.ints(leftLimit, rightLimit + 1)
                 .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
                 .limit(targetStringLength)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
-
-
-          //String encodedURL = Base64Utils.encodeToUrlSafeString(generatedString.getBytes());
-        //jwt 생성시 인코딩을 해준다.
 
         return generatedString;
     }
@@ -50,19 +45,14 @@ public class JwtProvider{
         headers.put("typ", "JWT");
         headers.put("alg", "HS256");
 
-
-        String randstring = createRandomnum();
+        String randString = createRandomNumber();
         //payload 설정
         Map<String, Object> payloads = new HashMap<>();
-        payloads.put("KEY", randstring);
+        payloads.put("KEY", randString);
         payloads.put("NickName",u_nickname);
 
-
-        //Key key = Keys.hmacShaKeyFor(createRandomnum().getBytes(StandardCharsets.UTF_8));
-
-
         // 토큰 Builder
-        String jwt = Jwts.builder()
+        String jwtToken = Jwts.builder()
                 .setHeader(headers) // Headers 설정
                 .setClaims(payloads) // Claims 설정
                 .setIssuedAt(now) // 발급시간(iat)
@@ -70,18 +60,14 @@ public class JwtProvider{
                 .setSubject("AccessToken") // 토큰 용도
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact(); // 토큰 생성
-
-        System.out.println(jwt);
-
-        return jwt;
+        return jwtToken;
     }
 
     //==JWT 토큰 유효성 체크 메서드==//
     public static Claims parseJwtToken(String token) {
-        token = BearerRemove(token);
         return Jwts.parser()
                 .setSigningKey(key)
-                .parseClaimsJws(token)
+                .parseClaimsJws(BearerRemove(token))
                 .getBody();
 
     }

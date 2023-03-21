@@ -1,7 +1,7 @@
 package hackathon.nomadworker.domain.repository;
 
+import hackathon.nomadworker.auth.service.AuthService;
 import hackathon.nomadworker.domain.model.User;
-import hackathon.nomadworker.domain.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
